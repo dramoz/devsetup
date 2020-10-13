@@ -1,7 +1,6 @@
 ms-python.python
 ms-vscode.cpptools
 ms-vscode-remote.remote-ssh
-
 eamodio.gitlens
 bat67.markdown-extension-pack
 alefragnani.project-manager
