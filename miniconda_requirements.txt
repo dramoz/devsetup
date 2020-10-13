@@ -1,0 +1,9 @@
+oyaml
+pyparsing
+pathlib
+sympy
+numpy
+attrs
+matplotlib
+prettytable
+nodejs
