@@ -25,11 +25,11 @@ proc.wait()
 
 # -----------------------------------------
 proc = subprocess.Popen(["code"], shell=shell)
+proc.wait()
 extensions = Path("vscode_extensions.txt").read_text().splitlines()
 for ext in extensions:
     proc = subprocess.Popen(["code", "--install-extension", ext, "--force"], shell=shell)
     proc.wait()
-
 
 print(f"Installing common repositories...")
 repos = Path("repositories.txt").read_text().splitlines()
