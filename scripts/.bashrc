@@ -120,15 +120,15 @@ fi
 #if [ -f "${HOME}/dev/DevSetup/.bash_aliases" ]; then
 #    . ${HOME}/dev/DevSetup/.bash_aliases
 #fi
-if [ -f "${HOME}/dev/DevSetup/.bashrc_devsetup" ]; then
-    . "${HOME}/dev/DevSetup/.bashrc_devsetup"
+if [ -f "${HOME}/dev/devsetup/scripts/.bashrc_devsetup" ]; then
+    . "${HOME}/dev/devsetup/scripts/.bashrc_devsetup"
 fi
 
 # virtualenv and virtualenvwrapper
 export WORKON_HOME=${HOME}/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
-source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+source /usr/local/bin/virtualenvwrapper.sh
 
 # Add python3 -m pip install --user to path
 export PATH=${HOME}/.local/bin:$PATH

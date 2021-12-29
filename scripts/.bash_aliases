@@ -25,3 +25,8 @@ alias rm_dir='/bin/rm  --recursive --force --verbose '
 # Alias's for archives
 alias targz='tar -cvzf'
 alias untargz='tar -xvzf'
+
+# terminal title
+termtitle_func() { printf "\033]0;$*\007"; }
+alias termtitle=termtitle_func
+
