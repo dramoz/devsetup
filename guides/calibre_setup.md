@@ -18,7 +18,7 @@
   * set as `{#genre:subitems(0,1)}/{#genre:subitems(1,2)}/{#genre:subitems(2,3)}/{#genre:subitems(3,4)}/{#genre:subitems(4,5)}/{title} - {authors}`
   * Click <kbd>Apply</kbd> <kbd>Close</kbd>
 * Click <kbd>Connect/Share</kbd> <kbd>Connect to Folder</kbd>
-  * set as `E:\Users\Danilo\OneDrive\Bibliothek\Books`
+  * set as `OneDrive\Bibliothek\Books\Calibre`
 * Verify that _On Device Column_ is set to _Main_ for all books
 * **Done!**
 
