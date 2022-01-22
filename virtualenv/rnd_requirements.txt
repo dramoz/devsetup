@@ -1,0 +1,14 @@
+colorama
+colorlog
+deepdiff
+hdlConvertor
+hypothesis
+gprof2dot
+pipdeptree
+prettytable
+psutil
+pyparsing
+PySide2
+pyvsc
+rstr
+termcolor

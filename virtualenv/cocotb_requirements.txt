@@ -1,0 +1,4 @@
+cocotb
+cocotb-bus
+cocotb-test
+cocotb-coverage

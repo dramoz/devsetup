@@ -1,0 +1,9 @@
+bitarray
+bitstring
+graphviz
+matplotlib
+numpy
+numexpr
+pandas
+pyserial
+sympy

@@ -1,0 +1,7 @@
+jupyterlab
+ipywidgets
+pygments
+jupyterlab_pygments
+ipympl
+wavedrom
+nbwavedrom
