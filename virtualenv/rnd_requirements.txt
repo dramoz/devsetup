@@ -3,6 +3,7 @@ colorlog
 deepdiff
 hdlConvertor
 hypothesis
+python-constraint
 gprof2dot
 pipdeptree
 prettytable
