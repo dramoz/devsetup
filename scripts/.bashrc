@@ -127,8 +127,8 @@ fi
 # virtualenv and virtualenvwrapper
 export WORKON_HOME=${HOME}/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-export VIRTUALENVWRAPPER_VIRTUALENV=/home/dramoz/.local/bin/virtualenv
-source /home/dramoz/.local/bin/virtualenvwrapper.sh
+export VIRTUALENVWRAPPER_VIRTUALENV=$HOME/.local/bin/virtualenv
+source $HOME/.local/bin/virtualenvwrapper.sh
 
 # Add python3 -m pip install --user to path
 export PATH=${HOME}/.local/bin:$PATH
