@@ -26,7 +26,17 @@ alias rm_dir='/bin/rm  --recursive --force --verbose '
 alias targz='tar -cvzf'
 alias untargz='tar -xvzf'
 
+# Funcs for coloring
+red() { tput setaf 1; cat; tput sgr0; }
+green() { tput setaf 2; cat; tput sgr0; }
+yellow() { tput setaf 3; cat; tput sgr0; }
+blue() { tput setaf 4; cat; tput sgr0; }
+magenta() { tput setaf 5; cat; tput sgr0; }
+cyan() { tput setaf 6; cat; tput sgr0; }
+
 # terminal title
 termtitle_func() { printf "\033]0;$*\007"; }
 alias termtitle=termtitle_func
 
+# Git shortcuts
+alias git_ls="git ls-files | green; git ls-files --others --exclude-standard | red"
