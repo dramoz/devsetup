@@ -20,3 +20,4 @@ jupyterlab_pygments
 nbwavedrom
 nodejs
 wavedrom
+intelhex
