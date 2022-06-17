@@ -124,17 +124,27 @@ if [ -f "${HOME}/dev/devsetup/scripts/.bashrc_devsetup" ]; then
     . "${HOME}/dev/devsetup/scripts/.bashrc_devsetup"
 fi
 
+export VERIFTOOLS=~/dev/VerifTools
+
+export DISPLAY=192.168.11.228:0
+#$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0
+export LIBGL_ALWAYS_INDIRECT=1
+
+source "$HOME/.cargo/env"
 # virtualenv and virtualenvwrapper
 export WORKON_HOME=${HOME}/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-export VIRTUALENVWRAPPER_VIRTUALENV=$HOME/.local/bin/virtualenv
-source $HOME/.local/bin/virtualenvwrapper.sh
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
+source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 
 # Add python3 -m pip install --user to path
 export PATH=${HOME}/.local/bin:$PATH
 
-# Tools paths
-export PATH="${HOME}/tools/fpga-toolchain/bin:$PATH"
+# Quartus
+#export LM_LICENSE_FILE=2100@edc-util01
+export LM_LICENSE_FILE=${HOME}/intelFPGA_pro/license.dat
+export PATH=/home/dramoz/intelFPGA_pro/21.3/questa_fse/linux_x86_64/:$PATH
+export QSYS_ROOTDIR="/home/dramoz/intelFPGA_pro/21.3/qsys/bin"
 
 # RISC-V
 export PATH=/opt/riscv64-unknown-elf-toolchain/bin:$PATH

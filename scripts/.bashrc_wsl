@@ -120,18 +120,15 @@ fi
 #if [ -f "${HOME}/dev/DevSetup/.bash_aliases" ]; then
 #    . ${HOME}/dev/DevSetup/.bash_aliases
 #fi
-if [ -f "${HOME}/dev/DevSetup/.bashrc_devsetup" ]; then
-    . "${HOME}/dev/DevSetup/.bashrc_devsetup"
+if [ -f "${HOME}/dev/devsetup/scripts/.bashrc_devsetup" ]; then
+    . "${HOME}/dev/devsetup/scripts/.bashrc_devsetup"
 fi
-
-export VERIFTOOLS=~/dev/VerifTools
 
 export DISPLAY=192.168.11.228:0
 #$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0
 export LIBGL_ALWAYS_INDIRECT=1
 
 source "$HOME/.cargo/env"
-
 # virtualenv and virtualenvwrapper
 export WORKON_HOME=${HOME}/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
@@ -141,3 +138,8 @@ source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 # Add python3 -m pip install --user to path
 export PATH=${HOME}/.local/bin:$PATH
 
+# Tools paths
+export PATH="${HOME}/tools/fpga-toolchain/bin:$PATH"
+
+# RISC-V
+export PATH=/opt/riscv64-unknown-elf-toolchain/bin:$PATH
