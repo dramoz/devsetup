@@ -1,11 +1,17 @@
-# some more ls aliases
+# ls & tree
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias t0='tree'
+alias t1='tree -L 1'
+alias t2='tree -L 2'
+alias t3='tree -L 3'
 
+# History & Grep
 alias h='history'
 alias hg='history | grep '
-alias restart='sudo shutdown -r 0'
+
+# Misc
 alias count_files='find $1 -type f | wc -l'
 alias sudo='sudo -E env "PATH=$PATH"'
 
@@ -13,11 +19,6 @@ alias sudo='sudo -E env "PATH=$PATH"'
 # https://gist.github.com/zachbrowne/8bc414c9f30192067831fafebd14255c
 # Change directory aliases
 alias home='cd ~'
-alias cd..='cd ..'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
 
 # Remove a directory and all files
 alias rm_dir='/bin/rm  --recursive --force --verbose '
