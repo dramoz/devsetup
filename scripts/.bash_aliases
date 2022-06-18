@@ -2,6 +2,8 @@
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias lah='ls -lah'
+
 alias t0='tree'
 alias t1='tree -L 1'
 alias t2='tree -L 2'
