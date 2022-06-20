@@ -8,6 +8,10 @@ case $- in
       *) return;;
 esac
 
+# Echos helpers
+L1="==============================================================================="
+L2="------------------------------------------------------------"
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -127,3 +131,6 @@ source $HOME/.local/bin/virtualenvwrapper.sh
 
 # Add python3 -m pip install --user to path
 export PATH=${HOME}/.local/bin:$PATH
+
+# Devsetup
+export DEVSETUP_DIR=${HOME}/dev/devsetup
