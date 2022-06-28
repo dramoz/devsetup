@@ -43,3 +43,7 @@ alias termtitle=termtitle_func
 
 # Git shortcuts
 alias git_ls="git ls-files | green; git ls-files --others --exclude-standard | red"
+
+# apt update all!
+alias apt_update_all="sudo apt update -y; sudo apt upgrade -y; sudo apt autoremove -y"
+
