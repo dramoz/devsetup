@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/dramoz/repos/pygrid/pygrid.py
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_CA]=pyGrid
+Name=pyGrid
+Comment[en_CA]=Windows Grid
+Comment=Windows Grid
