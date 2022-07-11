@@ -30,7 +30,8 @@ if [ "${ok}" == "y" ]; then
   sudo apt -y install git python3-gi python3-xlib
   cd ~/repos
   git clone https://github.com/mjs7231/pygrid.git
-  cp ${HOME}/dev/devsetup/scripts/pygrid.py.desktop ~/.config/autostart/pygrid.py.desktop
+  cp ${HOME}/dev/devsetup/scripts/pygrid.py.desktop ${HOME}/.config/autostart/pygrid.py.desktop
+  cp ${HOME}/dev/devsetup/scripts/pygrid.json ${HOME}/.config/pygrid.json
 fi
 
 echo "--------------------------------------------------"
