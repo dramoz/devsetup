@@ -70,11 +70,14 @@ done
 
 # DevSetup
 echo "--------------------------------------------------"
-echo "Cloning devsetup"
-cd ~/dev
-git clone git@github.com:dramoz/devsetup.git
+read -p "Clone GitHub dramoz/devsetup and set .bash* (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  cd ~/dev
+  git clone git@github.com:dramoz/devsetup.git
+fi
 
 # Guest Additions...
+echo "--------------------------------------------------"
 vboxguest=$(lsmod | grep vboxguest)
 if [ ! -z "${vboxguest}" ]; then
   read -p "It looks this is a VM, let's install Guest Additions (y/n)? " ok
@@ -91,7 +94,7 @@ if [ ! -z "${vboxguest}" ]; then
 fi
 
 echo "--------------------------------------------------"
-read -p "Done for the moment, reboot (y/n)?" ok
+read -p "Done for the moment, reboot (y/n)? " ok
 if [ "${ok}" == "y" ]; then
   sudo reboot
 else

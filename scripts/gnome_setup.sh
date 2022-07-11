@@ -14,7 +14,7 @@ sudo -S apt install gnome-shell-extensions chrome-gnome-shell
 # https://www.addictivetips.com/ubuntu-linux-tips/back-up-the-gnome-shell-desktop-settings-linux/
 dconf_bk=${HOME}/dev/devsetup/scripts/dconf-settings.ini
 if [ -f "${dconf_bk}" ]; then
-  read -p "Restore dconf preferences (y/n)?" ok
+  read -p "Restore dconf preferences (y/n)? " ok
   if [ "${ok}" == "y" ]; then
     sudo -S apt install dconf*
     cd ~/
