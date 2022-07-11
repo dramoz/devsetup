@@ -1,9 +1,16 @@
+addict
+attrs
 bitarray
 bitstring
+coverage
 graphviz
+intelhex
 matplotlib
 numpy
 numexpr
 pandas
+psutil
 pyserial
+pytest
+ruamel.yaml
 sympy

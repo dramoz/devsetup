@@ -1,5 +1,0 @@
-addict
-attrs
-coverage
-pytest
-ruamel.yaml

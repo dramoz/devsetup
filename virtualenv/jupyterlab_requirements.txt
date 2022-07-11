@@ -1,8 +1,8 @@
+nodejs
 jupyterlab
 ipywidgets
 ipympl
 pygments
 jupyterlab_pygments
-nbwavedrom
-nodejs
 wavedrom
+nbwavedrom
