@@ -9,7 +9,7 @@ while $read_data; do
   echo "--------------------------------------------------"
   echo "${full_name}: ${email}"
   read -p "OK (y/n)? " ok
-  if [ ${ok} == "y" ]; then
+  if [ "${ok}" == "y" ]; then
     read_data=false
   else
     read_data=true
@@ -61,7 +61,7 @@ echo "--------------------------------------------------"
 read_data=true
 while $read_data; do
   read -p "Did you added the key (y/n)? " ok
-  if [ ${ok} == "y" ]; then
+  if [ "${ok}" == "y" ]; then
     read_data=false
   else
     read_data=true
@@ -78,7 +78,7 @@ git clone git@github.com:dramoz/devsetup.git
 vboxguest=$(lsmod | grep vboxguest)
 if [ ! -z "${vboxguest}" ]; then
   read -p "It looks this is a VM, let's install Guest Additions (y/n)? " ok
-  if [ ${ok} == "y" ]; then
+  if [ "${ok}" == "y" ]; then
     echo "From VM menu"
     echo "-> Devices.Insert Guest Additions, and click [RUN]"
     read -p "Press [ENTER] key after Guest Additions is done..." ok
@@ -92,7 +92,7 @@ fi
 
 echo "--------------------------------------------------"
 read -p "Done for the moment, reboot (y/n)?" ok
-if [ ${ok} == "y" ]; then
+if [ "${ok}" == "y" ]; then
   sudo reboot
 else
   echo "Please reboot at your convenience..."
