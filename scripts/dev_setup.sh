@@ -17,7 +17,7 @@ pip3 install virtualenv virtualenvwrapper
 
 # DevSetup
 echo "--------------------------------------------------"
-if [ -d "~/dev/devsetup" ]; then
+if [ ! -d "${HOME}/dev/devsetup" ]; then
   echo "Cloning GitHub dramoz/devsetup and set .bash*"
   cd ~/dev
   git clone git@github.com:dramoz/devsetup.git
@@ -25,19 +25,25 @@ fi
 
 cd ~/dev/devsetup; git pull; cd ~
 cp ~/dev/devsetup/scripts/.bashrc ~/.bashrc
-. ~/.bashrc
+source ~/.bashrc
+source $HOME/.local/bin/virtualenvwrapper.sh
 
 # Virtualenv:dev
 echo "--------------------------------------------------"
-echo "Creating virtualenv:dev"
-mkvirtualenv dev
+if [ ! -d "${HOME}/.virtualenvs/dev/" ]; then
+  echo "virtualenv:dev not found, creating..."
+  mkvirtualenv dev
+fi
+
+echo "Adding requirements to virtualenv:dev"
+source .virtualenvs/dev/bin/activate
 pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
 pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
 
 echo "--------------------------------------------------"
 read -p "Add JupyterLab to virtualdev:dev (y/n)? " ok
 if [ "${ok}" == "y" ]; then
-  pip install -r ~/dev/devsetup/virtualenv/jupyter_requirements.txt
+  pip install -r ~/dev/devsetup/virtualenv/jupyterlab_requirements.txt
 fi
 
 echo "--------------------------------------------------"
