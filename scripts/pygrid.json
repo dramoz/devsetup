@@ -1,0 +1,35 @@
+{
+  "default": {
+    "maxheight": 0.75,
+    "maxwidth": 0.75,
+    "minheight": 0.25,
+    "minwidth": 0.25,
+    "padding": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "snaptocursor": false,
+    "spacing": 1,
+    "xdivs": 5,
+    "ydivs": 4
+  },
+  "keys": {
+    "accelerator": "<Ctrl><Mod1><Mod2>",
+    "commands": {
+      "KP_0": "maximize",
+      "KP_1": "bottomleft",
+      "KP_2": "bottom",
+      "KP_3": "bottomright",
+      "KP_4": "left",
+      "KP_5": "middle",
+      "KP_6": "right",
+      "KP_7": "topleft",
+      "KP_8": "top",
+      "KP_9": "topright",
+      "KP_Divide": "max-stretch",
+      "KP_Enter": "cycle-monitor"
+    }
+  }
+}
