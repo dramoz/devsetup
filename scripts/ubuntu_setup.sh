@@ -68,14 +68,6 @@ while $read_data; do
   fi
 done
 
-# DevSetup
-echo "--------------------------------------------------"
-read -p "Clone GitHub dramoz/devsetup and set .bash* (y/n)? " ok
-if [ "${ok}" == "y" ]; then
-  cd ~/dev
-  git clone git@github.com:dramoz/devsetup.git
-fi
-
 # Guest Additions...
 echo "--------------------------------------------------"
 vboxguest=$(lsmod | grep vboxguest)

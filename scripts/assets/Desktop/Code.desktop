@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Visual Studio Code
+Comment=Visual Studio Code
+Icon=/snap/code/current/snap/gui/com.visualstudio.code.png
+Exec=/snap/bin/code
