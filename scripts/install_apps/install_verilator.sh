@@ -4,6 +4,10 @@ name="verilator"
 install_path=$1
 tag=$2
 
+if [ -z "${install_path}" ]; then
+  install_path="${HOME}/repos"
+fi
+
 if [ -z "${tag}" ]; then
   echo "Installing ${name} (latest tag/version)"
 else
