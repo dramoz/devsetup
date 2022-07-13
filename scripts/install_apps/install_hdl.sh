@@ -52,7 +52,7 @@ fi
 echo "--------------------------------------------------"
 read -p "Install Verilator (simulation and linting) (https://www.veripool.org/verilator/) (y/n)? " ok
 if [ "${ok}" == "y" ]; then
-  ~/dev/devsetup/scripts/install_apps/install_verilator.sh
+  ~/dev/devsetup/scripts/install_apps/install_verilator.sh ~/repos v4.224.1
 fi
 
 echo "--------------------------------------------------"
