@@ -25,7 +25,7 @@ sudo -S apt purge -y virtualenvwrapper
 # Ubuntu update
 echo "--------------------------------------------------"
 echo "update/upgrade/remove"
-sudo -S apt update -y; sudo apt upgrade -y; sudo apt autoremove -y
+sudo -S apt update -y && sudo -S apt upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y
 
 # For USB/UART serial access
 echo "--------------------------------------------------"
@@ -50,23 +50,26 @@ git config --global user.name "${full_name}"
 
 # SSH key for GitHub
 echo "--------------------------------------------------"
-echo "GitHub ssh-key"
-ssh-keygen -t ed25519 -C "${email}"
-ssh-add ~/.ssh/id_ed25519
-echo "Copy/paste (and create key at GitHub) ->"
-cat ~/.ssh/id_ed25519.pub
-firefox -new-window https://github.com/settings/keys
-
-echo "--------------------------------------------------"
-read_data=true
-while $read_data; do
-  read -p "Did you added the key (y/n)? " ok
-  if [ "${ok}" == "y" ]; then
-    read_data=false
-  else
-    read_data=true
-  fi
-done
+ssh_key="${HOME}/.ssh/id_ed25519"
+if [ ! -f "${ssh_key}" ]; then
+  echo "Creating GitHub ssh-key"
+  ssh-keygen -t ed25519 -C "${email}"
+  ssh-add ~/.ssh/id_ed25519
+  echo "Copy/paste (and create key at GitHub) ->"
+  cat ~/.ssh/id_ed25519.pub
+  firefox -new-window https://github.com/settings/keys
+  
+  echo "--------------------------------------------------"
+  read_data=true
+  while $read_data; do
+    read -p "Press <y> after adding the key to GitHub (https://github.com/settings/keys)" ok
+    if [ "${ok}" == "y" ]; then
+      read_data=false
+    else
+      read_data=true
+    fi
+  done
+fi
 
 # Guest Additions...
 echo "--------------------------------------------------"

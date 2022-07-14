@@ -23,12 +23,16 @@ if [ ! -d "${HOME}/dev/devsetup" ]; then
   git clone git@github.com:dramoz/devsetup.git
 fi
 
-cd ~/dev/devsetup; git pull; cd ~
-cp ~/dev/devsetup/scripts/.bashrc ~/.bashrc
-source ~/.bashrc
-source $HOME/.local/bin/virtualenvwrapper.sh
+echo "--------------------------------------------------"
+read -p "Update .bashrc with <devsetup> (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  cd ~/dev/devsetup; git pull; cd ~
+  cp ~/dev/devsetup/scripts/.bashrc ~/.bashrc
+  source ~/.bashrc
+fi
 
 # Virtualenv:dev
+source $HOME/.local/bin/virtualenvwrapper.sh
 echo "--------------------------------------------------"
 if [ ! -d "${HOME}/.virtualenvs/dev/" ]; then
   echo "virtualenv:dev not found, creating..."
@@ -59,8 +63,10 @@ if [ "${ok}" == "y" ]; then
 fi
 
 echo "--------------------------------------------------"
-echo "Installing VS code..."
-sudo -S snap install code --classic
+read -p "Install VS code (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  sudo -S snap install code --classic
+fi
 
 echo "--------------------------------------------------"
 read -p "Done for the moment, reboot (y/n)? " ok
