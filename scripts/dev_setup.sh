@@ -28,6 +28,11 @@ read -p "Update .bashrc with <devsetup> (y/n)? " ok
 if [ "${ok}" == "y" ]; then
   cd ~/dev/devsetup; git pull; cd ~
   cp ~/dev/devsetup/scripts/.bashrc ~/.bashrc
+  if [ ! -f "${HOME}/.bashrc_local" ]; then
+    echo "devsetup: .bashrc can load local configurations from ~/.bashrc_local (${HOME}/.bashrc_local)"
+    echo "As no .bashrc_local file found, copying a base example"
+    cp ~/dev/devsetup/scripts/.bashrc_local ~/.bashrc_local
+  fi
   source ~/.bashrc
 fi
 
