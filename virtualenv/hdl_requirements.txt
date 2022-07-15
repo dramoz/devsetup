@@ -2,3 +2,5 @@ cocotb
 cocotb-bus
 cocotb-test
 cocotb-coverage
+hdlConvertor
+pyvsc

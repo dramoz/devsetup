@@ -26,6 +26,7 @@ if [ -z ${python} ]; then
         mkvirtualenv hdl
         source .virtualenvs/hdl/bin/activate
         pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
+        pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
       else
         source .virtualenvs/hdl/bin/activate
       fi
@@ -36,23 +37,22 @@ if [ -z ${python} ]; then
   fi
 fi
 
+# Dependencies
+sudo -S apt install -y build-essential uuid-dev cmake default-jre python3 python3-dev python3-pip libantlr4-runtime-dev antlr4 ninja-build
+
 echo "--------------------------------------------------"
-read -p "Install CoCoTB (https://docs.cocotb.org/en/stable/) (y/n)? " ok
-if [ "${ok}" == "y" ]; then
-  pip install -r ~/dev/devsetup/virtualenv/cocotb_requirements.txt
-fi
+echo "Installing CoCoTB (https://docs.cocotb.org/en/stable/)"
+pip install -r ~/dev/devsetup/virtualenv/hdl_requirements.txt
+
+echo "--------------------------------------------------"
+echo "Installing/checking Verilator (simulation and linting) (https://www.veripool.org/verilator/)"
+~/dev/devsetup/scripts/install_apps/install_verilator.sh ~/repos v4.224.1
 
 echo "--------------------------------------------------"
 read -p "Install VisualCode TerosHDL (https://terostechnology.github.io/terosHDLdoc/) (y/n)? " ok
 if [ "${ok}" == "y" ]; then
   pip install teroshdl
   code --install-extension teros-technology.teroshdl
-fi
-
-echo "--------------------------------------------------"
-read -p "Install Verilator (simulation and linting) (https://www.veripool.org/verilator/) (y/n)? " ok
-if [ "${ok}" == "y" ]; then
-  ~/dev/devsetup/scripts/install_apps/install_verilator.sh ~/repos v4.224.1
 fi
 
 echo "--------------------------------------------------"

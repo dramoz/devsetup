@@ -49,7 +49,7 @@ fi
 echo "--------------------------------------------------"
 read -p "Add CoCoTB requirements to virtualdev:dev (y/n)? " ok
 if [ "${ok}" == "y" ]; then
-  pip install -r ~/dev/devsetup/virtualenv/cocotb_requirements.txt
+  pip install -r ~/dev/devsetup/virtualenv/hdl_requirements.txt
 fi
 
 echo "--------------------------------------------------"

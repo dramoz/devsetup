@@ -1,15 +1,6 @@
 colorama
 colorlog
 deepdiff
-hdlConvertor
-hypothesis
-python-constraint
-gprof2dot
-pipdeptree
-prettytable
-pyparsing
 PySide2
-pyvsc
-rstr
 termcolor
 packaging
