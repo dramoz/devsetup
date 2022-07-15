@@ -11,9 +11,7 @@ fi
 source $HOME/.local/bin/virtualenvwrapper.sh
 
 echo "--------------------------------------------------"
-python=$(which python)
-python_cmd="python"
-pip_cmd="pip"
+python=${VIRTUAL_ENV}
 if [ -z ${python} ]; then
   read -p "No virtualenv active detected, use virtualenv:dev (y/n)? " ok
   if [ "${ok}" == "y" ]; then
