@@ -40,7 +40,9 @@ cd ~; mkdir -p dev tools repos
 # Required apps
 echo "--------------------------------------------------"
 echo "apt required tools..."
-sudo -S apt install -y build-essential git graphviz gtkwave screen tmux tree vim python3 python3-pip python3-tk meld
+sudo -S apt install -y build-essential git graphviz gtkwave screen tmux tree vim
+sudo -S apt install -y python3 python3-pip python3-tk meld nodejs
+sudo -S apt install -y gnome-shell-extensions chrome-gnome-shell
 
 # Setup git credentials
 echo "--------------------------------------------------"
@@ -86,6 +88,76 @@ if [ ! -z "${vboxguest}" ]; then
   else
     echo "Please install guest additions later..."
   fi
+fi
+
+echo "--------------------------------------------------"
+# Python virtualenv
+echo "--------------------------------------------------"
+echo "Installing Python virtualenv/virtualenvwrapper"
+pip3 install virtualenv virtualenvwrapper
+
+# DevSetup
+echo "--------------------------------------------------"
+if [ ! -d "${HOME}/dev/devsetup" ]; then
+  echo "Cloning GitHub dramoz/devsetup and set .bash*"
+  cd ~/dev
+  git clone git@github.com:dramoz/devsetup.git
+fi
+
+echo "--------------------------------------------------"
+read -p "Update .bashrc with <devsetup> (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  cd ~/dev/devsetup; git pull; cd ~
+  cp ~/dev/devsetup/scripts/.bashrc ~/.bashrc
+  if [ ! -f "${HOME}/.bashrc_local" ]; then
+    echo "devsetup: .bashrc can load local configurations from ~/.bashrc_local (${HOME}/.bashrc_local)"
+    echo "As no .bashrc_local file found, copying a base example"
+    cp ~/dev/devsetup/scripts/.bashrc_local ~/.bashrc_local
+  fi
+  source ~/.bashrc
+fi
+
+# Virtualenv:dev
+source $HOME/.local/bin/virtualenvwrapper.sh
+echo "--------------------------------------------------"
+if [ ! -d "${HOME}/.virtualenvs/dev/" ]; then
+  echo "virtualenv:dev not found, creating..."
+  mkvirtualenv dev
+fi
+
+echo "Adding requirements to virtualenv:dev"
+source .virtualenvs/dev/bin/activate
+pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
+pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
+
+echo "--------------------------------------------------"
+read -p "Install VS code (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  sudo -S snap install code --classic
+fi
+
+echo "--------------------------------------------------"
+read -p "Install pyGrid (https://github.com/pkkid/pygrid) (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  sudo apt -y install git python3-gi python3-xlib
+  cd ~/repos
+  git clone https://github.com/mjs7231/pygrid.git
+  cp ~/dev/devsetup/scripts/assets/pygrid/pygrid.py.desktop ~/.config/autostart/pygrid.py.desktop
+  cp ~/dev/devsetup/scripts/assets/pygrid/pygrid.json ~/.config/pygrid.json
+fi
+
+echo "--------------------------------------------------"
+echo "Installing desktop links"
+cp ~/dev/devsetup/scripts/assets/Desktop/* ~/Desktop/
+
+echo "--------------------------------------------------"
+read -p "Install Brave Browser (chromium alternative) (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  sudo -S apt -y install apt-transport-https curl
+  sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+  echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+  sudo -S apt update -y
+  sudo -S apt install -y brave-browser
 fi
 
 echo "--------------------------------------------------"
