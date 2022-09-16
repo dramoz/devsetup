@@ -177,7 +177,7 @@ if [ "${ok}" == "y" ]; then
   else
     read -p "Install VS code extensions (y/n)? " ok
   fi
-  if [ "${ok}" == "y" ]; 
+  if [ "${ok}" == "y" ];  then
     echo "Installing VS Code extensions"
     while IFS= read -r line; do
       code --install-extension ${line}
