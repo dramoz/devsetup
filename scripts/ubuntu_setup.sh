@@ -1,7 +1,31 @@
 #!/bin/bash
-echo "--------------------------------------------------"
-echo "The following script will do a custom install of the required apps for R&D, and then reboot"
-echo "--------------------------------------------------"
+echo "----------------------------------------------------------------------------------------------------"
+auto=0
+if [ ! -z "$1" ]; then
+  if [ "$1" == "y" ]; then
+    echo "Running the script in partial auto/all mode"
+    echo "Installing:"
+    echo " build-essential+python+..."
+    echo " setup virtualenv/virtualenvwrapper through pip"
+    echo " setup GIT and GitHub SSH"
+    echo " clone dramoz/devsetup.git and setup .bashrc"
+    echo " install code/brave/pyGrid"
+    echo "Note: user intervention required for Vbox guess install"
+    echo "--------------------------------------------------"
+    read -p "Proceed (y/n)? " ok
+    if [ "${ok}" == "y" ]; then
+      auto=1
+    fi
+    echo "----------------------------------------------------------------------------------------------------"
+  fi
+fi
+
+if [ "${auto}" == "0" ]; then
+  echo "The following script will do a custom install of the required apps for R&D, and then reboot"
+  echo "----------------------------------------------------------------------------------------------------"
+fi
+
+echo "----------------------------------------------------------------------------------------------------"
 read_data=true
 while $read_data; do
   read -p 'Name LastName: ' full_name
@@ -98,15 +122,21 @@ pip3 install virtualenv virtualenvwrapper
 
 # DevSetup
 echo "--------------------------------------------------"
-if [ ! -d "${HOME}/dev/devsetup" ]; then
-  echo "Cloning GitHub dramoz/devsetup and set .bash*"
-  cd ~/dev
-  git clone git@github.com:dramoz/devsetup.git
+if [ ${auto} -eq 1 ]; then
+  ok="y"
+else
+  read -p "Clone and update .bashrc with <devsetup> (y/n)? " ok
 fi
 
-echo "--------------------------------------------------"
-read -p "Update .bashrc with <devsetup> (y/n)? " ok
 if [ "${ok}" == "y" ]; then
+  if [ ! -d "${HOME}/dev/devsetup" ]; then
+    echo "Cloning GitHub dramoz/devsetup and set .bash*"
+    cd ~/dev
+    git clone git@github.com:dramoz/devsetup.git
+  fi
+
+  echo "--------------------------------------------------"
+
   cd ~/dev/devsetup; git pull; cd ~
   cp ~/dev/devsetup/scripts/.bashrc ~/.bashrc
   if [ ! -f "${HOME}/.bashrc_local" ]; then
@@ -131,14 +161,39 @@ pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
 pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
 
 echo "--------------------------------------------------"
-read -p "Install VS code (y/n)? " ok
+if [ ${auto} -eq 1 ]; then
+  ok="y"
+else
+  read -p "Install VS code (y/n)? " ok
+fi
+
 if [ "${ok}" == "y" ]; then
+  echo "Installing VS Code"
   sudo -S snap install code --classic
+  
+  echo "--------------------------------------------------"
+  if [ ${auto} -eq 1 ]; then
+    ok="y"
+  else
+    read -p "Install VS code extensions (y/n)? " ok
+  fi
+  if [ "${ok}" == "y" ]; 
+    echo "Installing VS Code extensions"
+    while IFS= read -r line; do
+      code --install-extension ${line}
+    done < ${HOME}/dev/devsetup/scripts/assets/code.ext
+  fi
 fi
 
 echo "--------------------------------------------------"
-read -p "Install pyGrid (https://github.com/pkkid/pygrid) (y/n)? " ok
+if [ ${auto} -eq 1 ]; then
+  ok="y"
+else
+  read -p "Install pyGrid (https://github.com/pkkid/pygrid) (y/n)? " ok
+fi
+
 if [ "${ok}" == "y" ]; then
+  echo "Installing pyGrid"
   sudo apt -y install git python3-gi python3-xlib
   cd ~/repos
   git clone https://github.com/mjs7231/pygrid.git
@@ -151,8 +206,13 @@ echo "Installing desktop links"
 cp ~/dev/devsetup/scripts/assets/Desktop/* ~/Desktop/
 
 echo "--------------------------------------------------"
-read -p "Install Brave Browser (chromium alternative) (y/n)? " ok
+if [ ${auto} -eq 1 ]; then
+  ok="y"
+else
+  read -p "Install Brave Browser (chromium alternative) (y/n)? " ok
+fi
 if [ "${ok}" == "y" ]; then
+  echo "Installing Brave browser"
   sudo -S apt -y install apt-transport-https curl
   sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
   echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
@@ -161,10 +221,13 @@ if [ "${ok}" == "y" ]; then
 fi
 
 echo "--------------------------------------------------"
-read -p "Done for the moment, reboot (y/n)? " ok
-if [ "${ok}" == "y" ]; then
-  sudo reboot
+echo "--------------------------------------------------"
+if [ ${auto} -eq 1 ]; then
+  ok="y"
 else
-  echo "Please reboot at your convenience..."
+  read -p "Done for the moment, reboot (y/n)? " ok
 fi
-
+if [ "${ok}" == "y" ]; then
+  echo "Sanity reboot..."
+  sudo reboot
+fi
