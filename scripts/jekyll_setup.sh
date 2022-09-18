@@ -70,7 +70,7 @@ for f in **/*.markdown; do mv -- "$f" "${f%.markdown}.md"; done
 
 if [ -f "./jekyll_setup_gems.lst" ]; then
   while IFS= read -r line; do
-    gem ${line}
+    gem install ${line}
   done < ./jekyll_setup_gems.lst
 fi
 
