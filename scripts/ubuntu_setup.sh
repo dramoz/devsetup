@@ -59,7 +59,7 @@ sudo -S adduser $USER dialout
 # R&D dirs
 echo "--------------------------------------------------"
 echo "Creating common dirs..."
-cd ~; mkdir -p dev tools repos
+cd ~; mkdir -p dev tools repos tmp
 
 # Required apps
 echo "--------------------------------------------------"
