@@ -189,16 +189,29 @@ echo "--------------------------------------------------"
 if [ ${auto} -eq 1 ]; then
   ok="y"
 else
-  read -p "Install pyGrid (https://github.com/pkkid/pygrid) (y/n)? " ok
+  read -p "Install x11pyGrid (https://github.com/pkkid/x11pygrid) (y/n)? " ok
 fi
 
 if [ "${ok}" == "y" ]; then
-  echo "Installing pyGrid"
-  sudo apt -y install git python3-gi python3-xlib
-  cd ~/repos
-  git clone https://github.com/mjs7231/pygrid.git
-  cp ~/dev/devsetup/scripts/assets/pygrid/pygrid.py.desktop ~/.config/autostart/pygrid.py.desktop
-  cp ~/dev/devsetup/scripts/assets/pygrid/pygrid.json ~/.config/pygrid.json
+  echo "Installing x11pyGrid"
+  mkdir -p ~/.local/bin/
+  cd ~/.local/bin/
+  wget https://raw.githubusercontent.com/pkkid/x11pygrid/master/src/x11pygrid/x11pygrid.py
+  mv x11pygrid.py x11pygrid
+  chmod +x x11pygrid
+  
+  cp ~/dev/devsetup/scripts/assets/x11pygrid/x11pygrid.json ~/.config/x11pygrid.json
+  mkdir -p ~/.config/autostart/
+  echo "" > ~/.config/autostart/x11pygrid.py.desktop
+  echo "[Desktop Entry]" > ~/.config/autostart/x11pygrid.py.desktop
+  echo "Type=Application" > ~/.config/autostart/x11pygrid.py.desktop
+  echo "Exec=${HOME}/.local/bin/x11pygrid" > ~/.config/autostart/x11pygrid.py.desktop
+  echo "Hidden=false" > ~/.config/autostart/x11pygrid.py.desktop
+  echo "NoDisplay=false" > ~/.config/autostart/x11pygrid.py.desktop
+  echo "X-GNOME-Autostart-enabled=true" > ~/.config/autostart/x11pygrid.py.desktop
+  echo "Name[en_CA]=x11pyGrid" > ~/.config/autostart/x11pygrid.py.desktop
+  echo "Name=x11pyGrid" > ~/.config/autostart/x11pygrid.py.desktop
+  echo "Comment=" > ~/.config/autostart/x11pygrid.py.desktop
 fi
 
 echo "--------------------------------------------------"
