@@ -1,0 +1,65 @@
+[control-center]
+last-panel='ubuntu'
+
+[desktop/app-folders]
+folder-children=['Utilities', 'YaST']
+
+[desktop/app-folders/folders/Utilities]
+apps=['gnome-abrt.desktop', 'gnome-system-log.desktop', 'nm-connection-editor.desktop', 'org.gnome.baobab.desktop', 'org.gnome.Connections.desktop', 'org.gnome.DejaDup.desktop', 'org.gnome.Dictionary.desktop', 'org.gnome.DiskUtility.desktop', 'org.gnome.eog.desktop', 'org.gnome.Evince.desktop', 'org.gnome.FileRoller.desktop', 'org.gnome.fonts.desktop', 'org.gnome.seahorse.Application.desktop', 'org.gnome.tweaks.desktop', 'org.gnome.Usage.desktop', 'vinagre.desktop']
+categories=['X-GNOME-Utilities']
+name='X-GNOME-Utilities.directory'
+translate=true
+
+[desktop/app-folders/folders/YaST]
+categories=['X-SuSE-YaST']
+name='suse-yast.directory'
+translate=true
+
+[desktop/input-sources]
+sources=[('xkb', 'us')]
+xkb-options=@as []
+
+[desktop/interface]
+color-scheme='prefer-light'
+gtk-theme='Yaru'
+icon-theme='Yaru'
+
+[desktop/notifications]
+application-children=['io-snapcraft-sessionagent', 'firefox-firefox']
+
+[desktop/notifications/application/firefox-firefox]
+application-id='firefox_firefox.desktop'
+
+[desktop/notifications/application/io-snapcraft-sessionagent]
+application-id='io.snapcraft.SessionAgent.desktop'
+
+[desktop/peripherals/keyboard]
+numlock-state=true
+
+[desktop/privacy]
+report-technical-problems=true
+
+[evolution-data-server]
+migrated=true
+network-monitor-gio-name=''
+
+[gedit/preferences/editor]
+scheme='Yaru'
+
+[nautilus/preferences]
+default-folder-viewer='icon-view'
+search-filter-time-type='last_modified'
+
+[nautilus/window-state]
+maximized=true
+
+[shell]
+favorite-apps=['org.gnome.Nautilus.desktop', 'snap-store_ubuntu-software.desktop', 'yelp.desktop', 'org.gnome.Terminal.desktop', 'brave-browser.desktop']
+welcome-dialog-last-shown-version='42.2'
+
+[shell/extensions/dash-to-dock]
+dash-max-icon-size=32
+dock-position='BOTTOM'
+
+[system/location]
+enabled=false
