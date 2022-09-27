@@ -21,17 +21,24 @@ xkb-options=@as []
 
 [desktop/interface]
 color-scheme='prefer-light'
+font-hinting='slight'
 gtk-theme='Yaru'
 icon-theme='Yaru'
 
 [desktop/notifications]
-application-children=['io-snapcraft-sessionagent', 'firefox-firefox']
+application-children=['io-snapcraft-sessionagent', 'firefox-firefox', 'code-code', 'typora']
+
+[desktop/notifications/application/code-code]
+application-id='code_code.desktop'
 
 [desktop/notifications/application/firefox-firefox]
 application-id='firefox_firefox.desktop'
 
 [desktop/notifications/application/io-snapcraft-sessionagent]
 application-id='io.snapcraft.SessionAgent.desktop'
+
+[desktop/notifications/application/typora]
+application-id='typora.desktop'
 
 [desktop/peripherals/keyboard]
 numlock-state=true
@@ -43,8 +50,37 @@ report-technical-problems=true
 migrated=true
 network-monitor-gio-name=''
 
+[gedit/plugins]
+active-plugins=['spell', 'openlinks', 'filebrowser', 'sort', 'modelines', 'docinfo']
+
+[gedit/plugins/filebrowser]
+root='file:///'
+tree-view=true
+virtual-root='file:///home/dramoz/dev/devsetup/scripts/install_apps'
+
 [gedit/preferences/editor]
 scheme='Yaru'
+
+[gedit/preferences/ui]
+show-tabs-mode='auto'
+
+[gedit/state/window]
+bottom-panel-size=140
+side-panel-active-page='GeditWindowDocumentsPanel'
+side-panel-size=200
+size=(900, 700)
+state=87168
+
+[gnome-system-monitor]
+maximized=false
+network-total-in-bits=false
+show-dependencies=false
+show-whose-processes='user'
+window-state=(700, 500, 26, 23)
+
+[gnome-system-monitor/disktreenew]
+col-6-visible=true
+col-6-width=0
 
 [nautilus/preferences]
 default-folder-viewer='icon-view'
@@ -54,12 +90,39 @@ search-filter-time-type='last_modified'
 maximized=true
 
 [shell]
-favorite-apps=['org.gnome.Nautilus.desktop', 'snap-store_ubuntu-software.desktop', 'yelp.desktop', 'org.gnome.Terminal.desktop', 'brave-browser.desktop']
+disable-user-extensions=false
+disabled-extensions=['drive-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com', 'windowsNavigator@gnome-shell-extensions.gcampax.github.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com']
+enabled-extensions=['dash-to-panel@jderose9.github.com', 'favorites@cvine.org', 'Resource_Monitor@Ory0n', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'ding@rastersoft.com']
+favorite-apps=['org.gnome.Nautilus.desktop', 'snap-store_ubuntu-software.desktop', 'yelp.desktop', 'typora.desktop', 'brave-browser.desktop', 'org.gnome.Terminal.desktop']
 welcome-dialog-last-shown-version='42.2'
 
 [shell/extensions/dash-to-dock]
 dash-max-icon-size=32
 dock-position='BOTTOM'
+
+[shell/extensions/dash-to-panel]
+animate-appicon-hover-animation-extent={'RIPPLE': 4, 'PLANK': 4, 'SIMPLE': 1}
+appicon-margin=8
+appicon-padding=4
+available-monitors=[0]
+hotkeys-overlay-combo='TEMPORARILY'
+leftbox-padding=-1
+panel-anchors='{"0":"MIDDLE"}'
+panel-element-positions='{"0":[{"element":"showAppsButton","visible":true,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":true,"position":"stackedBR"}]}'
+panel-lengths='{"0":100}'
+panel-sizes='{"0":32}'
+primary-monitor=0
+show-apps-icon-file=''
+show-favorites=false
+show-running-apps=true
+status-icon-padding=-1
+tray-padding=-1
+window-preview-title-position='TOP'
+
+[software]
+check-timestamp=int64 1664313544
+online-updates-timestamp=int64 1664314989
+update-notification-timestamp=int64 1664314989
 
 [system/location]
 enabled=false
