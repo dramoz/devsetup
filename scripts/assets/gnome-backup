@@ -50,27 +50,6 @@ report-technical-problems=true
 migrated=true
 network-monitor-gio-name=''
 
-[gedit/plugins]
-active-plugins=['spell', 'openlinks', 'filebrowser', 'sort', 'modelines', 'docinfo']
-
-[gedit/plugins/filebrowser]
-root='file:///'
-tree-view=true
-virtual-root='file:///home/dramoz/dev/devsetup/scripts/install_apps'
-
-[gedit/preferences/editor]
-scheme='Yaru'
-
-[gedit/preferences/ui]
-show-tabs-mode='auto'
-
-[gedit/state/window]
-bottom-panel-size=140
-side-panel-active-page='GeditWindowDocumentsPanel'
-side-panel-size=200
-size=(900, 700)
-state=87168
-
 [gnome-system-monitor]
 maximized=false
 network-total-in-bits=false
