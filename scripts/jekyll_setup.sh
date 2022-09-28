@@ -19,7 +19,7 @@ sudo apt update -y
 sudo apt install -y ruby-full build-essential zlib1g-dev
 
 echo "Setting .bashrc_local"
-if [[ -z "${GEM_HOME}" ]]; then
+if [ -z "${GEM_HOME}" ]; then
   # Load local .bashrc setttings
   if [ -f ~/.bashrc_local ]; then
     echo 'export GEM_HOME="${HOME}/gems"' >> ~/.bashrc_local
@@ -62,7 +62,9 @@ fi
 bundle init
 #bundle config set --local path 'vendor/bundle'
 bundle add jekyll
-bundle exec jekyll new --force --skip-bundle .
+if [ ! -f _config.yml ]; then
+  bundle exec jekyll new --force --skip-bundle .
+fi
 bundle install
 
 # I don't like .markdown extension, switch to .md
@@ -88,7 +90,7 @@ if [ "$?" != "0" ]; then
   git push
 fi
 
-BRANCH=gh_pages
+BRANCH=gh-pages
 git ls-remote --heads ${REPO} ${BRANCH} | grep ${BRANCH} >/dev/null
 if [ "$?" == "1" ]; then
   echo ${L2}
