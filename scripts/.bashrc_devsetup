@@ -48,7 +48,8 @@ cd_func ()
   done
   return 0
 }
-alias cd=cd_func
+#alias cd=cd_func
+alias cd_push=cd_func
 
 # --------------------------------------------------------------------------
 # bash history ctrl
