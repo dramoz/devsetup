@@ -150,6 +150,7 @@ if [ "${ok}" == "y" ]; then
 fi
 
 # Virtualenv:dev
+source ~/.bashrc
 source $HOME/.local/bin/virtualenvwrapper.sh
 echo "--------------------------------------------------"
 if [ ! -d "${HOME}/.virtualenvs/dev/" ]; then
