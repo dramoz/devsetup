@@ -64,10 +64,12 @@ cd ~; mkdir -p dev tools repos tmp
 # Required apps
 echo "--------------------------------------------------"
 echo "apt required tools..."
-sudo -S apt install -y build-essential git graphviz gtkwave screen tmux tree vim
+sudo -S apt install -y build-essential git graphviz screen tmux tree vim
+sudo -S apt install -y gtkwave libcanberra-gtk-module libcanberra-gtk3-module libcanberra-gtk-module:i386
 sudo -S apt install -y python3 python3-pip python3-tk meld
 sudo -S apt install -y gnome-shell-extensions chrome-gnome-shell gnome-shell-extension-manager
 sudo -S snap install node --classic
+
 # Setup git credentials
 echo "--------------------------------------------------"
 echo "git config..."

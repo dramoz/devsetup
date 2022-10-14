@@ -18,8 +18,8 @@ echo "Installing dependencies"
 sudo apt update -y
 sudo apt install -y ruby-full build-essential zlib1g-dev
 
-echo "Setting .bashrc"
-if [[ -z "${GEM_HOME}" ]]; then
+echo "Setting .bashrc_local"
+if [ -z "${GEM_HOME}" ]; then
   # Load local .bashrc setttings
   if [ -f ~/.bashrc_local ]; then
     echo 'export GEM_HOME="${HOME}/gems"' >> ~/.bashrc_local
@@ -45,13 +45,14 @@ gem install jekyll bundler
 echo ${L2}
 
 # git repo
-user=$1
-repo_path="~/dev/${user}.github.io"
-echo "Creating GitHub.io (pages) at ${repo_path}"
+USER=$1
+REPO_PATH="~/dev/${USER}.github.io"
+REPO=git@github.com:${USER}/${USER}.github.io.git
+echo "Creating GitHub.io (pages) at ${REPO_PATH}"
 mkdir -p ~/dev
 cd ~/dev
-git clone git@github.com:${user}/${user}.github.io.git
-cd ${user}.github.io
+git clone ${REPO}
+cd ${USER}.github.io
 
 if [ ! -f .gitignore ]; then
   echo "Generating .gitignore for Jekyll"
@@ -61,12 +62,20 @@ fi
 bundle init
 #bundle config set --local path 'vendor/bundle'
 bundle add jekyll
-bundle exec jekyll new --force --skip-bundle .
+if [ ! -f _config.yml ]; then
+  bundle exec jekyll new --force --skip-bundle .
+fi
 bundle install
 
 # I don't like .markdown extension, switch to .md
 for f in *.markdown; do mv -- "$f" "${f%.markdown}.md"; done
 for f in **/*.markdown; do mv -- "$f" "${f%.markdown}.md"; done
+
+if [ ! -f "./jekyll_setup_gems.lst" ]; then
+  if [ -f "${HOME}/dev/devsetup/scripts/assets/jekyll_setup_gems.lst" ]; then
+    cp ${HOME}/dev/devsetup/scripts/assets/jekyll_setup_gems.lst ./
+  fi
+fi
 
 if [ -f "./jekyll_setup_gems.lst" ]; then
   while IFS= read -r line; do
@@ -74,16 +83,23 @@ if [ -f "./jekyll_setup_gems.lst" ]; then
   done < ./jekyll_setup_gems.lst
 fi
 
-#git add -A
-#git commit -am "First commit..."
-#git push
+git log > /dev/null
+if [ "$?" != "0" ]; then
+  git add -A
+  git commit -am "First commit..."
+  git push
+fi
 
-#echo ${L2}
-#echo "Creating gh-pages branch"
-#git checkout --orphan gh-pages
-#git rm -rf 
-#git push
-#git checkout main
+BRANCH=gh-pages
+git ls-remote --heads ${REPO} ${BRANCH} | grep ${BRANCH} >/dev/null
+if [ "$?" == "1" ]; then
+  echo ${L2}
+  echo "Creating gh-pages branch"
+  git checkout --orphan gh-pages
+  git rm -rf 
+  git push
+  git checkout main
+fi
 
 echo ${L1}
 echo "Done! Happy web coding..."

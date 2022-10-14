@@ -12,6 +12,7 @@ emilast.LogFileHighlighter
 formulahendry.code-runner
 gizak.shortcuts
 goessner.mdmath
+haddiebakrie.material-kv
 ionutvmi.path-autocomplete
 jakob101.RelativePath
 jeff-hykin.better-cpp-syntax
@@ -47,8 +48,10 @@ sketchbuch.vsc-workspace-sidebar
 spmeesseman.vscode-taskexplorer
 tomoki1207.pdf
 trond-snekvik.gnu-mapfiles
+VisualStudioExptTeam.vscodeintellicode
 YuTengjing.open-in-external-app
 zixuanwang.linkerscript
+zomixi.naming-convention
 bat67.markdown-extension-pack
 bierner.markdown-checkbox
 bierner.emojisense
