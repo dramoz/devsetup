@@ -1,5 +1,5 @@
 [control-center]
-last-panel='ubuntu'
+last-panel='display'
 
 [desktop/app-folders]
 folder-children=['Utilities', 'YaST']
@@ -26,7 +26,10 @@ gtk-theme='Yaru'
 icon-theme='Yaru'
 
 [desktop/notifications]
-application-children=['io-snapcraft-sessionagent', 'firefox-firefox', 'code-code', 'typora']
+application-children=['io-snapcraft-sessionagent', 'firefox-firefox', 'code-code', 'typora', 'brave-browser', 'org-gnome-nautilus', 'org-gnome-chromegnomeshell', 'org-gnome-extensions-desktop']
+
+[desktop/notifications/application/brave-browser]
+application-id='brave-browser.desktop'
 
 [desktop/notifications/application/code-code]
 application-id='code_code.desktop'
@@ -37,6 +40,15 @@ application-id='firefox_firefox.desktop'
 [desktop/notifications/application/io-snapcraft-sessionagent]
 application-id='io.snapcraft.SessionAgent.desktop'
 
+[desktop/notifications/application/org-gnome-chromegnomeshell]
+application-id='org.gnome.ChromeGnomeShell.desktop'
+
+[desktop/notifications/application/org-gnome-extensions-desktop]
+application-id='org.gnome.Extensions.desktop.desktop'
+
+[desktop/notifications/application/org-gnome-nautilus]
+application-id='org.gnome.Nautilus.desktop'
+
 [desktop/notifications/application/typora]
 application-id='typora.desktop'
 
@@ -46,11 +58,15 @@ numlock-state=true
 [desktop/privacy]
 report-technical-problems=true
 
+[desktop/session]
+idle-delay=uint32 0
+
 [evolution-data-server]
 migrated=true
 network-monitor-gio-name=''
 
 [gnome-system-monitor]
+current-tab='resources'
 maximized=false
 network-total-in-bits=false
 show-dependencies=false
@@ -61,18 +77,28 @@ window-state=(700, 500, 26, 23)
 col-6-visible=true
 col-6-width=0
 
+[gnome-system-monitor/proctree]
+columns-order=[0, 1, 2, 3, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+sort-col=8
+sort-order=0
+
 [nautilus/preferences]
-default-folder-viewer='icon-view'
+default-folder-viewer='list-view'
 search-filter-time-type='last_modified'
 
 [nautilus/window-state]
-maximized=true
+initial-size=(1584, 797)
+maximized=false
+
+[settings-daemon/plugins/power]
+sleep-inactive-ac-timeout=3600
+sleep-inactive-ac-type='nothing'
 
 [shell]
 disable-user-extensions=false
-disabled-extensions=['drive-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com', 'windowsNavigator@gnome-shell-extensions.gcampax.github.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com']
-enabled-extensions=['dash-to-panel@jderose9.github.com', 'favorites@cvine.org', 'Resource_Monitor@Ory0n', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'ding@rastersoft.com']
-favorite-apps=['org.gnome.Nautilus.desktop', 'snap-store_ubuntu-software.desktop', 'yelp.desktop', 'typora.desktop', 'brave-browser.desktop', 'org.gnome.Terminal.desktop']
+disabled-extensions=['drive-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com', 'windowsNavigator@gnome-shell-extensions.gcampax.github.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'favorites@cvine.org']
+enabled-extensions=['dash-to-panel@jderose9.github.com', 'Resource_Monitor@Ory0n', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'ding@rastersoft.com']
+favorite-apps=['org.gnome.Nautilus.desktop', 'snap-store_ubuntu-software.desktop', 'yelp.desktop', 'typora.desktop', 'brave-browser.desktop', 'org.gnome.Terminal.desktop', 'code_code.desktop']
 welcome-dialog-last-shown-version='42.2'
 
 [shell/extensions/dash-to-dock]
@@ -99,9 +125,9 @@ tray-padding=-1
 window-preview-title-position='TOP'
 
 [software]
-check-timestamp=int64 1664313544
+check-timestamp=int64 1666692424
 online-updates-timestamp=int64 1664314989
-update-notification-timestamp=int64 1664314989
+update-notification-timestamp=int64 1664919169
 
 [system/location]
 enabled=false
