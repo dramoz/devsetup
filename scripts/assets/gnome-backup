@@ -96,8 +96,8 @@ sleep-inactive-ac-type='nothing'
 
 [shell]
 disable-user-extensions=false
-disabled-extensions=['drive-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com', 'windowsNavigator@gnome-shell-extensions.gcampax.github.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'favorites@cvine.org']
-enabled-extensions=['dash-to-panel@jderose9.github.com', 'Resource_Monitor@Ory0n', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'ding@rastersoft.com']
+disabled-extensions=['window-list@gnome-shell-extensions.gcampax.github.com', 'windowsNavigator@gnome-shell-extensions.gcampax.github.com', 'favorites@cvine.org']
+enabled-extensions=['dash-to-panel@jderose9.github.com', 'Resource_Monitor@Ory0n', 'ding@rastersoft.com', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com']
 favorite-apps=['org.gnome.Nautilus.desktop', 'snap-store_ubuntu-software.desktop', 'yelp.desktop', 'typora.desktop', 'brave-browser.desktop', 'org.gnome.Terminal.desktop', 'code_code.desktop']
 welcome-dialog-last-shown-version='42.2'
 
@@ -125,7 +125,7 @@ tray-padding=-1
 window-preview-title-position='TOP'
 
 [software]
-check-timestamp=int64 1666692424
+check-timestamp=int64 1666790105
 online-updates-timestamp=int64 1664314989
 update-notification-timestamp=int64 1664919169
 

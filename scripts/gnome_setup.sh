@@ -1,51 +1,66 @@
 #!/bin/bash
 echo "---------------------------------------------------------"
-echo "This script will install required Apps. for Embedded R&D"
+echo "Install Gnome extensions and restore gnome configuration"
 echo "-> Please make sure that ./ubuntu_setup.sh was run before!!"
 read -p "Continue (y/n)? " ok
+
 if [ "${ok}" == "n" ]; then
   exit 1
 fi
 
+ubuntu_release=$(lsb_release -r)
+ubuntu_ver=$(cut -f2 <<< "$ubuntu_release")
+echo "$ubuntu_ver"
+
 echo "--------------------------------------------------"
 echo "Installing gnome-shell-extensions..."
-sudo -S apt install gnome-shell-extensions chrome-gnome-shell
+echo "Dash to Panel (https://extensions.gnome.org/extension/1160/dash-to-panel/)"
+echo "Resource Monitor (https://extensions.gnome.org/extension/1634/resource-monitor/)"
+echo "Applications Menu (https://extensions.gnome.org//extension/6/applications-menu/)"
+echo "Removable Drive Menu (https://extensions.gnome.org/extension/7/removable-drive-menu/)"
+echo "Workspace Indicator (https://extensions.gnome.org/extension/21/workspace-indicator/)"
+echo "Places Status Indicator (https://extensions.gnome.org/extension/8/places-status-indicator/)"
 
 # https://www.addictivetips.com/ubuntu-linux-tips/back-up-the-gnome-shell-desktop-settings-linux/
-dconf_bk=${HOME}/dev/devsetup/scripts/assets/dconf-settings.ini
-if [ -f "${dconf_bk}" ]; then
-  read -p "Restore dconf preferences (y/n)? " ok
+dconf_gnome_bk=${HOME}/dev/devsetup/scripts/assets/gnome-backup
+
+# extension installer script
+wget -O gnome-shell-extension-installer "https://github.com/brunelli/gnome-shell-extension-installer/raw/master/gnome-shell-extension-installer"
+chmod +x gnome-shell-extension-installer
+mv gnome-shell-extension-installer /usr/bin/
+
+if [ "`echo "${ubuntu_ver} >= 22.04" | bc`" -eq 1 ]; then
+  echo "Installing  Dash2Pnl, Resources.Mon"
+  gnome-shell-extension-installer 1160 1634 --yes
+  
+  echo "Enabling extensions (Apps.Menu, Places, Rm.Drv, Workspace)"
+  gnome-extensions enable apps-menu@gnome-shell-extensions.gcampax.github.com
+  gnome-extensions enable places-menu@gnome-shell-extensions.gcampax.github.com
+  gnome-extensions enable drive-menu@gnome-shell-extensions.gcampax.github.com
+  gnome-extensions enable workspace-indicator@gnome-shell-extensions.gcampax.github.com
+  
+else
+  if [ "`echo "${ubuntu_ver} == 20.04" | bc`" -eq 1 ]; then
+    echo "Installing ExtensionManager, run as gnome_ext_mngr (reboot required first)"
+    flatpak install -y flathub com.mattjakeman.ExtensionManager
+    if ! grep -q "gnome_ext_mngr" "${HOME}/.bash_local"; then
+      echo '# --------------------------------'  >> ~/.bashrc_local
+      echo '# Ghnome Extension Manager (alias with flatpak)' >> ~/.bashrc_local
+      echo 'alias gnome_ext_mngr="flatpak run com.mattjakeman.ExtensionManager"' >> ~/.bashrc_local
+    fi
+  
+    echo "Installing: Dash2Pnl, Resources.Mon, Apps.Menu, Places, Rm.Drv, Workspace"
+    gnome-shell-extension-installer 1160 1634 6 7 21 8 --yes
+  fi
+fi
+
+if [ -f "${dconf_gnome_bk}" ]; then
+  read -p "Restore dconf.gnome preferences (y/n)? " ok
   if [ "${ok}" == "y" ]; then
-    sudo -S apt install dconf*
-    cd ~/
-    dconf load / < ${dconf_bk}
+    dconf load /org/gnome/ < ${dconf_gnome_bk}
   fi
 else
-  echo "${dconf_bk} file not found, skipping dconf restore"
-fi
-
-echo "--------------------------------------------------"
-read -p "Install pyGrid (https://github.com/pkkid/pygrid) (y/n)? " ok
-if [ "${ok}" == "y" ]; then
-  sudo apt -y install git python3-gi python3-xlib
-  cd ~/repos
-  git clone https://github.com/mjs7231/pygrid.git
-  cp ~/dev/devsetup/scripts/assets/pygrid/pygrid.py.desktop ~/.config/autostart/pygrid.py.desktop
-  cp ~/dev/devsetup/scripts/assets/pygrid/pygrid.json ~/.config/pygrid.json
-fi
-
-echo "--------------------------------------------------"
-echo "Installing desktop links"
-cp ~/dev/devsetup/scripts/assets/Desktop/* ~/Desktop/
-
-echo "--------------------------------------------------"
-read -p "Install Brave Browser (y/n)? " ok
-if [ "${ok}" == "y" ]; then
-  sudo -S apt -y install apt-transport-https curl
-  sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-  echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-  sudo -S apt update -y
-  sudo -S apt install -y brave-browser
+  echo "${dconf_gnome_bk} file not found, skipping dconf restore"
 fi
 
 echo "--------------------------------------------------"

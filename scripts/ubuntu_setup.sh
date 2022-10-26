@@ -1,5 +1,12 @@
 #!/bin/bash
 echo "----------------------------------------------------------------------------------------------------"
+
+ubuntu_release=$(lsb_release -r)
+ubuntu_ver=$(cut -f2 <<< "$ubuntu_release")
+echo "$ubuntu_ver"
+echo "Ubuntu: ${ubuntu_ver}"
+
+echo "----------------------------------------------------------------------------------------------------"
 auto=0
 if [ ! -z "$1" ]; then
   if [ "$1" == "y" ]; then
@@ -68,7 +75,14 @@ sudo -S apt install -y build-essential git graphviz screen tmux tree vim
 sudo -S apt install -y gtkwave libcanberra-gtk-module libcanberra-gtk3-module libcanberra-gtk-module:i386
 sudo -S apt install -y python3 python3-pip python3-tk meld
 sudo -S apt install -y gnome-shell-extensions chrome-gnome-shell gnome-shell-extension-manager
+
 sudo -S snap install node --classic
+
+if [ "`echo "${ubuntu_ver} < 22.04" | bc`" -eq 1 ]; then
+  # required for Gnome extensions setup
+  sudo apt install flatpak
+  flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+fi
 
 # Setup git credentials
 echo "--------------------------------------------------"
