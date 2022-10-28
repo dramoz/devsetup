@@ -43,6 +43,7 @@ alias termtitle=termtitle_func
 
 # Git shortcuts
 alias git_ls="git ls-files | green; git ls-files --others --exclude-standard | red"
+alias git_cache="git config --global credential.helper 'cache --timeout 36000'"
 
 # apt update all!
 alias apt_update_all="sudo apt update -y && sudo apt upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y"
