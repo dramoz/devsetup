@@ -93,7 +93,8 @@ fi
 if [ "${ok}" == "y" ]; then
   echo "Installing AMD/Xilinx Vitis/Vivado (https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)"
   mkdir -p ${HOME}/logs/xilinx
-  
+  mkdir -p ${HOME}/dev/xilinx/vitis/${xlnx_tools_ver}
+  mkdir -p ${HOME}/dev/xilinx/vivado/${xlnx_tools_ver}
   # Petalinux?
   #sudo -S dpkg --add-architecture i386
   #echo "Need to set bash as default shell (for petalinux)"
@@ -147,7 +148,7 @@ if [ "${ok}" == "y" ]; then
     
     # Launch tools setup
     cd ${HOME}/tools
-    vitis_sh="vitis_${xlnx_tools_ver}.sh"
+    vitis_sh="vitis.${xlnx_tools_ver}.sh"
     if [ ! -f ${vitis_sh} ]; then
       touch ${vitis_sh}
       echo '#!/bin/bash' >> ${vitis_sh}
@@ -159,7 +160,7 @@ if [ "${ok}" == "y" ]; then
       chmod +x ${vitis_sh}
     fi
     
-    vivado_sh="vivado_${xlnx_tools_ver}.sh"
+    vivado_sh="vivado.${xlnx_tools_ver}.sh"
     if [ ! -f ${vivado_sh} ]; then
       touch ${vivado_sh}
       echo '#!/bin/bash' >> ${vivado_sh}
@@ -168,6 +169,14 @@ if [ "${ok}" == "y" ]; then
       chmod +x ${vivado_sh}
     fi
     
+    echo "--------------------------------------------------"
+    echo "Invoke tools from terminal with:"
+    echo "$ vitis"
+    echo "$ vivado"
+    echo "--------------------------------------------------"
+    echo "or from desktop (right click, Allow Launching)"
+    echo "--------------------------------------------------"
+
   else
     echo "~/tmp/${xlnx_tools_inst_ver} directory NOT found! Unable to proceed..."
   fi
@@ -181,6 +190,9 @@ else
 fi
 if [ "${ok}" == "y" ]; then
   echo "Installing Intel Quartus Pro"
+  mkdir -p ${HOME}/logs/quartus
+  mkdir -p ${HOME}/dev/intel/quartus/${intel_quartus_ver}
+  
   cd ${HOME}/tmp
   rm -fr ${intel_quartus_inst_ver}-linux-complete
   mkdir ${intel_quartus_inst_ver}-linux-complete
