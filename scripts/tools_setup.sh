@@ -164,7 +164,7 @@ if [ "${ok}" == "y" ]; then
       touch ${vivado_sh}
       echo '#!/bin/bash' >> ${vivado_sh}
       echo "source ~/tools/Xilinx/Vivado/${xlnx_tools_ver}/settings64.sh" >> ${vivado_sh}
-      echo 'vivado -journal logs/xilinx -log logs/xilinx &' >> ${vivado_sh}
+      echo 'vivado -journal  logs/xilinx/vivado.jou -log logs/xilinx/vivado.log &' >> ${vivado_sh}
       chmod +x ${vivado_sh}
     fi
     
