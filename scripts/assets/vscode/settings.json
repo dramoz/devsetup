@@ -1,5 +1,10 @@
 {
-    "explorer.autoReveal": false,
+    "git.confirmSync": false,
+    "files.trimFinalNewlines": true,
     "editor.trimAutoWhitespace": false,
-    "git.autofetch": true
+    "git.autofetch": true,
+    "explorer.autoReveal": false,
+    "blockman.n01LineHeight": 0,
+    "editor.guides.indentation": false,
+    "editor.guides.bracketPairs": false
 }
