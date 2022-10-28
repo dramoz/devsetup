@@ -1,0 +1,5 @@
+{
+    "explorer.autoReveal": false,
+    "editor.trimAutoWhitespace": false,
+    "git.autofetch": true
+}

@@ -209,9 +209,13 @@ if [ "${ok}" == "y" ]; then
   if [ ${WSL} -eq 0 ]; then
     sudo -S snap install code --classic
   else
+    echo "Install Visual Code on Windows first..."
+    eval $browser "https://code.visualstudio.com/Download" >/dev/null 2>&1
+    read -p "VS Code installed (y/n)? " ok
     code
+    code --install-extension ms-vscode-remote.remote-wsl
   fi
-
+  
   echo "--------------------------------------------------"
   if [ ${auto} -eq 1 ]; then
     ok="y"
@@ -222,7 +226,7 @@ if [ "${ok}" == "y" ]; then
     echo "Installing VS Code extensions"
     while IFS= read -r line; do
       code --install-extension ${line}
-    done < ${HOME}/dev/devsetup/scripts/assets/code.ext
+    done < ${HOME}/dev/devsetup/scripts/assets/vscode/all_extensions.ext
   fi
 fi
 
