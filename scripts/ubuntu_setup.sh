@@ -6,6 +6,15 @@ ubuntu_ver=$(cut -f2 <<< "$ubuntu_release")
 echo "$ubuntu_ver"
 echo "Ubuntu: ${ubuntu_ver}"
 
+if [[ $(grep -i Microsoft /proc/version) ]]; then
+  WSL=1
+  browser="/mnt/c/\"Program Files (x86)\"/Microsoft/Edge/Application/msedge.exe"
+  echo "Under WSL..."
+else
+  WSL=0
+  browser="firefox -new-window"
+fi
+
 echo "----------------------------------------------------------------------------------------------------"
 auto=0
 if [ ! -z "$1" ]; then
@@ -74,14 +83,18 @@ echo "apt required tools..."
 sudo -S apt install -y build-essential git graphviz screen tmux tree vim
 sudo -S apt install -y gtkwave libcanberra-gtk-module libcanberra-gtk3-module libcanberra-gtk-module:i386
 sudo -S apt install -y python3 python3-pip python3-tk meld
-sudo -S apt install -y gnome-shell-extensions chrome-gnome-shell gnome-shell-extension-manager
+if [ ${WSL} -eq 0 ]; then
+  sudo -S apt install -y gnome-shell-extensions chrome-gnome-shell gnome-shell-extension-manager
+fi
 
 sudo -S snap install node --classic
 
-if [ "`echo "${ubuntu_ver} < 22.04" | bc`" -eq 1 ]; then
-  # required for Gnome extensions setup
-  sudo apt install flatpak
-  flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+if [ ${WSL} -eq 0 ]; then
+  if [ "`echo "${ubuntu_ver} < 22.04" | bc`" -eq 1 ]; then
+    # required for Gnome extensions setup
+    sudo apt install flatpak
+    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  fi
 fi
 
 # Setup git credentials
@@ -99,7 +112,7 @@ if [ ! -f "${ssh_key}" ]; then
   ssh-add ~/.ssh/id_ed25519
   echo "Copy/paste (and create key at GitHub) ->"
   cat ~/.ssh/id_ed25519.pub
-  firefox -new-window https://github.com/settings/keys
+  eval $browser "https://github.com/settings/keys"
   
   echo "--------------------------------------------------"
   read_data=true
@@ -113,24 +126,26 @@ if [ ! -f "${ssh_key}" ]; then
   done
 fi
 
-# Guest Additions...
-echo "--------------------------------------------------"
-vboxguest=$(lsmod | grep vboxguest)
-if [ ! -z "${vboxguest}" ]; then
-  read -p "It looks this is a VM, let's install Guest Additions (y/n)? " ok
-  if [ "${ok}" == "y" ]; then
-    echo "From VM menu"
-    echo "-> Devices.Insert Guest Additions, and click [RUN]"
-    read -p "Press [ENTER] key after Guest Additions is done..." ok
-    echo "Don't forget to [EJECT] Guest Additions CD/ISO"
-    sudo adduser $USER vboxsf
-  
-  else
-    echo "Please install guest additions later..."
+if [ ${WSL} -eq 0 ]; then
+  # Guest Additions...
+  echo "--------------------------------------------------"
+  vboxguest=$(lsmod | grep vboxguest)
+  if [ ! -z "${vboxguest}" ]; then
+    read -p "It looks this is a VM, let's install Guest Additions (y/n)? " ok
+    if [ "${ok}" == "y" ]; then
+      echo "From VM menu"
+      echo "-> Devices.Insert Guest Additions, and click [RUN]"
+      read -p "Press [ENTER] key after Guest Additions is done..." ok
+      echo "Don't forget to [EJECT] Guest Additions CD/ISO"
+      sudo adduser $USER vboxsf
+    
+    else
+      echo "Please install guest additions later..."
+    fi
   fi
+  echo "--------------------------------------------------"
 fi
 
-echo "--------------------------------------------------"
 # Python virtualenv
 echo "--------------------------------------------------"
 echo "Installing Python virtualenv/virtualenvwrapper"
@@ -186,8 +201,12 @@ fi
 
 if [ "${ok}" == "y" ]; then
   echo "Installing VS Code"
-  sudo -S snap install code --classic
-  
+  if [ ${WSL} -eq 0 ]; then
+    sudo -S snap install code --classic
+  else
+    code
+  fi
+
   echo "--------------------------------------------------"
   if [ ${auto} -eq 1 ]; then
     ok="y"
@@ -203,61 +222,68 @@ if [ "${ok}" == "y" ]; then
 fi
 
 echo "--------------------------------------------------"
-if [ ${auto} -eq 1 ]; then
-  ok="y"
-else
-  read -p "Install x11pyGrid (https://github.com/pkkid/x11pygrid) (y/n)? " ok
-fi
-
-if [ "${ok}" == "y" ]; then
-  echo "Installing x11pyGrid"
-  mkdir -p ~/.local/bin/
-  cd ~/.local/bin/
-  wget https://raw.githubusercontent.com/pkkid/x11pygrid/master/src/x11pygrid/x11pygrid.py
-  mv x11pygrid.py x11pygrid
-  chmod +x x11pygrid
+if [ ${WSL} -eq 0 ]; then
+  if [ ${auto} -eq 1 ]; then
+    ok="y"
+  else
+    read -p "Install x11pyGrid (https://github.com/pkkid/x11pygrid) (y/n)? " ok
+  fi
   
-  cp ~/dev/devsetup/scripts/assets/x11pygrid/x11pygrid.json ~/.config/x11pygrid.json
-  mkdir -p ~/.config/autostart/
-  echo "" > ~/.config/autostart/x11pygrid.py.desktop
-  echo "[Desktop Entry]" > ~/.config/autostart/x11pygrid.py.desktop
-  echo "Type=Application" > ~/.config/autostart/x11pygrid.py.desktop
-  echo "Exec=${HOME}/.local/bin/x11pygrid" > ~/.config/autostart/x11pygrid.py.desktop
-  echo "Hidden=false" > ~/.config/autostart/x11pygrid.py.desktop
-  echo "NoDisplay=false" > ~/.config/autostart/x11pygrid.py.desktop
-  echo "X-GNOME-Autostart-enabled=true" > ~/.config/autostart/x11pygrid.py.desktop
-  echo "Name[en_CA]=x11pyGrid" > ~/.config/autostart/x11pygrid.py.desktop
-  echo "Name=x11pyGrid" > ~/.config/autostart/x11pygrid.py.desktop
-  echo "Comment=" > ~/.config/autostart/x11pygrid.py.desktop
-fi
+  if [ "${ok}" == "y" ]; then
+    echo "Installing x11pyGrid"
+    mkdir -p ~/.local/bin/
+    cd ~/.local/bin/
+    wget https://raw.githubusercontent.com/pkkid/x11pygrid/master/src/x11pygrid/x11pygrid.py
+    mv x11pygrid.py x11pygrid
+    chmod +x x11pygrid
+    
+    cp ~/dev/devsetup/scripts/assets/x11pygrid/x11pygrid.json ~/.config/x11pygrid.json
+    mkdir -p ~/.config/autostart/
+    echo "" > ~/.config/autostart/x11pygrid.py.desktop
+    echo "[Desktop Entry]" > ~/.config/autostart/x11pygrid.py.desktop
+    echo "Type=Application" > ~/.config/autostart/x11pygrid.py.desktop
+    echo "Exec=${HOME}/.local/bin/x11pygrid" > ~/.config/autostart/x11pygrid.py.desktop
+    echo "Hidden=false" > ~/.config/autostart/x11pygrid.py.desktop
+    echo "NoDisplay=false" > ~/.config/autostart/x11pygrid.py.desktop
+    echo "X-GNOME-Autostart-enabled=true" > ~/.config/autostart/x11pygrid.py.desktop
+    echo "Name[en_CA]=x11pyGrid" > ~/.config/autostart/x11pygrid.py.desktop
+    echo "Name=x11pyGrid" > ~/.config/autostart/x11pygrid.py.desktop
+    echo "Comment=" > ~/.config/autostart/x11pygrid.py.desktop
+  fi
+  
+  echo "--------------------------------------------------"
+  echo "Installing desktop links"
+  cp ~/dev/devsetup/scripts/assets/Desktop/* ~/Desktop/
+  
+  echo "--------------------------------------------------"
+  if [ ${auto} -eq 1 ]; then
+    ok="y"
+  else
+    read -p "Install Brave Browser (chromium alternative) (y/n)? " ok
+  fi
+  if [ "${ok}" == "y" ]; then
+    echo "Installing Brave browser"
+    sudo -S apt -y install apt-transport-https curl
+    sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+    sudo -S apt update -y
+    sudo -S apt install -y brave-browser
+  fi
+  
+  echo "--------------------------------------------------"
+  if [ ${auto} -eq 1 ]; then
+    ok="y"
+  else
+    read -p "Done for the moment, reboot (y/n)? " ok
+  fi
 
-echo "--------------------------------------------------"
-echo "Installing desktop links"
-cp ~/dev/devsetup/scripts/assets/Desktop/* ~/Desktop/
+  if [ "${ok}" == "y" ]; then
+    echo "Sanity reboot..."
+    sudo reboot
+  fi
 
-echo "--------------------------------------------------"
-if [ ${auto} -eq 1 ]; then
-  ok="y"
 else
-  read -p "Install Brave Browser (chromium alternative) (y/n)? " ok
+  echo "--------------------------------------------------"
+  echo "Done..."
 fi
-if [ "${ok}" == "y" ]; then
-  echo "Installing Brave browser"
-  sudo -S apt -y install apt-transport-https curl
-  sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-  echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-  sudo -S apt update -y
-  sudo -S apt install -y brave-browser
-fi
-
 echo "--------------------------------------------------"
-echo "--------------------------------------------------"
-if [ ${auto} -eq 1 ]; then
-  ok="y"
-else
-  read -p "Done for the moment, reboot (y/n)? " ok
-fi
-if [ "${ok}" == "y" ]; then
-  echo "Sanity reboot..."
-  sudo reboot
-fi
