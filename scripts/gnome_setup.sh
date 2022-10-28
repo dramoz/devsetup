@@ -49,7 +49,7 @@ else
     flatpak install -y flathub com.mattjakeman.ExtensionManager
     if ! grep -q "gnome_ext_mngr" "${HOME}/.bashrc_local"; then
       echo '# --------------------------------'  >> ~/.bashrc_local
-      echo '# Ghnome Extension Manager (alias with flatpak)' >> ~/.bashrc_local
+      echo '# Gnome Extension Manager (alias with flatpak)' >> ~/.bashrc_local
       echo 'alias gnome_ext_mngr="flatpak run com.mattjakeman.ExtensionManager"' >> ~/.bashrc_local
     fi
     
