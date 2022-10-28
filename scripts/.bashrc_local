@@ -1,7 +1,6 @@
 # ----------------------------------------------------------------
 # Env. Variables
 #export DUMMY_ENV=value
-#export LICENSE_FILE=path_to_license
 
 # ----------------------------------------------------------------
 # Tools paths

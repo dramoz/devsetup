@@ -81,6 +81,7 @@ if [ "${ok}" == "y" ]; then
     echo '# --------------------------------'  >> ~/.bashrc_local
     echo '# RISC-V Toolchain' >> ~/.bashrc_local
     echo 'export PATH=${HOME}/tools/riscv64-unknown-elf-toolchain/bin:$PATH' >> ~/.bashrc_local
+  fi
 fi
 
 echo "--------------------------------------------------"
@@ -107,19 +108,27 @@ if [ "${ok}" == "y" ]; then
     read -p "Press [ENTER] key after download completed..." ok
   fi
   
-  if [ ! -d "${xlnx_tools_inst_ver}"] && [ -f "${xlnx_tools_inst_ver}.tar.gz" ]; then
+  if [ ! -d "${xlnx_tools_inst_ver}" ] && [ -f "${xlnx_tools_inst_ver}.tar.gz" ]; then
     tar -xvzf ${xlnx_tools_inst_ver}.tar.gz
   else
     echo "~/tmp/${xlnx_tools_inst_ver}.tar.gz file NOT found! (checking directory)"
   fi
   
   if [ -d ${xlnx_tools_inst_ver} ]; then
+    echo "--------------------------------------------------"
     echo "!!! Install directory: ${HOME}/tools/"
-    echo "*Important (From AMD/Xilinx UG1393):"
+    echo "->Important (From AMD/Xilinx UG1393):"
     echo "*Do not deselect the following option. It is required for installation."
     echo "  [x] Devices > Install devices for Alveo and Xilinx Edge acceleration platforms"
     echo "  (https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-the-Vitis-Software-Platform)"
-    
+    echo "--------------------------------------------------"
+    echo "- Common options:"
+    echo "  [] Uncheck Vitis Model Composer (MATLAB+Simulink required)"
+    echo "  [] Uncheck unrequired FPGAs"
+    echo "  BUT select: [x] Install devices for Alveo and Xilinx Edge acceleration platforms"
+
+    cd ${xlnx_tools_inst_ver}
+    ./xsetup
     read -p "Press [ENTER] key after installation is done..." ok
     sudo -S ${HOME}/tools/Vitis/${xlnx_tools_ver}/scripts/installLibs.sh
     
