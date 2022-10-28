@@ -92,7 +92,7 @@ else
 fi
 if [ "${ok}" == "y" ]; then
   echo "Installing AMD/Xilinx Vitis/Vivado (https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)"
-  mkdir -p logs/xilinx
+  mkdir -p ${HOME}/logs/xilinx
   
   # Petalinux?
   #sudo -S dpkg --add-architecture i386
@@ -130,21 +130,23 @@ if [ "${ok}" == "y" ]; then
     cd ${xlnx_tools_inst_ver}
     ./xsetup
     read -p "Press [ENTER] key after installation is done..." ok
-    sudo -S ${HOME}/tools/Vitis/${xlnx_tools_ver}/scripts/installLibs.sh
+    sudo -S ${HOME}/tools/Xilinx/Vitis/${xlnx_tools_ver}/scripts/installLibs.sh
     
     # Xilinx Runtime (XRT)
-    echo "Installing Xilinx Runtime (XRT) (https://xilinx.github.io/XRT/2022.2/html/index.html)"
-    if [ "`echo "${ubuntu_ver} == 22.04" | bc`" -eq 1 ]; then
-      xlnx_xrt_ver="202220.2.14.354_22.04-amd64-xrt"
-    fi
-    if [ "`echo "${ubuntu_ver} == 20.04" | bc`" -eq 1 ]; then
-      xlnx_xrt_ver="202220.2.14.354_20.04-amd64-xrt"
-    fi
-    wget "https://www.xilinx.com/bin/public/openDownload?filename=xrt_${xlnx_xrt_ver}.deb"
-    sudo -S apt install xrt_${xlnx_xrt_ver}.deb
+    # -> This is required for the embedded OS, but not host!!!
+    #cd ${HOME}/tmp
+    #echo "Installing Xilinx Runtime (XRT) (https://xilinx.github.io/XRT/2022.2/html/index.html)"
+    #if [ "`echo "${ubuntu_ver} == 22.04" | bc`" -eq 1 ]; then
+    #  xlnx_xrt_ver="202220.2.14.354_22.04-amd64-xrt"
+    #fi
+    #if [ "`echo "${ubuntu_ver} == 20.04" | bc`" -eq 1 ]; then
+    #  xlnx_xrt_ver="202220.2.14.354_20.04-amd64-xrt"
+    #fi
+    #wget -O "xrt_${xlnx_xrt_ver}.deb" "https://www.xilinx.com/bin/public/openDownload?filename=xrt_${xlnx_xrt_ver}.deb"
+    #sudo -S apt install -y ./xrt_${xlnx_xrt_ver}.deb
     
     # Launch tools setup
-    cd ${HOME}
+    cd ${HOME}/tools
     vitis_sh="vitis_${xlnx_tools_ver}.sh"
     if [ ! -f ${vitis_sh} ]; then
       touch ${vitis_sh}
