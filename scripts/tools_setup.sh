@@ -2,9 +2,9 @@
 # --------------------------------------------------------------------------------
 # Tools versions
 risv_toolchain_ver="10.2.0-2020.12.8-x86_64-linux-ubuntu14"
-xlnx_tools_inst_ver="Xilinx_Unified_2022.2_1014_8888"
+xlnx_tools_pkg="Xilinx_Unified_2022.2_1014_8888"
 xlnx_tools_ver="2022.2"
-intel_quartus_inst_ver="Quartus-pro-22.3.0.104"
+intel_quartus_pkg="Quartus-pro-22.3.0.104-linux-complete"
 intel_quartus_ver="22.3"
 
 # --------------------------------------------------------------------------------
@@ -13,8 +13,8 @@ echo "Install R&D Tools"
 echo "--------------------------------------------------"
 echo "Tools:"
 echo "- RISC-V toolchain (SiFive default), ver:${risv_toolchain_ver}"
-echo "- AMD/Xilinx Vitis/Vivado, ver:${xlnx_tools_inst_ver}"
-echo "- Intel Quartus Pro, ver:${intel_quartus_inst_ver}"
+echo "- AMD/Xilinx Vitis/Vivado, ver:${xlnx_tools_pkg}"
+echo "- Intel Quartus Pro, ver:${intel_quartus_pkg}"
 echo "--------------------------------------------------"
 echo "-> Please make sure that ./ubuntu_setup.sh was run before!!"
 read -p "Continue (y/n)? " ok
@@ -102,20 +102,20 @@ if [ "${ok}" == "y" ]; then
   #sudo -S dpkg-reconfigure dash
   
   cd ${HOME}/tmp
-  if [ ! -d ${xlnx_tools_inst_ver} ] && [ ! -f "${xlnx_tools_inst_ver}.tar.gz" ]; then
-    echo "Download: Xilinx Unified Installer xxxx.x SFD (TAR/GZIP ~100 GB) (${xlnx_tools_inst_ver})"
+  if [ ! -d ${xlnx_tools_pkg} ] && [ ! -f "${xlnx_tools_pkg}.tar.gz" ]; then
+    echo "Download: Xilinx Unified Installer xxxx.x SFD (TAR/GZIP ~90 GB) (${xlnx_tools_pkg})"
     echo "!!! save to ~/tmp/"
-    eval $browser "https://www.xilinx.com/member/forms/download/xef.html?filename=${xlnx_tools_inst_ver}.tar.gz"
+    eval $browser "https://www.xilinx.com/member/forms/download/xef.html?filename=${xlnx_tools_pkg}.tar.gz" >/dev/null 2>&1
     read -p "Press [ENTER] key after download completed..." ok
   fi
   
-  if [ ! -d "${xlnx_tools_inst_ver}" ] && [ -f "${xlnx_tools_inst_ver}.tar.gz" ]; then
-    tar -xvzf ${xlnx_tools_inst_ver}.tar.gz
+  if [ ! -d "${xlnx_tools_pkg}" ] && [ -f "${xlnx_tools_pkg}.tar.gz" ]; then
+    tar -xvzf ${xlnx_tools_pkg}.tar.gz
   else
-    echo "~/tmp/${xlnx_tools_inst_ver}.tar.gz file NOT found! (checking directory)"
+    echo "~/tmp/${xlnx_tools_pkg}.tar.gz file NOT found! (checking directory)"
   fi
   
-  if [ -d ${xlnx_tools_inst_ver} ]; then
+  if [ -d ${xlnx_tools_pkg} ]; then
     echo "--------------------------------------------------"
     echo "!!! Install directory: ${HOME}/tools/"
     echo "->Important (From AMD/Xilinx UG1393):"
@@ -128,7 +128,7 @@ if [ "${ok}" == "y" ]; then
     echo "  [] Uncheck unrequired FPGAs"
     echo "  BUT select: [x] Install devices for Alveo and Xilinx Edge acceleration platforms"
 
-    cd ${xlnx_tools_inst_ver}
+    cd ${xlnx_tools_pkg}
     ./xsetup
     read -p "Press [ENTER] key after installation is done..." ok
     sudo -S ${HOME}/tools/Xilinx/Vitis/${xlnx_tools_ver}/scripts/installLibs.sh
@@ -178,7 +178,7 @@ if [ "${ok}" == "y" ]; then
     echo "--------------------------------------------------"
 
   else
-    echo "~/tmp/${xlnx_tools_inst_ver} directory NOT found! Unable to proceed..."
+    echo "~/tmp/${xlnx_tools_pkg} directory NOT found! Unable to proceed..."
   fi
 fi
 
@@ -194,25 +194,37 @@ if [ "${ok}" == "y" ]; then
   mkdir -p ${HOME}/dev/intel/quartus/${intel_quartus_ver}
   
   cd ${HOME}/tmp
-  rm -fr ${intel_quartus_inst_ver}-linux-complete
-  mkdir ${intel_quartus_inst_ver}-linux-complete
-  cd ${intel_quartus_inst_ver}-linux-complete
-  
-  #echo "Attemping to automatically download Intel Quartus Pro ${intel_quartus_inst_ver}-linux-complete.tar"
-  #wget "https://cdrdv2.intel.com/v1/dl/getContent/746666/746690?filename=${intel_quartus_inst_ver}-linux-complete.tar"
-  echo "Download: Intel Quartus Pro (${intel_quartus_inst_ver}-linux-complete.tar) (TAR - 85.5 GB)"
-  echo "!!! save to ~/tmp/"
-  cd ${HOME}/tmp
-  eval $browser "https://www.intel.ca/content/www/ca/en/software-kit/current/657472.html"
-  read -p "Press [ENTER] key after download completed..." ok
-  
-  if [ -f "${intel_quartus_inst_ver}-linux-complete.tar" ]; then
-    tar -xvf ${intel_quartus_inst_ver}-linux-complete.tar
+  if [ ! -d ${intel_quartus_pkg} ] && [ ! -f "${intel_quartus_pkg}.tar" ]; then
+    echo "Download: Intel Quartus Pro (TAR ~90GB) (${intel_quartus_pkg})"
+    echo "!!! save to ~/tmp/"
+    #eval $browser "https://www.intel.ca/content/www/ca/en/software-kit/current/657472.html" >/dev/null 2>&1
+    eval $browser "https://cdrdv2.intel.com/v1/dl/getContent/746666/746690?filename=${intel_quartus_pkg}.tar" >/dev/null 2>&1
     
-    read -p "Press [ENTER] key after installation is done..." ok
-    
+    read -p "Press [ENTER] key after download completed..." ok
+  fi
+  
+  if [ ! -d "${intel_quartus_pkg}" ] && [ -f "${intel_quartus_pkg}.tar" ]; then
+    tar -xvf ${intel_quartus_pkg}.tar -C ${intel_quartus_pkg}
   else
-    echo "~/tmp/${intel_quartus_inst_ver}-linux-complete.tar file NOT found!"
+    echo "~/tmp/${intel_quartus_pkg}.tar file NOT found! (checking directory)"
+  fi
+  
+  if [ -d ${intel_quartus_pkg} ]; then
+    echo "--------------------------------------------------"
+    
+    # ...
+    
+    echo "--------------------------------------------------"
+    echo "Invoke tools from terminal with:"
+    #${HOME}/tools/intel/intelFPGA_pro/${intel_quartus_ver}
+    echo "$ "
+    echo "$ "
+    echo "--------------------------------------------------"
+    echo "or from desktop (right click, Allow Launching)"
+    echo "--------------------------------------------------"
+
+  else
+    echo "~/tmp/${intel_quartus_pkg} directory NOT found! Unable to proceed..."
   fi
 fi
 

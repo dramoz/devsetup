@@ -117,7 +117,7 @@ if [ ! -f "${ssh_key}" ]; then
   ssh-add ~/.ssh/id_ed25519
   echo "Copy/paste (and create key at GitHub) ->"
   cat ~/.ssh/id_ed25519.pub
-  eval $browser "https://github.com/settings/keys"
+  eval $browser "https://github.com/settings/keys" >/dev/null 2>&1
   
   echo "--------------------------------------------------"
   read_data=true
