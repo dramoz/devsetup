@@ -125,6 +125,7 @@ export PATH=${HOME}/.local/bin:$PATH
 
 # Devsetup
 export DEVSETUP_DIR=${HOME}/dev/devsetup
+export PATH=${HOME}/tools:$PATH
 
 # Load local .bashrc setttings
 if [ -f ~/.bashrc_local ]; then
