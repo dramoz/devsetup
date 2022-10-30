@@ -107,6 +107,7 @@ echo "--------------------------------------------------"
 echo "git config..."
 git config --global user.email "${email}"
 git config --global user.name "${full_name}"
+git config --global credential.helper 'cache --timeout 30000'
 
 # SSH key for GitHub
 echo "--------------------------------------------------"
