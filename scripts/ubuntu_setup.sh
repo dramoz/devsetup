@@ -221,13 +221,15 @@ if [ "${ok}" == "y" ]; then
   if [ ${auto} -eq 1 ]; then
     ok="y"
   else
-    read -p "Install VS code extensions (y/n)? " ok
+    read -p "Install VS code extensions + user settings (y/n)? " ok
   fi
   if [ "${ok}" == "y" ];  then
     echo "Installing VS Code extensions"
     while IFS= read -r line; do
       code --install-extension ${line}
     done < ${HOME}/dev/devsetup/scripts/assets/vscode/all_extensions.ext
+    
+    cp ${HOME}/dev/devsetup/scripts/assets/vscode/*.json ${HOME}/.config/Code/User/
   fi
 fi
 
