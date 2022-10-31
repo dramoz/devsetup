@@ -2,10 +2,17 @@
 # --------------------------------------------------------------------------------
 # Tools versions
 risv_toolchain_ver="10.2.0-2020.12.8-x86_64-linux-ubuntu14"
+
 xlnx_tools_pkg="Xilinx_Unified_2022.2_1014_8888"
 xlnx_tools_ver="2022.2"
+
 intel_quartus_pkg="Quartus-pro-22.3.0.104-linux-complete"
 intel_quartus_ver="22.3"
+
+verilator_tag="v4.228.1"
+cocotb_bus_tag="v0.1.0"
+cocotbext_pcie_tag="v0.1.14"
+cocotbext_axi_tag="v0.1.12"
 
 # --------------------------------------------------------------------------------
 echo "---------------------------------------------------------"
@@ -247,6 +254,112 @@ if [ "${ok}" == "y" ]; then
   else
     echo "~/tmp/${intel_quartus_pkg} directory NOT found! Unable to proceed..."
   fi
+fi
+
+echo "--------------------------------------------------"
+if [ ${auto} -eq 1 ]; then
+  ok="y"
+else
+  read -p "Install Verilator+CoCoTB+TerosHDL (y/n)? " ok
+fi
+if [ "${ok}" == "y" ]; then
+  echo "Installing Verilator"
+  # App dependencies
+  sudo -S apt purge -y verilator
+  sudo -S apt install -y perl g++
+  sudo -S apt install -y autoconf flex bison
+  sudo -S apt install -y libfl2 libfl-dev zlib1g zlib1g-dev
+  sudo -S apt install -y ccache libgoogle-perftools-dev numactl perl-doc
+  
+  # Check if directory exists
+  cd ${HOME}/repos
+  if [ ! -d "verilator" ]; then
+    git clone https://github.com/eideticom/verilator.git
+    cd verilator
+    git remote add upstream https://github.com/verilator/verilator.git
+    git fetch upstream
+    cd ..
+  fi
+  
+  # Setup env
+  unset VERILATOR_ROOT
+  cd verilator
+  git checkout master
+  git fetch; git pull
+  if [ -z "${verilator_tag}" ]; then
+    verilator_tag=$(git describe --abbrev=0)
+  fi
+  git checkout ${verilator_tag}
+  
+  # Install App
+  autoconf
+  ./configure --prefix ${HOME}/tools/verilator
+  make -j$(nproc)
+  sudo -S make install
+  
+  if ! grep -q "verilator" "${HOME}/.bashrc_local"; then
+    echo '# --------------------------------' >> ~/.bashrc_local
+    echo '# verilator' >> ~/.bashrc_local
+    echo 'export PATH=${HOME}/tools/verilator/bin:$PATH' >> ~/.bashrc_local
+  fi
+  
+  echo "--------------------------------------------------"
+  echo "Installing CoCoTB (https://docs.cocotb.org/en/stable/)"
+  # VirtualEnv
+  source $HOME/.local/bin/virtualenvwrapper.sh
+  echo "--------------------------------------------------"
+  python=${VIRTUAL_ENV}
+  if [ -z ${python} ]; then
+    read -p "No virtualenv active detected, use virtualenv:dev (y/n)? " ok
+    if [ "${ok}" == "y" ]; then
+      source .virtualenvs/dev/bin/activate
+    else
+      read -p "Create/use virtualenv:hdl (y/n)? " ok
+      if [ "${ok}" == "y" ]; then
+        if [ ! -d "${HOME}/.virtualenvs/hdl/" ]; then
+          echo "virtualenv:hdl not found, creating..."
+          mkvirtualenv hdl
+          source .virtualenvs/hdl/bin/activate
+          pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
+          pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
+        else
+          source .virtualenvs/hdl/bin/activate
+        fi
+      else
+        echo "This scripts only with virtualenv"
+        exit 1
+      fi
+    fi
+  fi
+  pip install cocotb cocotb-test cocotb-coverage
+  
+  # cocotb-bus
+  # -> verilator/cocotb currently only works with bus v0.1.0
+  cd ${HOME}/repos
+  if [ ! -d "cocotb-bus" ]; then
+    git clone https://github.com/cocotb/cocotb-bus.git
+  fi
+  cd cocotb-bus
+  git checkout ${cocotb_bus_tag}
+  pip install -e ./
+  
+  # cocotbext-pcie
+  cd ${HOME}/repos
+  if [ ! -d "cocotbext-pcie" ]; then
+    git clone https://github.com/Eideticom/cocotbext-pcie.git
+  fi
+  cd cocotbext-pcie
+  git checkout ${cocotbext_pcie_tag}
+  pip install -e ./
+  
+  # cocotbext-axi
+  cd ${HOME}/repos
+  if [ ! -d "cocotbext-axi" ]; then
+    git clone https://github.com/Eideticom/cocotbext-axi.git
+  fi
+  cd cocotbext-axi
+  git checkout ${cocotbext_axi_tag}
+  pip install -e ./
 fi
 
 echo "--------------------------------------------------"
