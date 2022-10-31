@@ -4,8 +4,7 @@
     "files.trimFinalNewlines": true,
     "editor.trimAutoWhitespace": false,
     "explorer.autoReveal": false,
-    "blockman.n01LineHeight": 0,
-    "editor.guides.indentation": false,
-    "editor.guides.bracketPairs": false,
-    "editor.fontLigatures": true
+    "editor.fontLigatures": true,
+    "editor.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
+    "editor.renderWhitespace": "all"
 }
