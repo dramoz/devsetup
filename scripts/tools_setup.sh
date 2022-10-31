@@ -11,8 +11,8 @@ intel_quartus_ver="22.3"
 
 verilator_tag="v4.228.1"
 cocotb_bus_tag="v0.1.0"
-cocotbext_pcie_tag="v0.1.14"
-cocotbext_axi_tag="v0.1.12"
+cocotbext_pcie_tag="eid"
+cocotbext_axi_tag="master"
 
 # --------------------------------------------------------------------------------
 echo "---------------------------------------------------------"
@@ -347,6 +347,10 @@ if [ "${ok}" == "y" ]; then
   cd ${HOME}/repos
   if [ ! -d "cocotbext-pcie" ]; then
     git clone https://github.com/Eideticom/cocotbext-pcie.git
+    cd cocotbext-pcie
+    git remote add upstream https://github.com/alexforencich/cocotbext-pcie.git
+    git fetch upstream
+    cd ..
   fi
   cd cocotbext-pcie
   git checkout ${cocotbext_pcie_tag}
@@ -356,10 +360,25 @@ if [ "${ok}" == "y" ]; then
   cd ${HOME}/repos
   if [ ! -d "cocotbext-axi" ]; then
     git clone https://github.com/Eideticom/cocotbext-axi.git
+    cd cocotbext-pcie
+    git remote add upstream https://github.com/alexforencich/cocotbext-axi.git
+    git fetch upstream
+    cd ..
   fi
   cd cocotbext-axi
   git checkout ${cocotbext_axi_tag}
   pip install -e ./
+  
+  echo "--------------------------------------------------"
+  if [ ${auto} -eq 1 ]; then
+    ok="y"
+  else
+    read -p "Install VisualCode TerosHDL (https://terostechnology.github.io/terosHDLdoc/) (y/n)? " ok
+  fi
+  if [ "${ok}" == "y" ]; then
+    pip install teroshdl
+    code --install-extension teros-technology.teroshdl
+  fi
 fi
 
 echo "--------------------------------------------------"
