@@ -36,7 +36,9 @@
     
     "settingsSync.ignoredExtensions": [
         "platformio.platformio-ide",
-        "teros-technology.teroshdl"
+        "teros-technology.teroshdl",
+        "twxs.cmake",
+        "ms-vscode.cmake-tools"
     ],
     "settingsSync.ignoredSettings": [
     
