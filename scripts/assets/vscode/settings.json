@@ -40,5 +40,6 @@
     ],
     "settingsSync.ignoredSettings": [
     
-    ]
+    ],
+    "settingsSync.keybindingsPerPlatform": false
 }
