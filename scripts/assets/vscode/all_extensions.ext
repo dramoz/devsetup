@@ -42,12 +42,16 @@ mtsmfm.vscode-stl-viewer
 platformio.platformio-ide
 QiaoJie.binary-viewer
 redhat.vscode-yaml
+richie5um2.vscode-sort-json
 rust-lang.rust-analyzer
+ryu1kn.partial-diff
 scala-lang.scala
 sketchbuch.vsc-workspace-sidebar
 spmeesseman.vscode-taskexplorer
 tomoki1207.pdf
 trond-snekvik.gnu-mapfiles
+tyriar.sort-lines
+usernamehw.errorlens
 VisualStudioExptTeam.vscodeintellicode
 YuTengjing.open-in-external-app
 zixuanwang.linkerscript
