@@ -385,6 +385,19 @@ echo "--------------------------------------------------"
 if [ ${auto} -eq 1 ]; then
   ok="y"
 else
+  read -p "Review Other Embedded Tools (y/n)? " ok
+fi
+if [ "${ok}" == "y" ]; then
+  read -p "VS Code Platform.IO (y/n)? " ok
+  if [ "${ok}" == "y" ]; then
+    code --install-extension platformio.platformio-ide
+  fi
+fi
+
+echo "--------------------------------------------------"
+if [ ${auto} -eq 1 ]; then
+  ok="y"
+else
   read -p "Done for the moment, reboot (y/n)? " ok
 fi
 if [ "${ok}" == "y" ]; then
