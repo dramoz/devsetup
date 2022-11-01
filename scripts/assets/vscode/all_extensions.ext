@@ -1,7 +1,8 @@
 aaron-bond.better-comments
 adrianwilczynski.toggle-hidden
-Antyos.openscad
 appliedengdesign.vscode-gcode-syntax
+bat67.markdown-extension-pack
+bierner.markdown-mermaid
 carlos-algms.make-task-provider
 cschlosser.doxdocgen
 dbaeumer.vscode-eslint
@@ -19,6 +20,7 @@ jeff-hykin.better-cpp-syntax
 jerrygoyal.shortcut-menu-bar
 keroc.hex-fmt
 ldez.ignore-files
+leathong.openscad-language-support
 leodevbro.blockman
 mateuszchudyk.hexinspector
 mkxml.vscode-filesize
@@ -49,5 +51,3 @@ VisualStudioExptTeam.vscodeintellicode
 YuTengjing.open-in-external-app
 zixuanwang.linkerscript
 zomixi.naming-convention
-bat67.markdown-extension-pack
-bierner.markdown-mermaid
