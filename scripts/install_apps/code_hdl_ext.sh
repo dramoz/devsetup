@@ -36,6 +36,32 @@ echo "--------------------------------------------------"
 echo "Creating common dirs..."
 cd ~; mkdir -p dev tools repos tmp
 
+# VirtualEnv
+source $HOME/.local/bin/virtualenvwrapper.sh
+echo "--------------------------------------------------"
+python=${VIRTUAL_ENV}
+if [ -z ${python} ]; then
+  read -p "No virtualenv active detected, use virtualenv:dev (y/n)? " ok
+  if [ "${ok}" == "y" ]; then
+    source .virtualenvs/dev/bin/activate
+  else
+    read -p "Create/use virtualenv:hdl (y/n)? " ok
+    if [ "${ok}" == "y" ]; then
+      if [ ! -d "${HOME}/.virtualenvs/hdl/" ]; then
+        echo "virtualenv:hdl not found, creating..."
+        mkvirtualenv hdl
+        source .virtualenvs/hdl/bin/activate
+        pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
+      else
+        source .virtualenvs/hdl/bin/activate
+      fi
+    else
+      echo "This scripts only with virtualenv"
+      exit 1
+    fi
+  fi
+fi
+
 echo "--------------------------------------------------"
 read -p "Install VisualCode TerosHDL (https://terostechnology.github.io/terosHDLdoc/) (y/n)? " ok
 if [ "${ok}" == "y" ]; then
