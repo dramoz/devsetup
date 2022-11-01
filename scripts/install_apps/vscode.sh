@@ -24,7 +24,7 @@ if [ "${ok}" == "y" ]; then
     sudo -S apt purge code && sudo apt autoremove
     sudo -S snap remove code
     rm -fr ~/.vscode/
-    rm -fr .config/Code
+    rm -fr ~/.config/Code
   fi
   
   echo "Installing VS Code"
@@ -50,4 +50,3 @@ if [ "${ok}" == "y" ]; then
     cp ${HOME}/dev/devsetup/scripts/assets/vscode/*.json ${HOME}/.config/Code/User/
   fi
 fi
-
