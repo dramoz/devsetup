@@ -221,7 +221,7 @@ if [ "${ok}" == "y" ]; then
   if [ ${auto} -eq 1 ]; then
     ok="y"
   else
-    read -p "Install VS code extensions + user settings (y/n)? " ok
+    read -p "Install VS code extensions + user settings (NO if using sync!) (y/n)? " ok
   fi
   if [ "${ok}" == "y" ];  then
     echo "Installing VS Code extensions"
