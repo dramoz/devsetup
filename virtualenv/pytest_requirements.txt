@@ -1,12 +1,8 @@
-hypothesis
-pysmt
 pytest
 pytest-forked
 pytest-html
 pytest-metadata
-python-slugify
 pytest-sugar
 pytest-timeout
 pytest-xdist
-python-constraint
-rstr
+python-slugify

@@ -1,6 +1,6 @@
-cocotb
-cocotb-bus
-cocotb-test
-cocotb-coverage
 hdlConvertor
+hypothesis
+pysmt
+python-constraint
 pyvsc
+rstr
