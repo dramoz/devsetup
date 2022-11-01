@@ -10,6 +10,11 @@
     "explorer.confirmDelete": false,
     "editor.tabSize": 2,
     
+    "blockman.n01LineHeight": 0,
+    "workbench.colorCustomizations": {
+        "editor.lineHighlightBackground": "#1073cf2d",
+        "editor.lineHighlightBorder": "#9fced11f"
+    },
     "editor.wordWrap": "off",
     "diffEditor.wordWrap": "off",
     "editor.guides.indentation": false,

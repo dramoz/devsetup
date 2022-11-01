@@ -8,5 +8,17 @@
     {
         "key": "ctrl+shift+x",
         "command": "workbench.files.action.showActiveFileInExplorer"
+    },
+    {
+        "key": "ctrl+b ctrl+b",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "-workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "ctrl+b ctrl+v",
+        "command": "workbench.action.toggleAuxiliaryBar"
     }
 ]
