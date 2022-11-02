@@ -23,6 +23,7 @@ keroc.hex-fmt
 ldez.ignore-files
 leathong.openscad-language-support
 leodevbro.blockman
+mads-hartmann.bash-ide-vscode
 mateuszchudyk.hexinspector
 mkxml.vscode-filesize
 ms-python.python
@@ -36,6 +37,7 @@ mtsmfm.vscode-stl-viewer
 QiaoJie.binary-viewer
 redhat.vscode-yaml
 richie5um2.vscode-sort-json
+rogalmic.bash-debug
 rust-lang.rust-analyzer
 ryu1kn.partial-diff
 scala-lang.scala
