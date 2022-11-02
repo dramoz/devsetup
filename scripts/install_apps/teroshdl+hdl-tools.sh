@@ -108,6 +108,7 @@ if [ "${ok}" == "y" ]; then
   echo "--------------------------------------------------"
   echo ".................................................."
   echo "Tools configuration (required tools installation)"
+  echo " >> No paths requires if properly set on environment"
   echo ".................................................."
   echo "XSim (Vivado - https://www.xilinx.com/products/design-tools/vivado.html)"
   echo "  path: ~/tools/Xilinx/Vivado/2022.2/bin/"
@@ -133,6 +134,10 @@ if [ "${ok}" == "y" ]; then
   echo "SymbiYosys Formal Verification (https://symbiyosys.readthedocs.io/en/latest/)"
   echo "  path: ~/tools/oss-cad-suite/bin/"
   echo "  install: (OSS-CAD-SUITE, this script)"
+  echo ".................................................."
+  echo "VeribleLint (https://chipsalliance.github.io/verible/lint.html)"
+  echo "  path: ~/tools/verible/bin/"
+  echo "  install: (Verible, this script)"
   echo ".................................................."
   echo "Verilator (https://www.veripool.org/verilator/)"
   echo "  path: ~/tools/verilator/bin/"
@@ -166,7 +171,7 @@ if [ "${ok}" == "y" ]; then
 fi
 
 echo "--------------------------------------------------"
-read -p "Verible (SV linter) (y/n)? " ok
+read -p "Verible (SV linter/formatter) (y/n)? " ok
 if [ "${ok}" == "y" ]; then
   if [ ! -d "${HOME}/tools/verible" ] && [ ! -f "verible.tar.gz" ]; then
     echo "Download: Verible (TAR ~10MB) (${verible_ver})"
