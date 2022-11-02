@@ -80,7 +80,7 @@ cd ~; mkdir -p dev tools repos tmp
 # Required apps
 echo "--------------------------------------------------"
 echo "apt required tools..."
-sudo -S apt install -y build-essential git graphviz screen tmux tree vim openssh-server
+sudo -S apt install -y build-essential git graphviz screen tmux tree vim openssh-server net-tool
 if [ ${WSL} -eq 0 ]; then
   sudo -S apt install -y gtkwave libcanberra-gtk-module libcanberra-gtk3-module libcanberra-gtk-module:i386
 else
