@@ -44,6 +44,12 @@ if [ -d ${intel_quartus_pkg} ]; then
   echo "  [] Uncheck DSP Builder (MATLAB+Simulink required)"
   echo "  [] Uncheck SDK for OpenCL"
   echo "  [] Uncheck unrequired FPGAs"
+  echo "--------------------------------------------------"
+  echo "Get (free) license from: https://licensing.intel.com/psg/s/licenses-menu"
+  echo "NIC: "
+  ifconfig /all
+  echo "--------------------------------------------------"
+  
   cd ${intel_quartus_pkg}
   #${intel_quartus_pkg}.run --mode unattended --unattendedmodeui minimal --installdir ${HOME}/dev/tools/intel --accept_eula 1
   ./setup_pro.sh
@@ -51,12 +57,10 @@ if [ -d ${intel_quartus_pkg} ]; then
   if ! grep -q "quartus" "${HOME}/.bashrc_local"; then
     echo '# --------------------------------' >> ~/.bashrc_local
     echo '# quartus' >> ~/.bashrc_local
-    echo "export QUARTUS_ROOTDIR=\"${HOME}/tools/intel/intelFPGA_pro/${intel_quartus_ver}/quartus\"" >> ~/.bashrc_local
-    echo 'export QSYS_ROOTDIR="$QUARTUS_ROOTDIR/qsys/bin"' >> ~/.bashrc_local
-    echo '#export PATH="$QUARTUS_ROOTDIR/bin:$QSYS_ROOTDIR:__^S^__PATH" ' >> ~/.bashrc_local
-    echo 'export PATH="$QUARTUS_ROOTDIR/bin:$PATH" ' >> ~/.bashrc_local
-    echo '# Adding  any /bin under __^S^__ALTERAOCLSDKROOT or __^S^__INTELFPGAOCLSDKROOT to __^S^__PATH if applicable' >> ~/.bashrc_local
-    echo '#export LM_LICENSE_FILE=<path_to_license_file>' >> ~/.bashrc_local
+    echo "export QUARTUS_ROOTDIR=\"${HOME}/tools/intel/intelFPGA_pro/${intel_questa_ver}/quartus\"" >> ~/.bashrc_local
+    echo 'export QSYS_ROOTDIR="$QUARTUS_ROOTDIR/qsys/bin' >> ~/.bashrc_local
+    echo 'export PATH="$QUARTUS_ROOTDIR/bin:$PATH' >> ~/.bashrc_local
+    echo 'export LM_LICENSE_FILE="${HOME}/tools/intel/intelFPGA_pro/${intel_questa_ver}/license.dat' >> ~/.bashrc_local
   fi
   
   echo "--------------------------------------------------"
@@ -65,7 +69,7 @@ if [ -d ${intel_quartus_pkg} ]; then
   echo "--------------------------------------------------"
   echo "or from desktop (right click, Allow Launching)"
   echo "--------------------------------------------------"
-
+  
 else
   echo "~/tmp/${intel_quartus_pkg} directory NOT found! Unable to proceed..."
 fi
