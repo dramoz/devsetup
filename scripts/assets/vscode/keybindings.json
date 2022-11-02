@@ -20,5 +20,13 @@
     {
         "key": "ctrl+b ctrl+v",
         "command": "workbench.action.toggleAuxiliaryBar"
+    },
+    {
+        "key": "ctrl+b ctrl+p",
+        "command": "workbench.action.terminal.moveToTerminalPanel"
+    },
+    {
+        "key": "ctrl+b ctrl+e",
+        "command": "workbench.action.terminal.moveToEditor"
     }
 ]
