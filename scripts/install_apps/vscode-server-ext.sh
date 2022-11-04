@@ -28,6 +28,10 @@ echo "--------------------------------------------------------------------------
 echo "VS Code Server/Remote extensions (https://code.visualstudio.com/api/advanced-topics/remote-extensions#architecture-and-extension-types)"
 echo "- UI Extensions -> run on host"
 echo "- Workspace Extensions -> run on remote"
+echo "--------------------------------------------------------"
+echo "!!! Run this script inside VS Code terminal after"
+echo "!!! establishing the remote connection (ssh usr@remote)"
+echo "--------------------------------------------------------"
 read -p "Install Visual Studio Code (Server) Extensions? (y/n)" ok
 if [ "${ok}" == "y" ]; then
   echo "Installing VS Code (Server) Extensions..."
@@ -38,3 +42,7 @@ if [ "${ok}" == "y" ]; then
     done < ${HOME}/dev/devsetup/scripts/assets/vscode/server_extensions.ext
   fi
 fi
+
+echo "----------------------------------------------------------------------------------------------------"
+echo "Done! Pleaser reload VS code!!!"
+echo "----------------------------------------------------------------------------------------------------"
