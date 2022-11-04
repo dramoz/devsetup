@@ -1,6 +1,5 @@
 #!/bin/bash
 echo "----------------------------------------------------------------------------------------------------"
-
 ubuntu_release=$(lsb_release -r)
 ubuntu_ver=$(cut -f2 <<< "$ubuntu_release")
 echo "$ubuntu_ver"

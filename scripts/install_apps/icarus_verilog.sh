@@ -11,7 +11,7 @@ if [ "${ok}" != "y" ]; then
   exit 1
 fi
 
-# --------------------------------------------------------------------------------
+echo "----------------------------------------------------------------------------------------------------"
 ubuntu_release=$(lsb_release -r)
 ubuntu_ver=$(cut -f2 <<< "$ubuntu_release")
 echo "$ubuntu_ver"
@@ -26,17 +26,17 @@ else
   browser="firefox -new-window"
 fi
 
-# Ubuntu update
 echo "--------------------------------------------------"
+# Ubuntu update
 echo "update/upgrade/remove"
 sudo -S apt update -y && sudo -S apt upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y
 
-# R&D dirs
 echo "--------------------------------------------------"
+# R&D dirs
 echo "Creating common dirs..."
 cd ~; mkdir -p dev tools repos tmp
 
-echo "--------------------------------------------------"
+echo "----------------------------------------------------------------------------------------------------"
 echo "Installing Icarus-Verilog (https://iverilog.fandom.com/wiki/Main_Page)"
 # App dependencies
 sudo -S apt install -y autoconf gperf

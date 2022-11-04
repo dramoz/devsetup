@@ -12,6 +12,32 @@ if [ "${ok}" != "y" ]; then
   exit 1
 fi
 
+echo "----------------------------------------------------------------------------------------------------"
+ubuntu_release=$(lsb_release -r)
+ubuntu_ver=$(cut -f2 <<< "$ubuntu_release")
+echo "$ubuntu_ver"
+echo "Ubuntu: ${ubuntu_ver}"
+
+if [[ $(grep -i Microsoft /proc/version) ]]; then
+  WSL=1
+  browser="/mnt/c/\"Program Files (x86)\"/Microsoft/Edge/Application/msedge.exe"
+  echo "Under WSL..."
+else
+  WSL=0
+  browser="firefox -new-window"
+fi
+
+echo "--------------------------------------------------"
+# Ubuntu update
+echo "update/upgrade/remove"
+sudo -S apt update -y && sudo -S apt upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y
+
+echo "--------------------------------------------------"
+# R&D dirs
+echo "Creating common dirs..."
+cd ~; mkdir -p dev tools repos tmp
+
+echo "----------------------------------------------------------------------------------------------------"
 echo "Installing Intel Quartus Pro (https://www.intel.com/content/www/us/en/docs/programmable/683472/22-3/downloading-and-installing-fpga-software.html)"
 sudo -S apt install libncurses5
 mkdir -p ${HOME}/logs/quartus
