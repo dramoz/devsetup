@@ -76,93 +76,7 @@ if [ "${ok}" == "y" ]; then
   pip install teroshdl
   code --install-extension teros-technology.teroshdl
   
-  echo "--------------------------------------------------"
-  echo "TerosHDL"
-  echo "- Project Manager"
-  echo "- Document generator (Markdown, Doxygen, Wavedrom, Bitfield)"
-  echo "- FSM viewer"
-  echo "- Linter+Style+CodeFormatting+Templates"
-  echo "--------------------------------------------------"
-  echo "Config:"
-  echo "--------------------------------------------------"
-  echo "+General.Python: '. ${VIRTUAL_ENV}/bin/activate; python'"
-  echo "+General.tool/framework/simulator:"
-  echo "  frameworks: [CoCoTB | VUnit]"
-  echo "    - CoCoTB+[ Icarus | Verilator | Questa]"
-  echo "    - VUnit+Questa"
-  echo "  tools: [Quartus | Vivado | Yosys | ...]"
-  echo "  simulators: [ModelSim (Quartus/Questa) | Xsim (Vivado) | Icarus | Verilator | ...]"
-  echo "+General.tool/framework/simulator:"
-  echo "  [Tool GUI | GTKwave | VCDrom (VSCode plugin)]"
-  echo "--------------------------------------------------"
-  echo "+Schematic viewer"
-  echo "  Yosys (Install with OSS CAD Suite)"
-  echo "--------------------------------------------------"
-  echo "+Linter Settings"
-  echo "  Linter VHDL/SV: [Modelsim|Vivado]"
-  echo "  -> [Icarus | Verilator] only SV synthesis!"
-  echo "  Style checker (SV): Verible"
-  echo "--------------------------------------------------"
-  echo "+Formatter Settings"
-  echo "  Verilog/SV Formatter: Verible"
-  echo "  Verilog/SV Verible formatter: ~/tools/verible/bin/verible-verilog-format"
-  echo "--------------------------------------------------"
-  echo ".................................................."
-  echo "Tools configuration (required tools installation)"
-  echo " >> No paths requires if properly set on environment"
-  echo ".................................................."
-  echo "XSim (Vivado - https://www.xilinx.com/products/design-tools/vivado.html)"
-  echo "  path: ~/tools/Xilinx/Vivado/2022.2/bin/"
-  echo "  install: ~/dev/devsetup/scripts/install_apps/amd_xilinx.sh"
-  echo ".................................................."
-  echo "GHDL (https://ghdl.github.io/ghdl/)"
-  echo "  path: ~/tools/oss-cad-suite/bin/"
-  echo "  install: (OSS-CAD-SUITE, this script)"
-  echo ".................................................."
-  echo "Icarus (http://iverilog.icarus.com/)"
-  echo "  path:"
-  echo "  install: (pending)"
-  echo ".................................................."
-  echo "Modelsim (Intel Questa - https://www.intel.com/content/www/us/en/software/programmable/quartus-prime/questa-edition.html)"
-  echo "  path: ~/tools/intel/intelFPGA_pro/22.3/questa_fse/bin/"
-  echo "  install: ~/dev/devsetup/scripts/install_apps/intel_questa.sh"
-  echo ".................................................."
-  echo "Quartus (Intel - https://www.intel.ca/content/www/ca/en/products/details/fpga/development-tools/quartus-prime.html)"
-  echo "  path: ~/tools/intel/intelFPGA_pro/22.3/quartus/bin/"
-  echo "  install: ~/dev/devsetup/scripts/install_apps/intel_quartus.sh"
-  echo "  !Requires FPGA target configuration"
-  echo ".................................................."
-  echo "SymbiYosys Formal Verification (https://symbiyosys.readthedocs.io/en/latest/)"
-  echo "  path: ~/tools/oss-cad-suite/bin/"
-  echo "  install: (OSS-CAD-SUITE, this script)"
-  echo ".................................................."
-  echo "VeribleLint (https://chipsalliance.github.io/verible/lint.html)"
-  echo "  path: ~/tools/verible/bin/"
-  echo "  install: (Verible, this script)"
-  echo ".................................................."
-  echo "Verilator (https://www.veripool.org/verilator/)"
-  echo "  path: ~/tools/verilator/bin/"
-  echo "  install: ~/dev/devsetup/scripts/install_apps/verilator_cocotb.sh"
-  echo "  options: '-Wall, -Wno-fatal, -Wno-TIMESCALEMOD'"
-  echo "  options: '-Wno-UNOPT, -Wno-UNOPTFLAT, -Wno-UNUSED, -Wno-WIDTH, -Wno-CASEINCOMPLETE'"
-  echo ".................................................."
-  echo "Vivado (https://www.xilinx.com/products/design-tools/vivado.html)"
-  echo "  path: ~/tools/Xilinx/Vivado/2022.2/bin/"
-  echo "  install: ~/dev/devsetup/scripts/install_apps/amd_xilinx.sh"
-  echo "  !Requires FPGA target configuration"
-  echo ".................................................."
-  echo "Vunit (https://vunit.github.io/)"
-  echo "  simulator: ModelSim/Questa"
-  echo "  install: (this script)"
-  echo ".................................................."
-  echo "Yosys (https://yosyshq.net/yosys/) (https://yosyshq.readthedocs.io/en/latest/)"
-  echo "  path: ~/tools/oss-cad-suite/bin/"
-  echo "  install: (OSS-CAD-SUITE, this script)"
-  echo ".................................................."
-  echo "CoCoTB (https://docs.cocotb.org/en/stable/)"
-  echo "  path: ${VIRTUAL_ENV}/bin/cocotb"
-  echo "  install: ~/dev/devsetup/scripts/install_apps/verilator_cocotb.sh"
-  echo "----------------------------------------------------------------------------------------------------"
+
 fi
 
 echo "--------------------------------------------------"
@@ -174,12 +88,12 @@ fi
 echo "--------------------------------------------------"
 read -p "Verible (SV linter/formatter) (y/n)? " ok
 if [ "${ok}" == "y" ]; then
-  if [ ! -d "${HOME}/tools/verible" ] && [ ! -f "verible.tar.gz" ]; then
+  cd ${HOME}/tools
+  if [ ! -d "verible" ] && [ ! -f "${HOME}/tmp/verible.tar.gz" ]; then
     echo "Download: Verible (TAR ~10MB) (${verible_ver})"
-    cd ${HOME}/tools
-    wget -O verible.tar.gz https://github.com/chipsalliance/verible/releases/download/${verible_ver}/verible-${verible_ver}-Ubuntu-22.04-jammy-x86_64.tar.gz
-    tar -xvzf verible.tar.gz
-    cd ..
+    wget -O ${HOME}/tmp/verible.tar.gz https://github.com/chipsalliance/verible/releases/download/${verible_ver}/verible-${verible_ver}-Ubuntu-22.04-jammy-x86_64.tar.gz
+    tar -xvzf ${HOME}/tmp/verible.tar.gz
+    mv verible-${verible_ver} verible
   fi
   
   if ! grep -q "verible" "${HOME}/.bashrc_local"; then
@@ -201,13 +115,11 @@ fi
 echo "--------------------------------------------------"
 read -p "OSS CAD Suite (Yosys, schematic viewer) (https://github.com/YosysHQ/oss-cad-suite-build) (y/n)? " ok
 if [ "${ok}" == "y" ]; then
-  cd ~/tmp
-  if [ ! -d "oss-cad-suite" ] && [ ! -f "oss_cad_suite_ver.tgz" ]; then
+  cd ${HOME}/tools
+  if [ ! -d "oss-cad-suite" ] && [ ! -f "${HOME}/tmp/oss_cad_suite_ver.tgz" ]; then
     echo "Download: OSS CAD Suite (TAR ~480MB) (${oss_cad_suite_ver})"
-    cd ${HOME}/tools
-    wget -O oss_cad_suite_ver.tgz https://github.com/YosysHQ/oss-cad-suite-build/releases/download/${oss_cad_suite_dwnld_dir}/${oss_cad_suite_ver}.tgz
-    tar -xvzf oss_cad_suite_ver.tgz
-    cd ..
+    wget -O ${HOME}/tmp/oss_cad_suite_ver.tgz https://github.com/YosysHQ/oss-cad-suite-build/releases/download/${oss_cad_suite_dwnld_dir}/${oss_cad_suite_ver}.tgz
+    tar -xvzf ${HOME}/tmp/oss_cad_suite_ver.tgz
   fi
   
   if ! grep -q "oss-cad-suite" "${HOME}/.bashrc_local"; then
