@@ -17,6 +17,7 @@ goessner.mdmath
 haddiebakrie.material-kv
 ionutvmi.path-autocomplete
 jakob101.RelativePath
+janisdd.vscode-edit-csv
 jeff-hykin.better-cpp-syntax
 jerrygoyal.shortcut-menu-bar
 keroc.hex-fmt
@@ -25,6 +26,7 @@ leathong.openscad-language-support
 leodevbro.blockman
 mads-hartmann.bash-ide-vscode
 mateuszchudyk.hexinspector
+mechatroner.rainbow-csv
 mkxml.vscode-filesize
 ms-python.python
 ms-vscode-remote.remote-ssh
