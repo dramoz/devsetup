@@ -1,4 +1,5 @@
 {
+    "workbench.colorTheme": "Dark+ (color blind)",
     "git.confirmSync": false,
     "git.autofetch": true,
     "files.trimFinalNewlines": true,
@@ -19,9 +20,8 @@
     "diffEditor.wordWrap": "off",
     "editor.guides.indentation": false,
     "editor.guides.bracketPairs": "active",
-    "workbench.colorTheme": "Dark+ (color blind)",
     
-    "editor.inlayHints.enabled": "offUnlessPressed",
+    "editor.inlayHints.enabled": "onUnlessPressed",
     "python.analysis.inlayHints.functionReturnTypes": true,
     "editor.inlayHints.padding": true,
     "javascript.inlayHints.enumMemberValues.enabled": true,
@@ -42,7 +42,8 @@
         "ms-vscode.cmake-tools"
     ],
     "settingsSync.ignoredSettings": [
-    
+        "remote.SSH.configFile",
+        "remote.SSH.remotePlatform"
     ],
     "settingsSync.keybindingsPerPlatform": false
 }
