@@ -13,14 +13,16 @@
 
 ### General
 
-- Python: `. ${VIRTUAL_ENV}/bin/activate; python`
-- Select a tool, framework, simulator...
+- Python: `. ~/virtualenvs/hdl/bin/activate; python`
+- Select a tool, framework, simulator...: `[Modelsim]` (basic testing)
   - frameworks: `[CoCoTB | VUnit]`
     - `CoCoTB` + `[ Icarus | Verilator | Questa]`
     - `VUnit` + `Questa`
   - tools: `[Quartus | Vivado | Yosys | ...]`
   - simulators: `[ModelSim (Quartus/Questa) | Xsim (Vivado) | Icarus | Verilator | ...]`
-- Select waveform viewer: `[Tool GUI | GTKwave | VCDrom (VSCode plugin)]`
+- Select waveform viewer: `VDRom` (basic testing)
+  - `[Tool GUI | GTKwave | VCDrom ]`
+  - `VCDrom`: shows inside VS code with plugin
 
 ### Editor
 
