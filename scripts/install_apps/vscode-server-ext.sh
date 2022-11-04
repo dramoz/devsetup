@@ -32,14 +32,14 @@ echo "--------------------------------------------------------"
 echo "!!! Run this script inside VS Code terminal after"
 echo "!!! establishing the remote connection (ssh usr@remote)"
 echo "--------------------------------------------------------"
-read -p "Install Visual Studio Code (Server) Extensions? (y/n)" ok
+read -p "Install Visual Studio Code (Server/Workspace) Extensions? (y/n)" ok
 if [ "${ok}" == "y" ]; then
-  echo "Installing VS Code (Server) Extensions..."
+  echo "Installing VS Code (Server/Workspace) Extensions..."
   if [ "${ok}" == "y" ];  then
     echo "Installing VS Code extensions"
     while IFS= read -r line; do
       code --install-extension ${line}
-    done < ${HOME}/dev/devsetup/scripts/assets/vscode/server_extensions.ext
+    done < ${HOME}/dev/devsetup/scripts/assets/vscode/workspace_extensions.ext
   fi
 fi
 

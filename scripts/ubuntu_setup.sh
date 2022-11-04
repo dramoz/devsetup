@@ -217,17 +217,18 @@ if [ "${ok}" == "y" ]; then
   fi
   
   echo "--------------------------------------------------"
-  if [ ${auto} -eq 1 ]; then
-    ok="y"
-  else
-    read -p "Install VS code extensions + user settings (NO if using sync!) (y/n)? " ok
-  fi
+  read -p "Install VS code extensions + user settings (select 'n' if using code sync) (y/n)? " ok
   if [ "${ok}" == "y" ];  then
-    echo "Installing VS Code extensions"
+    echo "Installing VS Code extensions (UI+Workspace)"
     while IFS= read -r line; do
       code --install-extension ${line}
-    done < ${HOME}/dev/devsetup/scripts/assets/vscode/all_extensions.ext
+    done < ${HOME}/dev/devsetup/scripts/assets/vscode/ui_extensions.ext
     
+    while IFS= read -r line; do
+      code --install-extension ${line}
+    done < ${HOME}/dev/devsetup/scripts/assets/vscode/workspace_extensions.ext
+    
+    echo "Restoring user settings"
     cp ${HOME}/dev/devsetup/scripts/assets/vscode/*.json ${HOME}/.config/Code/User/
   fi
 fi

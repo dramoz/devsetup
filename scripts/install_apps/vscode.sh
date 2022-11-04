@@ -48,14 +48,20 @@ if [ "${ok}" == "y" ]; then
   fi
   
   echo "--------------------------------------------------"
-  read -p "Install VS code extensions + user settings (y/n)? " ok
-  
+  read -p "Install VS code extensions (select 'n' if using code sync) (y/n)? " ok
   if [ "${ok}" == "y" ];  then
-    echo "Installing VS Code extensions"
+    echo "Installing VS Code extensions (UI+Workspace)"
     while IFS= read -r line; do
       code --install-extension ${line}
-    done < ${HOME}/dev/devsetup/scripts/assets/vscode/all_extensions.ext
+    done < ${HOME}/dev/devsetup/scripts/assets/vscode/ui_extensions.ext
     
+    while IFS= read -r line; do
+      code --install-extension ${line}
+    done < ${HOME}/dev/devsetup/scripts/assets/vscode/workspace_extensions.ext
+  fi
+  
+  read -p "Install VS user settings (select 'n' if using code sync) (y/n)? " ok
+  if [ "${ok}" == "y" ];  then
     cp ${HOME}/dev/devsetup/scripts/assets/vscode/*.json ${HOME}/.config/Code/User/
   fi
 fi
