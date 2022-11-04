@@ -19,6 +19,7 @@
     "diffEditor.wordWrap": "off",
     "editor.guides.indentation": false,
     "editor.guides.bracketPairs": "active",
+    "workbench.colorTheme": "Dark+ (color blind)",
     
     "editor.inlayHints.enabled": "offUnlessPressed",
     "python.analysis.inlayHints.functionReturnTypes": true,
