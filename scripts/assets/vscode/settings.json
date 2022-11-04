@@ -39,7 +39,9 @@
         "platformio.platformio-ide",
         "teros-technology.teroshdl",
         "twxs.cmake",
-        "ms-vscode.cmake-tools"
+        "ms-vscode.cmake-tools",
+        "ms-vscode-remote.vscode-remote-extensionpack",
+        "ms-vscode-remote.remote-wsl"
     ],
     "settingsSync.ignoredSettings": [
         "remote.SSH.configFile",
