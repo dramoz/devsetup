@@ -1,8 +1,8 @@
 #!/bin/bash
 # --------------------------------------------------------------------------------
 # Tools versions
-intel_questa_setup="QuestaSetup-22.3.0.104-linux"
-intel_questa_pkg="22.3/104/ib_installers/questa_part2-22.3.0.104-linux.qdz"
+intel_questa_setup="QuestaSetup-22.3.0.104-linux.run"
+intel_questa_pkg="questa_part2-22.3.0.104-linux.qdz"
 intel_questa_ver="22.3"
 # --------------------------------------------------------------------------------
 echo "---------------------------------------------------------"
@@ -45,27 +45,27 @@ mkdir -p ${HOME}/logs/questa
 mkdir -p ${HOME}/dev/intel/questa/${intel_questa_ver}
 
 cd ${HOME}/tmp
-if [ ! -f "${intel_questa_setup}.run" ]; then
+if [ ! -f "${intel_questa_setup}" ]; then
   echo "Download: Intel Quartus/Questa Setup (BIN ~1GB) (${intel_questa_setup})"
   echo "!!! save to ~/tmp/"
-  eval $browser "https://cdrdv2.intel.com/v1/dl/downloadStart/746695/746699?filename=${intel_questa_setup}.run" >/dev/null 2>&1
+  eval $browser "https://cdrdv2.intel.com/v1/dl/downloadStart/746695/746699?filename=${intel_questa_setup}" >/dev/null 2>&1
   read -p "Press [ENTER] key after download completed..." ok
 fi
 
 if [ ! -f "${intel_questa_pkg}" ]; then
   echo "Download: Intel Questa PKG (~23GB) (${intel_questa_setup})"
   echo "!!! save to ~/tmp/"
-  eval $browser "https://downloads.intel.com/akdlm/software/acdsinst/${intel_questa_pkg}" >/dev/null 2>&1
+  eval $browser "https://downloads.intel.com/akdlm/software/acdsinst/22.3/104/ib_installers/${intel_questa_pkg}" >/dev/null 2>&1
   read -p "Press [ENTER] key after download completed..." ok
 fi
 
-if [ -f "${intel_questa_setup}.run" ] && [ -f "${intel_questa_pkg}" ]; then
+if [ -f "${intel_questa_setup}" ] && [ -f "${intel_questa_pkg}" ]; then
   echo "--------------------------------------------------"
   echo "!!! Install directory: ${HOME}/tools/intel/intelFPGA_pro/${intel_quartus_ver}/"
   echo "--------------------------------------------------"
   echo "Get (free) license from: https://licensing.intel.com/psg/s/licenses-menu"
   echo "NIC: "
-  ifconfig /all
+  ifconfig -a
   echo "--------------------------------------------------"
   
   if ! grep -q "questa" "${HOME}/.bashrc_local"; then
@@ -76,8 +76,8 @@ if [ -f "${intel_questa_setup}.run" ] && [ -f "${intel_questa_pkg}" ]; then
     echo 'export LM_LICENSE_FILE="${HOME}/tools/intel/intelFPGA_pro/${intel_questa_ver}/license.dat' >> ~/.bashrc_local
   fi
   
-  chmod +x ${intel_questa_setup}.run
-  ./${intel_questa_setup}.run
+  chmod +x ${intel_questa_setup}
+  ./${intel_questa_setup}
   
   echo "--------------------------------------------------"
   echo "Invoke tools from terminal with:"
@@ -85,8 +85,8 @@ if [ -f "${intel_questa_setup}.run" ] && [ -f "${intel_questa_pkg}" ]; then
   echo "--------------------------------------------------"
   
 else
-  if [ ! -f "${intel_questa_setup}.run" ]; then
-    echo "~/tmp/${intel_questa_setup}.run file NOT found!"
+  if [ ! -f "${intel_questa_setup}" ]; then
+    echo "~/tmp/${intel_questa_setup} file NOT found!"
   fi
   if [ ! -f "${intel_questa_pkg}" ]; then
     echo "~/tmp/${intel_questa_pkg} file NOT found!"
