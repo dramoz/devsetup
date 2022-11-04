@@ -111,6 +111,7 @@ fi
 #    . ${HOME}/dev/DevSetup/.bash_aliases
 #fi
 if [ -f "${HOME}/dev/devsetup/scripts/.bashrc_devsetup" ]; then
+    cd ${HOME}/dev/devsetup/; git pull; cd ${HOME}
     . "${HOME}/dev/devsetup/scripts/.bashrc_devsetup"
 fi
 
