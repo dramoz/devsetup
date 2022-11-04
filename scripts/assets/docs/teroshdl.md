@@ -63,7 +63,7 @@
   - vsim: `-voptargs="+acc"` (should be disabled for regression)
 - Veriblelint
 
-  - rules: `-no-trailing-spaces`
+  - rules: `-no-trailing-spaces, -line-length`
 - Verilator
 
   - options
@@ -112,7 +112,7 @@
 - path: `~/tools/verible/bin/` `[Optional]`
 - install: (Verible, this script)
 - options:
-  - -Rules: `-no-trailing-spaces`
+  - -Rules: `-no-trailing-spaces, -line-length`
 
 ### [Verilator](https://www.veripool.org/verilator/)
 
