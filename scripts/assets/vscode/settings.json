@@ -5,7 +5,7 @@
     "files.trimFinalNewlines": true,
     "editor.trimAutoWhitespace": false,
     "explorer.autoReveal": false,
-    "editor.fontLigatures": true,
+    "editor.fontLigatures": false,
     "editor.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
     "editor.renderWhitespace": "all",
     "explorer.confirmDelete": false,
@@ -21,7 +21,7 @@
     "editor.guides.indentation": false,
     "editor.guides.bracketPairs": "active",
     
-    "editor.inlayHints.enabled": "onUnlessPressed",
+    "editor.inlayHints.enabled": "offUnlessPressed",
     "python.analysis.inlayHints.functionReturnTypes": true,
     "editor.inlayHints.padding": true,
     "javascript.inlayHints.enumMemberValues.enabled": true,
@@ -34,6 +34,10 @@
     "C_Cpp.inlayHints.autoDeclarationTypes.enabled": true,
     "C_Cpp.inlayHints.referenceOperator.showSpace": true,
     "C_Cpp.inlayHints.referenceOperator.enabled": true,
+    
+    "workbench.editorAssociations": {
+        "*.csv": "default"
+    },
     
     "settingsSync.ignoredExtensions": [
         "platformio.platformio-ide",
