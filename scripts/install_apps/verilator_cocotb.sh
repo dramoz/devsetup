@@ -70,7 +70,7 @@ git checkout ${verilator_tag}
 autoconf
 ./configure --prefix ${HOME}/tools/verilator
 make -j$(nproc)
-sudo -S make install
+make install
 
 if ! grep -q "verilator" "${HOME}/.bashrc_local"; then
   echo '# --------------------------------' >> ~/.bashrc_local

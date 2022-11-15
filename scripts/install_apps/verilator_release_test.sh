@@ -9,4 +9,4 @@ cd ~/repos/verilator
 autoconf
 ./configure --prefix ${HOME}/tools/verilator
 make -j$(nproc)
-sudo -S make install
+make install
