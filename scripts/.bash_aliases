@@ -43,8 +43,20 @@ alias termtitle=termtitle_func
 alias newtab='gnome-terminal --tab --title'
 
 # Git shortcuts
-alias git_ls="git ls-files | green; git ls-files --others --exclude-standard | red"
-alias git_cache="git config --global credential.helper 'cache --timeout 36000'"
+alias gls="git ls-files | green; git ls-files --others --exclude-standard | red"
+alias gcache="git config --global credential.helper 'cache --timeout 36000'"
+alias gpush="git push"
+alias gci="git commit -m"
+alias gcia="git commit -am"
+alias gpull="git pull"
+alias gsync="git pull && git push"
+alias gmerge="git merge"
+alias gshow_remote="git remote -v"
+alias gmerge_fork="git merge upstream/"
+
+#https://www.fizerkhan.com/blog/posts/clean-up-your-local-branches-after-merge-and-delete-in-github
+alias ghelp_cleanup="echo https://www.fizerkhan.com/blog/posts/clean-up-your-local-branches-after-merge-and-delete-in-github"
+alias gignore="wget -O .gitignore https://www.toptal.com/developers/gitignore/api/c,c++,python,jupyternotebooks,backup"
 
 # apt update all!
 alias apt_update_all="sudo apt update -y && sudo apt upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y"
