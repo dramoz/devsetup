@@ -40,6 +40,7 @@ cyan() { tput setaf 6; cat; tput sgr0; }
 # terminal title
 termtitle_func() { printf "\033]0;$*\007"; }
 alias termtitle=termtitle_func
+alias newtab='gnome-terminal --tab --title'
 
 # Git shortcuts
 alias git_ls="git ls-files | green; git ls-files --others --exclude-standard | red"
