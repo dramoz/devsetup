@@ -1,5 +1,6 @@
 hdlConvertor
 hypothesis
+pyslang
 pysmt
 python-constraint
 pyvsc

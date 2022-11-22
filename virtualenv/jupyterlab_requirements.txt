@@ -3,6 +3,9 @@ jupyterlab
 ipywidgets
 ipympl
 pygments
-jupyterlab_pygments
 wavedrom
 nbwavedrom
+jupyterlab_pygments
+jupyter-resource-usage
+jupyterlab-topbar
+jupyterlab-system-monitor
