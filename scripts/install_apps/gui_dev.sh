@@ -74,5 +74,18 @@ if [ "${ok}" == "y" ]; then
 fi
 
 echo "----------------------------------------------------------------------------------------------------"
+read -p "Install Qt (python + tools) (https://kivy.org/) (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  echo ".................................................."
+  echo "Installing on python virtualenv: ${VIRTUAL_ENV}"
+  echo ".................................................."
+  #pip install pyqt5 pyqt5-tools
+  pip install pyside6
+  sudo -S apt install -y libgl1-mesa-dev qt6-tools-dev-tools
+  code --install-extension seanwu.vscode-qt-for-python
+  code --install-extension tonka3000.qtvsctools
+fi
+
+echo "----------------------------------------------------------------------------------------------------"
 echo "Done"
 echo "----------------------------------------------------------------------------------------------------"

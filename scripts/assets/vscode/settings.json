@@ -40,12 +40,16 @@
     },
     
     "settingsSync.ignoredExtensions": [
-        "platformio.platformio-ide",
-        "teros-technology.teroshdl",
-        "twxs.cmake",
-        "ms-vscode.cmake-tools",
+        "BattleBas.kivy-vscode",
+        "ms-vscode-remote.remote-wsl",
         "ms-vscode-remote.vscode-remote-extensionpack",
-        "ms-vscode-remote.remote-wsl"
+        "ms-vscode.cmake-tools",
+        "platformio.platformio-ide",
+        "seanwu.vscode-qt-for-python",
+        "teros-technology.teroshdl",
+        "tonka3000.qtvsctools",
+        "twxs.cmake",
+        "watchakorn-18k.kivy-snippets"
     ],
     "settingsSync.ignoredSettings": [
         "remote.SSH.configFile",
