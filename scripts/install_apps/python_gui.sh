@@ -42,14 +42,14 @@ source $HOME/.local/bin/virtualenvwrapper.sh
 echo "--------------------------------------------------"
 python=${VIRTUAL_ENV}
 if [ -z ${python} ]; then
-  read -p "No virtualenv active detected, create/use virtualenv:kivy (y/n)? " ok
+  read -p "No virtualenv active detected, create/use virtualenv:gui (y/n)? " ok
   if [ "${ok}" == "y" ]; then
-    if [ ! -d "${HOME}/.virtualenvs/kivy/" ]; then
-      echo "virtualenv:kivy not found, creating..."
-      mkvirtualenv kivy
-      source .virtualenvs/kivy/bin/activate
+    if [ ! -d "${HOME}/.virtualenvs/gui/" ]; then
+      echo "virtualenv:gui not found, creating..."
+      mkvirtualenv gui
+      source .virtualenvs/gui/bin/activate
     else
-      source .virtualenvs/kivy/bin/activate
+      source .virtualenvs/gui/bin/activate
     fi
   else
     echo "This scripts only with virtualenv"
@@ -58,10 +58,21 @@ if [ -z ${python} ]; then
 fi
 
 echo "----------------------------------------------------------------------------------------------------"
-echo "Installing python requirements and kivy extensions..."
+echo "Installing python requirements"
 pip install --upgrade pip setuptools virtualenv
 pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
-pip install "kivy[base]" kivy_examples
+
+echo "----------------------------------------------------------------------------------------------------"
+read -p "Install Kivy + VS code extensions (https://kivy.org/) (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  echo ".................................................."
+  echo "Installing on python virtualenv: ${VIRTUAL_ENV}"
+  echo ".................................................."
+  pip install "kivy[base]" kivy_examples
+  code --install-extension BattleBas.kivy-vscode
+  code --install-extension watchakorn-18k.kivy-snippets
+fi
+
 echo "----------------------------------------------------------------------------------------------------"
 echo "Done"
 echo "----------------------------------------------------------------------------------------------------"
