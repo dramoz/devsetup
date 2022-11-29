@@ -84,9 +84,8 @@ if [ "${ok}" == "y" ]; then
     git clone https://github.com/SpinalHDL/SpinalTemplateSbt.git SpinalTemplateSbt
   fi
   cd SpinalTemplateSbt
-  echo "select mylib.MyTopLevelVhdl in the menu..."
+  echo "select mylib.MyTopLevelVhdl or mylib.MyTopLevelVerilog in the menu..."
   sbt run
-  ls MyTopLevel.vhd
 fi
 
 echo "----------------------------------------------------------------------------------------------------"
