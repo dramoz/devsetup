@@ -1,7 +1,7 @@
 #!/bin/bash
 # --------------------------------------------------------------------------------
 # Tools versions
-verilator_tag="v4.228.1"
+verilator_tag="v5.002-vpi-callback-patch"
 cocotb_ver="1.7.1"
 cocotb_bus_ver="v0.1.0"
 cocotbext_pcie_tag="eid"
