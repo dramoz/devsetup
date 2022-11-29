@@ -29,7 +29,7 @@ fi
 echo "--------------------------------------------------"
 # Ubuntu update
 echo "update/upgrade/remove"
-sudo -S apt update -y && sudo -S apt upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y
+sudo -S apt update -y && sudo -S apt upgrade -y && sudo -S apt dist-upgrade -y && sudo -S apt autoremove -y
 
 echo "--------------------------------------------------"
 # R&D dirs

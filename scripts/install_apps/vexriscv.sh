@@ -29,7 +29,7 @@ fi
 echo "--------------------------------------------------"
 # Ubuntu update
 echo "update/upgrade/remove"
-sudo -S apt update -y && sudo -S apt upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y
+sudo -S apt update -y && sudo -S apt upgrade -y && sudo -S apt dist-upgrade -y && sudo -S apt autoremove -y
 
 echo "--------------------------------------------------"
 # R&D dirs
@@ -66,13 +66,13 @@ pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
 
 echo "----------------------------------------------------------------------------------------------------"
 echo "Installing SBT/Scala"
-sudo apt-get install openjdk-8-jdk
-sudo apt-get install scala
-echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | sudo tee /etc/apt/sources.list.d/sbt.list
-echo "deb https://repo.scala-sbt.org/scalasbt/debian /" | sudo tee /etc/apt/sources.list.d/sbt_old.list
-curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
-sudo apt-get update
-sudo apt-get install sbt
+sudo -S apt install -y openjdk-8-jdk
+sudo -S apt install -y scala
+echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | sudo -S tee /etc/apt/sources.list.d/sbt.list
+echo "deb https://repo.scala-sbt.org/scalasbt/debian /" | sudo -S tee /etc/apt/sources.list.d/sbt_old.list
+curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo -S apt-key add
+sudo -S apt update -y
+sudo -S apt install -y sbt
 
 echo "----------------------------------------------------------------------------------------------------"
 read -p "Test SpinalHDL (https://spinalhdl.github.io/SpinalDoc-RTD/master/index.html) (y/n)? " ok
