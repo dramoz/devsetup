@@ -25,6 +25,7 @@ keroc.hex-fmt
 ldez.ignore-files
 leathong.openscad-language-support
 leodevbro.blockman
+lextudio.restructuredtext
 mads-hartmann.bash-ide-vscode
 mateuszchudyk.hexinspector
 mechatroner.rainbow-csv
@@ -34,10 +35,14 @@ ms-vscode-remote.remote-ssh
 ms-vscode-remote.remote-ssh-edit
 ms-vscode.cpptools
 ms-vscode.cpptools-themes
+ms-vscode.hexeditor
 ms-vscode.live-server
 ms-vscode.remote-repositories
+MS-vsliveshare.vsliveshare
 mshr-h.veriloghdl
 mtsmfm.vscode-stl-viewer
+njpwerner.autodocstring
+PascalReitermann93.vscode-yaml-sort
 pedrofonsecadev.dark-plus-colorblind
 QiaoJie.binary-viewer
 redhat.vscode-yaml
@@ -48,6 +53,7 @@ ryu1kn.partial-diff
 scala-lang.scala
 sketchbuch.vsc-workspace-sidebar
 spmeesseman.vscode-taskexplorer
+streetsidesoftware.code-spell-checker
 tomoki1207.pdf
 trond-snekvik.gnu-mapfiles
 tyriar.sort-lines
