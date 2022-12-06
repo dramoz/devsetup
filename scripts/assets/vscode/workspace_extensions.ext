@@ -21,6 +21,7 @@ leathong.openscad-language-support
 lextudio.restructuredtext
 mads-hartmann.bash-ide-vscode
 mateuszchudyk.hexinspector
+matsuyoido-kanro.space-align-format
 mechatroner.rainbow-csv
 mkxml.vscode-filesize
 ms-python.python
@@ -40,6 +41,7 @@ rust-lang.rust-analyzer
 ryu1kn.partial-diff
 sketchbuch.vsc-workspace-sidebar
 spmeesseman.vscode-taskexplorer
+streetsidesoftware.code-spell-checker
 tomoki1207.pdf
 trond-snekvik.gnu-mapfiles
 tyriar.sort-lines
