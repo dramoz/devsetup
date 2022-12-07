@@ -28,6 +28,7 @@ leodevbro.blockman
 lextudio.restructuredtext
 mads-hartmann.bash-ide-vscode
 mateuszchudyk.hexinspector
+matsuyoido-kanro.space-align-format
 mechatroner.rainbow-csv
 mkxml.vscode-filesize
 ms-python.python
@@ -52,6 +53,7 @@ rust-lang.rust-analyzer
 ryu1kn.partial-diff
 scala-lang.scala
 sketchbuch.vsc-workspace-sidebar
+sleistner.vscode-fileutils
 spmeesseman.vscode-taskexplorer
 streetsidesoftware.code-spell-checker
 tomoki1207.pdf
