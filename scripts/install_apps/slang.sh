@@ -94,7 +94,15 @@ fi
 
 echo "--------------------------------------------------"
 echo "Installing pyslang to ${VIRTUAL_ENV}"
-pip install pyslang
+# Check if directory exists
+cd ${HOME}/repos
+if [ ! -d "pyslang" ]; then
+  git clone https://github.com/MikePopoloski/pyslang.git
+fi
+
+cd pyslang
+git submodule update --init --recursive
+pip install .
 
 echo "--------------------------------------------------"
 echo "Done"
