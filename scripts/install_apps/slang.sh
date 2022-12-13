@@ -2,6 +2,7 @@
 #!/bin/bash
 # --------------------------------------------------------------------------------
 VENV_TGT="hdl"
+CMAKE_VER="3.25.1"
 # --------------------------------------------------------------------------------
 echo "---------------------------------------------------------"
 echo "-> Please make sure that ./ubuntu_setup.sh was run before!!"
@@ -68,7 +69,15 @@ pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
 # https://sv-lang.com/building.html
 
 # Dependecies
-sudo -S snap install cmake --classic
+#sudo -S snap install cmake --classic -> snape CMake does not currently works with VS Code
+sudo -S apt install libssl-dev
+cd ~/tmp
+wget -O cmake-${CMAKE_VER}.tar.gz https://github.com/Kitware/CMake/releases/download/v${CMAKE_VER}/cmake-${CMAKE_VER}.tar.gz
+tar -xvzf cmake-${CMAKE_VER}.tar.gz 
+cd cmake-${CMAKE_VER}/
+./bootstrap
+make
+sudo -S make install
 
 # Check if directory exists
 cd ${HOME}/repos
