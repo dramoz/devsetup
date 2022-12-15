@@ -260,6 +260,25 @@ function __setprompt
 }
 PROMPT_COMMAND='__setprompt'
 
+# ---------------------------------------------------------------------------
+# Add projects scripts to path
+export PROJECTS_SCRIPTS=${HOME}/scripts/projects
+mkdir -p ${PROJECTS_SCRIPTS}
+export PATH=${PROJECTS_SCRIPTS}:$PATH
+function create_project () {
+    prj_sh=${PROJECTS_SCRIPTS}/$1.sh
+    
+    if [ ! -f "${prj_sh}" ]; then
+        PRJ_PATH=$(pwd)
+        echo "" >> ${prj_sh}
+        #!/bin/bash
+        # --------------------------------------------------------------------------------
+        export PRJ=${PRJ_PATH}
+        cd ${PRJ_PATH}
+        workon hdl
+    fi
+}
+
 ###############################################
 # Load other aliases
 if [ -f "${HOME}/dev/devsetup/scripts/.bash_aliases" ]; then

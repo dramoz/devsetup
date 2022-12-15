@@ -60,3 +60,6 @@ alias gignore="wget -O .gitignore https://www.toptal.com/developers/gitignore/ap
 
 # apt update all!
 alias apt_update_all="sudo apt update -y && sudo apt upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y"
+
+# projects
+alias start_project="export PRJ=$(pwd)"
