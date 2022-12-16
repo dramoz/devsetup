@@ -101,7 +101,7 @@ if [ -d ${intel_quartus_pkg} ]; then
     if ! grep -q "questa" "${HOME}/.bashrc_local"; then
       echo '# --------------------------------' >> ~/.bashrc_local
       echo '# questa' >> ~/.bashrc_local
-      echo "export QUESTA_ROOTDIR=\"${HOME}/tools/intel/intelFPGA_lite/${intel_quartus_ver}/questa_fe\"" >> ~/.bashrc_local
+      echo "export QUESTA_ROOTDIR=\"${HOME}/tools/intel/intelFPGA_lite/${intel_quartus_ver}/questa_fse\"" >> ~/.bashrc_local
       echo 'export PATH=$QUESTA_ROOTDIR/bin:$PATH' >> ~/.bashrc_local
       echo 'export LM_LICENSE_FILE=${HOME}/tools/intel/license.dat' >> ~/.bashrc_local
     fi

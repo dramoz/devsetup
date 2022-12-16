@@ -90,7 +90,8 @@
 
 ### [Modelsim (Intel Questa)](https://www.intel.com/content/www/us/en/software/programmable/quartus-prime/questa-edition.html)
 
-- path: `~/tools/intel/intelFPGA_pro/22.3/questa_fse/bin/` `[Optional]`
+- path: `~/tools/intel/intelFPGA_pro/22.3/questa_fse/bin/` `[Optional - free edition]`
+- path: `~/tools/intel/intelFPGA_pro/22.3/questa_fe/bin/` `[Optional - paid version]`
 - install: `~/dev/devsetup/scripts/install_apps/intel_questa.sh`
 - options:
   - vsim: `-voptargs="+acc"` (should be disabled for regression)
