@@ -1,13 +1,14 @@
 #!/bin/bash
 # --------------------------------------------------------------------------------
 # Tools versions
-intel_quartus_pkg="Quartus-pro-22.3.0.104-linux-complete"
-intel_quartus_ver="22.3"
+intel_quartus_ver="22.1std"
+intel_quartus_pkg="Quartus-lite-${intel_quartus_ver}.0.915-linux"
+intel_quartus_url="https://cdrdv2.intel.com/v1/dl/getContent/757261/757273?filename=${intel_quartus_pkg}.tar"
 # --------------------------------------------------------------------------------
 echo "---------------------------------------------------------"
 echo "-> Please make sure that ./ubuntu_setup.sh was run before!!"
 echo "--------------------------------------------------"
-read -p "Install Intel Quartus Pro ver:${intel_quartus_pkg} (y/n)? " ok
+read -p "Install Intel Quartus Lite ver:${intel_quartus_pkg} (y/n)? " ok
 if [ "${ok}" != "y" ]; then
   exit 1
 fi
@@ -38,17 +39,16 @@ echo "Creating common dirs..."
 cd ~; mkdir -p dev tools repos tmp
 
 echo "----------------------------------------------------------------------------------------------------"
-echo "Installing Intel Quartus Pro (https://www.intel.com/content/www/us/en/docs/programmable/683472/22-3/downloading-and-installing-fpga-software.html)"
+echo "Installing Intel Quartus Lite (https://www.intel.com/content/www/us/en/docs/programmable/683472/22-3/downloading-and-installing-fpga-software.html)"
 sudo -S apt install libncurses5
 mkdir -p ${HOME}/logs/quartus
 mkdir -p ${HOME}/dev/intel/quartus/${intel_quartus_ver}
 
 cd ${HOME}/tmp
 if [ ! -d ${intel_quartus_pkg} ] && [ ! -f "${intel_quartus_pkg}.tar" ]; then
-  echo "Download: Intel Quartus Pro (TAR ~90GB) (${intel_quartus_pkg})"
+  echo "Download: Intel Quartus Lite (TAR ~6.5GB) (${intel_quartus_pkg})"
   echo "!!! save to ~/tmp/"
-  #eval $browser "https://www.intel.ca/content/www/ca/en/software-kit/current/657472.html" >/dev/null 2>&1
-  eval $browser "https://cdrdv2.intel.com/v1/dl/getContent/746666/746690?filename=${intel_quartus_pkg}.tar" >/dev/null 2>&1
+  eval $browser "${intel_quartus_url}" >/dev/null 2>&1
   
   read -p "Press [ENTER] key after download completed..." ok
 fi
@@ -64,21 +64,15 @@ fi
 
 if [ -d ${intel_quartus_pkg} ]; then
   echo "--------------------------------------------------"
-  echo "!!! Install directory: ${HOME}/tools/intel/intelFPGA_pro/${intel_quartus_ver}/"
+  echo "!!! Install directory: ${HOME}/tools/intel/intelFPGA_lite/${intel_quartus_ver}/"
   echo "--------------------------------------------------"
   echo "- Common options:"
-  echo "  [] Uncheck DSP Builder (MATLAB+Simulink required)"
-  echo "  [] Uncheck SDK for OpenCL"
   echo "  [] Uncheck unrequired FPGAs"
-  echo "--------------------------------------------------"
-  echo "Get (free) license from: https://licensing.intel.com/psg/s/licenses-menu"
-  echo "NIC: "
-  ifconfig /all
+  echo "  [] Uncheck/Questa"
   echo "--------------------------------------------------"
   
   cd ${intel_quartus_pkg}
-  #${intel_quartus_pkg}.run --mode unattended --unattendedmodeui minimal --installdir ${HOME}/dev/tools/intel --accept_eula 1
-  ./setup_pro.sh
+  ./setup.sh
   
   if ! grep -q "quartus" "${HOME}/.bashrc_local"; then
     echo '# --------------------------------' >> ~/.bashrc_local
