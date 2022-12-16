@@ -77,10 +77,10 @@ if [ -d ${intel_quartus_pkg} ]; then
   if ! grep -q "quartus" "${HOME}/.bashrc_local"; then
     echo '# --------------------------------' >> ~/.bashrc_local
     echo '# quartus' >> ~/.bashrc_local
-    echo "export QUARTUS_ROOTDIR=${HOME}/tools/intel/intelFPGA_pro/${intel_questa_ver}/quartus" >> ~/.bashrc_local
+    echo "export QUARTUS_ROOTDIR=\"${HOME}/tools/intel/intelFPGA_lite/${intel_quartus_ver}/quartus\"" >> ~/.bashrc_local
     echo 'export QSYS_ROOTDIR=$QUARTUS_ROOTDIR/qsys/bin' >> ~/.bashrc_local
     echo 'export PATH=$QUARTUS_ROOTDIR/bin:$PATH' >> ~/.bashrc_local
-    echo 'export LM_LICENSE_FILE=${HOME}/tools/intel/license.dat' >> ~/.bashrc_local
+    echo '#export LM_LICENSE_FILE=${HOME}/tools/intel/license.dat' >> ~/.bashrc_local
   fi
   
   echo "--------------------------------------------------"
