@@ -68,7 +68,7 @@ if [ -d ${intel_quartus_pkg} ]; then
   echo "--------------------------------------------------"
   echo "- Common options:"
   echo "  [] Uncheck unrequired FPGAs"
-  echo "  [] Uncheck/Questa"
+  echo "  [] Uncheck/Questa (Lite)"
   echo "--------------------------------------------------"
   
   cd ${intel_quartus_pkg}
@@ -89,6 +89,23 @@ if [ -d ${intel_quartus_pkg} ]; then
   echo "--------------------------------------------------"
   echo "or from desktop (right click, Allow Launching)"
   echo "--------------------------------------------------"
+  
+  echo "--------------------------------------------------"
+  read -p "Did you installed Questa (y/n)? " ok
+  if [ "${ok}" != "y" ]; then
+    echo "Needs (free) license from: https://licensing.intel.com/psg/s/licenses-menu"
+    echo "NIC: "
+    ifconfig -a
+    echo "--------------------------------------------------"
+    
+    if ! grep -q "questa" "${HOME}/.bashrc_local"; then
+      echo '# --------------------------------' >> ~/.bashrc_local
+      echo '# questa' >> ~/.bashrc_local
+      echo "export QUESTA_ROOTDIR=\"${HOME}/tools/intel/intelFPGA_lite/${intel_quartus_ver}/questa_fe\"" >> ~/.bashrc_local
+      echo 'export PATH=$QUESTA_ROOTDIR/bin:$PATH' >> ~/.bashrc_local
+      echo 'export LM_LICENSE_FILE=${HOME}/tools/intel/license.dat' >> ~/.bashrc_local
+    fi
+  fi
   
 else
   echo "~/tmp/${intel_quartus_pkg} directory NOT found! Unable to proceed..."
