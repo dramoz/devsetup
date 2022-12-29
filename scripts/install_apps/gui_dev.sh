@@ -88,5 +88,15 @@ if [ "${ok}" == "y" ]; then
 fi
 
 echo "----------------------------------------------------------------------------------------------------"
+read -p "Install PySimpleGUI (https://www.pysimplegui.org/en/latest/) (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  echo ".................................................."
+  echo "Installing on python virtualenv: ${VIRTUAL_ENV}"
+  echo ".................................................."
+  #sudo -S apt install -y libx11-xcb-dev libxcb-xinerama0 libgl1-mesa-dev qt6-tools-dev-tools qt6-base-dev
+  pip install pysimplegui
+fi
+
+echo "----------------------------------------------------------------------------------------------------"
 echo "Done"
 echo "----------------------------------------------------------------------------------------------------"
