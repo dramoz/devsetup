@@ -2,6 +2,8 @@
 # --------------------------------------------------------------------------------
 VENV_TGT="dev"
 ARM_VERSION="12.2.rel1"
+HOST="x86_64"
+ARM_TGT=("aarch64-none-linux-gnu", "aarch64-none-elf")
 # --------------------------------------------------------------------------------
 echo "---------------------------------------------------------"
 echo "-> Please make sure that ./ubuntu_setup.sh was run before!!"
@@ -65,40 +67,36 @@ pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
 pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
 
 echo "----------------------------------------------------------------------------------------------------"
-read -p "Install ARM GNU Toolchain (https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain) (y/n)? " ok
-ARM_TOOL_CHAIN="arm-gnu-toolchain-${ARM_VERSION}-x86_64-aarch64-none-linux-gnu"
+read -p "Install ARM GNU Toolchain (https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain) (baremetal+linux) (y/n)? " ok
+
 if [ "${ok}" == "y" ]; then
   echo ".................................................."
   cd ${HOME}/tmp
-  if [ ! -d ${ARM_TOOL_CHAIN} ] && [ ! -f "${ARM_TOOL_CHAIN}.tar.gz" ]; then
-    wget -O ${ARM_TOOL_CHAIN}.tar.xz https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu/${ARM_VERSION}/binrel/${ARM_TOOL_CHAIN}.tar.xz
-  fi
+  TAR_EXT="tar.xz"
+  for TGT in ${ARM_TGT[@]}; do
+    ARM_TOOL_CHAIN="arm-gnu-toolchain-${ARM_VERSION}-${HOST}-${TGT}"
+    ARM_PATH_TGT="arm-gnu-toolchain-${TGT}"
+    if [ ! -d ${ARM_TOOL_CHAIN} ] && [ ! -f "${ARM_TOOL_CHAIN}.${TAR_EXT}" ]; then
+      wget -O ${ARM_TOOL_CHAIN}.${TAR_EXT} https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu/${ARM_VERSION}/binrel/${ARM_TOOL_CHAIN}.${TAR_EXT}
+    fi
+    
+    if [ ! -d "${ARM_TOOL_CHAIN}" ] && [ -f "${ARM_TOOL_CHAIN}.${TAR_EXT}" ]; then
+      tar -xvf ${ARM_TOOL_CHAIN}.${TAR_EXT}
+    else
+      echo "~/tmp/${ARM_TOOL_CHAIN}.${TAR_EXT} file NOT found! (checking directory)"
+    fi
+    
+    if [ -d ${ARM_TOOL_CHAIN} ]; then
+      mv ${ARM_TOOL_CHAIN} ~/tools/${ARM_PATH_TGT}
+      if ! grep -q "${TGT}" "${HOME}/.bashrc_local"; then
+        echo '# --------------------------------'  >> ~/.bashrc_local
+        echo "# ${TGT}" >> ~/.bashrc_local
+        echo '# ARM Toolchain' >> ~/.bashrc_local
+        echo 'export PATH=${HOME}/tools/${ARM_PATH_TGT}/bin:$PATH' >> ~/.bashrc_local
+      fi
+    fi
+  done
 fi
-
-if [ ! -d "${ARM_TOOL_CHAIN}" ] && [ -f "${ARM_TOOL_CHAIN}.tar.gz" ]; then
-  tar -xvzf ${ARM_TOOL_CHAIN}.tar.gz
-else
-  echo "~/tmp/${ARM_TOOL_CHAIN}.tar.gz file NOT found! (checking directory)"
-fi
-
-if [ -d ${ARM_TOOL_CHAIN} ]; then
-  cd ${ARM_TOOL_CHAIN}
-fi
-
-echo "----------------------------------------------------------------------------------------------------"
-# RISC-V toolchain
-# Install
-#cd ${HOME}/tmp
-#wget https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-${risv_toolchain_ver}.tar.gz
-#tar -xvzf riscv64-unknown-elf-toolchain-${risv_toolchain_ver}.tar.gz
-#rm -f riscv64-unknown-elf-toolchain-${risv_toolchain_ver}.tar.gz
-#mv riscv64-unknown-elf-toolchain-${risv_toolchain_ver} ${HOME}/tools/riscv64-unknown-elf-toolchain
-#if ! grep -q "riscv" "${HOME}/.bashrc_local"; then
-#  echo '# --------------------------------'  >> ~/.bashrc_local
-#  echo '# riscv' >> ~/.bashrc_local
-#  echo '# RISC-V Toolchain' >> ~/.bashrc_local
-#  echo 'export PATH=${HOME}/tools/riscv64-unknown-elf-toolchain/bin:$PATH' >> ~/.bashrc_local
-#fi
 
 echo "----------------------------------------------------------------------------------------------------"
 echo "Done"
