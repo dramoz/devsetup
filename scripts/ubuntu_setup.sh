@@ -1,4 +1,8 @@
 #!/bin/bash
+# --------------------------------------------------------------------------------
+VENV_TGT="dev"
+# --------------------------------------------------------------------------------
+
 echo "----------------------------------------------------------------------------------------------------"
 ubuntu_release=$(lsb_release -r)
 ubuntu_ver=$(cut -f2 <<< "$ubuntu_release")
@@ -183,17 +187,17 @@ if [ "${ok}" == "y" ]; then
   source ~/.bashrc
 fi
 
-# Virtualenv:dev
+# Virtualenv:VENV_TGT
 source ~/.bashrc
 source $HOME/.local/bin/virtualenvwrapper.sh
 echo "--------------------------------------------------"
-if [ ! -d "${HOME}/.virtualenvs/dev/" ]; then
-  echo "virtualenv:dev not found, creating..."
-  mkvirtualenv dev
+if [ ! -d "${HOME}/.virtualenvs/${VENV_TGT}/" ]; then
+  echo "virtualenv:${VENV_TGT} not found, creating..."
+  mkvirtualenv ${VENV_TGT}
 fi
 
-echo "Adding requirements to virtualenv:dev"
-source .virtualenvs/dev/bin/activate
+echo "Adding requirements to virtualenv:${VENV_TGT}"
+source .virtualenvs/${VENV_TGT}/bin/activate
 pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
 pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
 
