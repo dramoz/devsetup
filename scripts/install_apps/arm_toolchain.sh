@@ -3,7 +3,7 @@
 VENV_TGT="dev"
 ARM_VERSION="12.2.rel1"
 HOST="x86_64"
-ARM_TGT=("aarch64-none-linux-gnu", "aarch64-none-elf")
+ARM_TGT=("aarch64-none-linux-gnu" "aarch64-none-elf")
 # --------------------------------------------------------------------------------
 echo "---------------------------------------------------------"
 echo "-> Please make sure that ./ubuntu_setup.sh was run before!!"
