@@ -80,7 +80,7 @@ if [ -d ${intel_quartus_pkg} ]; then
     echo "export QUARTUS_ROOTDIR=\"\${TOOLS_PATH}/intelFPGA_lite/${intel_quartus_ver}/quartus\"" >> ~/.bashrc_local
     echo 'export QSYS_ROOTDIR=$QUARTUS_ROOTDIR/qsys/bin' >> ~/.bashrc_local
     echo 'export PATH=$QUARTUS_ROOTDIR/bin:$PATH' >> ~/.bashrc_local
-    echo '#export LM_LICENSE_FILE=${TOOLS_PATH}/intel/license.dat' >> ~/.bashrc_local
+    echo '#export LM_LICENSE_FILE=${HOME}/tools/intel/license.dat' >> ~/.bashrc_local
   fi
   
   echo "--------------------------------------------------"
@@ -103,7 +103,7 @@ if [ -d ${intel_quartus_pkg} ]; then
       echo '# questa' >> ~/.bashrc_local
       echo "export QUESTA_ROOTDIR=\"\${TOOLS_PATH}/intelFPGA_lite/${intel_quartus_ver}/questa_fse\"" >> ~/.bashrc_local
       echo 'export PATH=$QUESTA_ROOTDIR/bin:$PATH' >> ~/.bashrc_local
-      echo 'export LM_LICENSE_FILE=${TOOLS_PATH}/intel/license.dat' >> ~/.bashrc_local
+      echo 'export LM_LICENSE_FILE=${HOME}/tools/intel/license.dat' >> ~/.bashrc_local
     fi
   fi
   

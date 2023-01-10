@@ -73,7 +73,7 @@ if [ -f "${intel_questa_setup}" ] && [ -f "${intel_questa_pkg}" ]; then
     echo '# questa' >> ~/.bashrc_local
     echo "export QUESTA_ROOTDIR=\"\${TOOLS_PATH}/intelFPGA_pro/${intel_questa_ver}/questa_fe\"" >> ~/.bashrc_local
     echo 'export PATH=$QUESTA_ROOTDIR/bin:$PATH' >> ~/.bashrc_local
-    echo 'export LM_LICENSE_FILE=${TOOLS_PATH}/intel/license.dat' >> ~/.bashrc_local
+    echo 'export LM_LICENSE_FILE=${HOME}/tools/intel/license.dat' >> ~/.bashrc_local
   fi
   
   chmod +x ${intel_questa_setup}
