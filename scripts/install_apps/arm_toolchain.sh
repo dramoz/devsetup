@@ -39,34 +39,6 @@ echo "Creating common dirs..."
 cd ~; mkdir -p dev tools repos tmp
 
 echo "----------------------------------------------------------------------------------------------------"
-# VirtualEnv
-source $HOME/.local/bin/virtualenvwrapper.sh
-echo "--------------------------------------------------"
-python=${VIRTUAL_ENV}
-if [ -z ${python} ]; then
-  read -p "No virtualenv active detected, create/use virtualenv:${VENV_TGT} (y/n)? " ok
-  if [ "${ok}" == "y" ]; then
-    if [ ! -d "${HOME}/.virtualenvs/${VENV_TGT}/" ]; then
-      echo "virtualenv:${VENV_TGT} not found, creating..."
-      mkvirtualenv ${VENV_TGT}
-      source .virtualenvs/${VENV_TGT}/bin/activate
-    else
-      source .virtualenvs/${VENV_TGT}/bin/activate
-    fi
-  else
-    echo "This scripts only with virtualenv"
-    exit 1
-  fi
-fi
-
-echo "----------------------------------------------------------------------------------------------------"
-echo "Python update..."
-pip install --upgrade pip setuptools virtualenv
-pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
-#pip install -r ~/dev/devsetup/virtualenv/hdl_requirements.txt
-pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
-
-echo "----------------------------------------------------------------------------------------------------"
 read -p "Install ARM GNU Toolchain (https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain) (baremetal+linux) (y/n)? " ok
 
 if [ "${ok}" == "y" ]; then
