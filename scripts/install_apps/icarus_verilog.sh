@@ -49,7 +49,7 @@ fi
 cd iverilog
 git checkout $iverilog_tag
 bash autoconf.sh
-./configure --prefix=${HOME}/tools/iverilog
+./configure --prefix=${TOOLS_PATH}/iverilog
 make -j$(nproc)
 sudo -S make install
 iverilog -v

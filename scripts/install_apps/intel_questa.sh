@@ -61,7 +61,7 @@ fi
 
 if [ -f "${intel_questa_setup}" ] && [ -f "${intel_questa_pkg}" ]; then
   echo "--------------------------------------------------"
-  echo "!!! Install directory: ${HOME}/tools/intel/intelFPGA_pro/${intel_quartus_ver}/"
+  echo "!!! Install directory: ${TOOLS_PATH}/intelFPGA_pro/${intel_quartus_ver}/"
   echo "--------------------------------------------------"
   echo "Get (free) license from: https://licensing.intel.com/psg/s/licenses-menu"
   echo "NIC: "
@@ -71,9 +71,9 @@ if [ -f "${intel_questa_setup}" ] && [ -f "${intel_questa_pkg}" ]; then
   if ! grep -q "questa" "${HOME}/.bashrc_local"; then
     echo '# --------------------------------' >> ~/.bashrc_local
     echo '# questa' >> ~/.bashrc_local
-    echo "export QUESTA_ROOTDIR=\"${HOME}/tools/intel/intelFPGA_pro/${intel_questa_ver}/questa_fe\"" >> ~/.bashrc_local
+    echo "export QUESTA_ROOTDIR=\"\${TOOLS_PATH}/intelFPGA_pro/${intel_questa_ver}/questa_fe\"" >> ~/.bashrc_local
     echo 'export PATH=$QUESTA_ROOTDIR/bin:$PATH' >> ~/.bashrc_local
-    echo 'export LM_LICENSE_FILE=${HOME}/tools/intel/license.dat' >> ~/.bashrc_local
+    echo 'export LM_LICENSE_FILE=${TOOLS_PATH}/intel/license.dat' >> ~/.bashrc_local
   fi
   
   chmod +x ${intel_questa_setup}

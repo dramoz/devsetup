@@ -4,3 +4,6 @@
 
 # ----------------------------------------------------------------
 # Tools paths
+#export TOOLS_PATH="/data/tools"
+export TOOLS_PATH="${HOME}/tools"
+export PATH=${TOOLS_PATH}:$PATH

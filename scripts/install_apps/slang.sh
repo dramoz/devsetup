@@ -92,13 +92,13 @@ git pull
 #cmake --build build
 cmake -B build -DSLANG_INCLUDE_DOCS=ON
 cmake --build build --target docs
-cmake --install build --strip --prefix ${HOME}/tools/slang
+cmake --install build --strip --prefix ${TOOLS_PATH}/slang
 
 # Add path
 if ! grep -q "slang" "${HOME}/.bashrc_local"; then
   echo '# --------------------------------' >> ~/.bashrc_local
   echo '# slang' >> ~/.bashrc_local
-  echo 'export PATH=${HOME}/tools/slang/bin:$PATH' >> ~/.bashrc_local
+  echo 'export PATH=${TOOLS_PATH}/slang/bin:$PATH' >> ~/.bashrc_local
 fi
 
 echo "--------------------------------------------------"

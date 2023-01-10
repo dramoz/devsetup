@@ -88,7 +88,7 @@ fi
 echo "--------------------------------------------------"
 read -p "Verible (SV linter/formatter) (y/n)? " ok
 if [ "${ok}" == "y" ]; then
-  cd ${HOME}/tools
+  cd ${TOOLS_PATH}
   if [ ! -d "verible" ] && [ ! -f "${HOME}/tmp/verible.tar.gz" ]; then
     echo "Download: Verible (TAR ~10MB) (${verible_ver})"
     wget -O ${HOME}/tmp/verible.tar.gz https://github.com/chipsalliance/verible/releases/download/${verible_ver}/verible-${verible_ver}-Ubuntu-22.04-jammy-x86_64.tar.gz
@@ -99,7 +99,7 @@ if [ "${ok}" == "y" ]; then
   if ! grep -q "verible" "${HOME}/.bashrc_local"; then
     echo '# --------------------------------' >> ~/.bashrc_local
     echo '# verible' >> ~/.bashrc_local
-    echo 'export PATH=${HOME}/tools/verible/bin:$PATH' >> ~/.bashrc_local
+    echo 'export PATH=${TOOLS_PATH}/verible/bin:$PATH' >> ~/.bashrc_local
   fi
   
   echo "--------------------------------------------------"
@@ -108,14 +108,14 @@ if [ "${ok}" == "y" ]; then
   echo "$ verible-verilog-lint --version"
   echo "--------------------------------------------------"
   echo "Paths for VS Code TerosHDL: "
-  echo "  Formatter Settings.Verilog/SV Verible formatter: ~/tools/verible/bin/verible-verilog-format"
+  echo "  Formatter Settings.Verilog/SV Verible formatter: ${TOOLS_PATH}/verible/bin/verible-verilog-format"
   echo "--------------------------------------------------"
 fi
 
 echo "--------------------------------------------------"
 read -p "OSS CAD Suite (Yosys, schematic viewer) (https://github.com/YosysHQ/oss-cad-suite-build) (y/n)? " ok
 if [ "${ok}" == "y" ]; then
-  cd ${HOME}/tools
+  cd ${TOOLS_PATH}
   if [ ! -d "oss-cad-suite" ] && [ ! -f "${HOME}/tmp/oss_cad_suite_ver.tgz" ]; then
     echo "Download: OSS CAD Suite (TAR ~480MB) (${oss_cad_suite_ver})"
     wget -O ${HOME}/tmp/oss_cad_suite_ver.tgz https://github.com/YosysHQ/oss-cad-suite-build/releases/download/${oss_cad_suite_dwnld_dir}/${oss_cad_suite_ver}.tgz
@@ -127,7 +127,7 @@ if [ "${ok}" == "y" ]; then
     echo '# oss-cad-suite' >> ~/.bashrc_local
     echo '# Set PATH at the end, as oss-cad has several tools' >> ~/.bashrc_local
     echo '# that will conflict with other installations (e.g. Verilator, RISC-V toolchain, ...' >> ~/.bashrc_local
-    echo 'export PATH=$PATH:${HOME}/tools/verible/bin' >> ~/.bashrc_local
+    echo 'export PATH=$PATH:${TOOLS_PATH}/verible/bin' >> ~/.bashrc_local
   fi
   
   echo "--------------------------------------------------"
@@ -140,7 +140,7 @@ if [ "${ok}" == "y" ]; then
   echo "--------------------------------------------------"
   echo "Path(s) for VS Code TerosHDL: "
   echo "- Tools: GHDL, SymbiYosys, Yosys"
-  echo "  path: ~/tools/oss-cad-suite/bin/"
+  echo "  path: ${TOOLS_PATH}/oss-cad-suite/bin/"
   echo "--------------------------------------------------"
 fi
 

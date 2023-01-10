@@ -64,7 +64,7 @@ fi
 
 if [ -d ${xlnx_tools_pkg} ]; then
   echo "--------------------------------------------------"
-  echo "!!! Install directory: ${HOME}/tools/"
+  echo "!!! Install directory: ${TOOLS_PATH}/"
   echo "->Important (From AMD/Xilinx UG1393):"
   echo "*Do not deselect the following option. It is required for installation."
   echo "  [x] Devices > Install devices for Alveo and Xilinx Edge acceleration platforms"
@@ -78,7 +78,7 @@ if [ -d ${xlnx_tools_pkg} ]; then
   cd ${xlnx_tools_pkg}
   ./xsetup
   read -p "Press [ENTER] key after installation is done..." ok
-  sudo -S ${HOME}/tools/Xilinx/Vitis/${xlnx_tools_ver}/scripts/installLibs.sh
+  sudo -S ${TOOLS_PATH}/Xilinx/Vitis/${xlnx_tools_ver}/scripts/installLibs.sh
   
   # Xilinx Runtime (XRT)
   # -> This is required for the embedded OS, but not host!!!
@@ -100,7 +100,7 @@ if [ -d ${xlnx_tools_pkg} ]; then
     touch ${vitis_sh}
     echo '#!/bin/bash' >> ${vitis_sh}
     echo '#set up XILINX_VITIS and XILINX_VIVADO variables' >> ${vitis_sh}
-    echo "source ~/tools/Xilinx/Vitis/${xlnx_tools_ver}/settings64.sh" >> ${vitis_sh}
+    echo "source ${TOOLS_PATH}/Xilinx/Vitis/${xlnx_tools_ver}/settings64.sh" >> ${vitis_sh}
     echo '#set up XILINX_XRT for data center platforms (not required for embedded platforms)' >> ${vitis_sh}
     echo 'source /opt/xilinx/xrt/setup.sh' >> ${vitis_sh}
     echo 'vitis &' >> ${vitis_sh}
@@ -111,7 +111,7 @@ if [ -d ${xlnx_tools_pkg} ]; then
   if [ ! -f ${vivado_sh} ]; then
     touch ${vivado_sh}
     echo '#!/bin/bash' >> ${vivado_sh}
-    echo "source ~/tools/Xilinx/Vivado/${xlnx_tools_ver}/settings64.sh" >> ${vivado_sh}
+    echo "source ${TOOLS_PATH}/Xilinx/Vivado/${xlnx_tools_ver}/settings64.sh" >> ${vivado_sh}
     echo 'vivado -journal  logs/xilinx/vivado.jou -log logs/xilinx/vivado.log &' >> ${vivado_sh}
     chmod +x ${vivado_sh}
   fi

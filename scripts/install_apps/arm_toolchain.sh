@@ -59,12 +59,12 @@ if [ "${ok}" == "y" ]; then
     fi
     
     if [ -d ${ARM_TOOL_CHAIN} ]; then
-      mv ${ARM_TOOL_CHAIN} ~/tools/${ARM_PATH_TGT}
+      mv ${ARM_TOOL_CHAIN} ${TOOLS_PATH}/${ARM_PATH_TGT}
       if ! grep -q "${TGT}" "${HOME}/.bashrc_local"; then
         echo '# --------------------------------'  >> ~/.bashrc_local
         echo "# ${TGT}" >> ~/.bashrc_local
         echo '# ARM Toolchain' >> ~/.bashrc_local
-        echo "export PATH=${HOME}/tools/${ARM_PATH_TGT}/bin:\$PATH" >> ~/.bashrc_local
+        echo "export PATH=\${TOOLS_PATH}/${ARM_PATH_TGT}/bin:\$PATH" >> ~/.bashrc_local
       fi
     fi
   done

@@ -48,7 +48,7 @@
 ### Formatter Settings
 
   Verilog/SV Formatter: `Verible`
-  Verilog/SV Verible formatter: `~/tools/verible/bin/verible-verilog-format` `[Optional]`
+  Verilog/SV Verible formatter: `${TOOLS_PATH}/verible/bin/verible-verilog-format` `[Optional]`
 
 ## Tools configuration
 
@@ -75,12 +75,12 @@
 
 ### [XSim (Vivado)](https://www.xilinx.com/products/design-tools/vivado.html)
 
-- path: `~/tools/Xilinx/Vivado/2022.2/bin/` `[Optional]`
+- path: `${TOOLS_PATH}/Xilinx/Vivado/2022.2/bin/` `[Optional]`
 - install: `~/dev/devsetup/scripts/install_apps/amd_xilinx.sh`
 
 ### [GHDL](https://ghdl.github.io/ghdl/)
 
-- path: `~/tools/oss-cad-suite/bin/` `[Optional]`
+- path: `${TOOLS_PATH}/oss-cad-suite/bin/` `[Optional]`
 - install: (OSS-CAD-SUITE, this script)
 
 ### [Icarus](http://iverilog.icarus.com/)
@@ -90,8 +90,8 @@
 
 ### [Modelsim (Intel Questa)](https://www.intel.com/content/www/us/en/software/programmable/quartus-prime/questa-edition.html)
 
-- path: `~/tools/intel/intelFPGA_pro/22.3/questa_fse/bin/` `[Optional - free edition]`
-- path: `~/tools/intel/intelFPGA_pro/22.3/questa_fe/bin/` `[Optional - paid version]`
+- path: `${TOOLS_PATH}/intelFPGA_pro/22.3/questa_fse/bin/` `[Optional - free edition]`
+- path: `${TOOLS_PATH}/intelFPGA_pro/22.3/questa_fe/bin/` `[Optional - paid version]`
 - install: `~/dev/devsetup/scripts/install_apps/intel_questa.sh`
 - options:
   - vsim: `-voptargs="+acc"` (should be disabled for regression)
@@ -100,24 +100,24 @@
 
 > ! Requires FPGA target configuration
 
-- path: `~/tools/intel/intelFPGA_pro/22.3/quartus/bin/` `[Optional]`
+- path: `${TOOLS_PATH}/intelFPGA_pro/22.3/quartus/bin/` `[Optional]`
 - install: ~/dev/devsetup/scripts/install_apps/intel_quartus.sh
 
 ### [Symbiyosys Formal Verification](https://symbiyosys.readthedocs.io/en/latest/)
 
-- path: `~/tools/oss-cad-suite/bin/` `[Optional]`
+- path: `${TOOLS_PATH}/oss-cad-suite/bin/` `[Optional]`
   install: (OSS-CAD-SUITE, this script)
 
 ### [Veriblelint](https://chipsalliance.github.io/verible/lint.html)
 
-- path: `~/tools/verible/bin/` `[Optional]`
+- path: `${TOOLS_PATH}/verible/bin/` `[Optional]`
 - install: (Verible, this script)
 - options:
   - -Rules: `-no-trailing-spaces, -line-length`
 
 ### [Verilator](https://www.veripool.org/verilator/)
 
-- path: `~/tools/verilator/bin/` `[Optional]`
+- path: `${TOOLS_PATH}/verilator/bin/` `[Optional]`
 - install: `~/dev/devsetup/scripts/install_apps/verilator_cocotb.sh`
 - options:
   - `-Wall, -Wno-fatal, -Wno-TIMESCALEMOD`
@@ -127,7 +127,7 @@
 
 > ! Requires FPGA target configuration
 
-- path: `~/tools/Xilinx/Vivado/2022.2/bin/` `[Optional]`
+- path: `${TOOLS_PATH}/Xilinx/Vivado/2022.2/bin/` `[Optional]`
 - install: `~/dev/devsetup/scripts/install_apps/amd_xilinx.sh`
 
 ### [Vunit](https://vunit.github.io/)
@@ -137,7 +137,7 @@
 
 ### [Yosys](https://yosyshq.net/yosys/) (https://yosyshq.readthedocs.io/en/latest/)
 
-- path: `~/tools/oss-cad-suite/bin/` `[Optional]`
+- path: `${TOOLS_PATH}/oss-cad-suite/bin/` `[Optional]`
 - install: (OSS-CAD-SUITE, this script)
 
 ### [CoCoTB](https://docs.cocotb.org/en/stable/)

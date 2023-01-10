@@ -45,12 +45,12 @@ cd ${HOME}/tmp
 wget https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-${risv_toolchain_ver}.tar.gz
 tar -xvzf riscv64-unknown-elf-toolchain-${risv_toolchain_ver}.tar.gz
 rm -f riscv64-unknown-elf-toolchain-${risv_toolchain_ver}.tar.gz
-mv riscv64-unknown-elf-toolchain-${risv_toolchain_ver} ${HOME}/tools/riscv64-unknown-elf-toolchain
+mv riscv64-unknown-elf-toolchain-${risv_toolchain_ver} ${TOOLS_PATH}/riscv64-unknown-elf-toolchain
 if ! grep -q "riscv" "${HOME}/.bashrc_local"; then
   echo '# --------------------------------'  >> ~/.bashrc_local
   echo '# riscv' >> ~/.bashrc_local
   echo '# RISC-V Toolchain' >> ~/.bashrc_local
-  echo 'export PATH=${HOME}/tools/riscv64-unknown-elf-toolchain/bin:$PATH' >> ~/.bashrc_local
+  echo 'export PATH=${TOOLS_PATH}/riscv64-unknown-elf-toolchain/bin:$PATH' >> ~/.bashrc_local
 fi
 
 echo "--------------------------------------------------"

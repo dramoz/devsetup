@@ -5,6 +5,9 @@
 
 # ----------------------------------------------------------------
 # Tools paths
+#export TOOLS_PATH="/data/tools"
+export TOOLS_PATH="${HOME}/tools"
+export PATH=${TOOLS_PATH}:$PATH
 
 # --------------------------------
 # RISC-V
@@ -20,7 +23,7 @@
 # --------------------------------
 # OSS CAD Suite (formely FPGA-Toolchain / OpenSource)
 # https://github.com/YosysHQ/oss-cad-suite-build
-#export PATH="${HOME}/tools/oss-cad-suite/bin:$PATH"
+#export PATH="${TOOLS_PATH}/oss-cad-suite/bin:$PATH"
 
 # --------------------------------
 # Antlr

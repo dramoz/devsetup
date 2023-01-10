@@ -68,14 +68,14 @@ git checkout ${verilator_tag}
 
 # Install App
 autoconf
-./configure --prefix ${HOME}/tools/verilator CFG_CXXFLAGS_STD_NEWEST="-std=gnu++20"
+./configure --prefix ${TOOLS_PATH}/verilator CFG_CXXFLAGS_STD_NEWEST="-std=gnu++20"
 make -j$(nproc)
 make install
 
 if ! grep -q "verilator" "${HOME}/.bashrc_local"; then
   echo '# --------------------------------' >> ~/.bashrc_local
   echo '# verilator' >> ~/.bashrc_local
-  echo 'export PATH=${HOME}/tools/verilator/bin:$PATH' >> ~/.bashrc_local
+  echo 'export PATH=${TOOLS_PATH}/verilator/bin:$PATH' >> ~/.bashrc_local
 fi
 
 echo "--------------------------------------------------"

@@ -137,9 +137,3 @@ source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 
 # Add python3 -m pip install --user to path
 export PATH=${HOME}/.local/bin:$PATH
-
-# Tools paths
-export PATH="${HOME}/tools/fpga-toolchain/bin:$PATH"
-
-# RISC-V
-export PATH=/opt/riscv64-unknown-elf-toolchain/bin:$PATH
