@@ -64,7 +64,7 @@ if [ "${ok}" == "y" ]; then
         echo '# --------------------------------'  >> ~/.bashrc_local
         echo "# ${TGT}" >> ~/.bashrc_local
         echo '# ARM Toolchain' >> ~/.bashrc_local
-        echo 'export PATH=${HOME}/tools/${ARM_PATH_TGT}/bin:$PATH' >> ~/.bashrc_local
+        echo "export PATH=${HOME}/tools/${ARM_PATH_TGT}/bin:\$PATH" >> ~/.bashrc_local
       fi
     fi
   done
