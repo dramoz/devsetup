@@ -54,17 +54,18 @@ else
 fi
 
 sudo -S apt install -y python3 python3-pip python3-tk meld
-if [ ${WSL} -eq 0 ]; then
-  sudo -S apt install -y gnome-shell-extensions chrome-gnome-shell gnome-shell-extension-manager
-fi
-
 sudo -S snap install node --classic
 
-if [ ${WSL} -eq 0 ]; then
-  if [ "`echo "${ubuntu_ver} < 22.04" | bc`" -eq 1 ]; then
-    # required for Gnome extensions setup
-    sudo apt install flatpak
-    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+echo "--------------------------------------------------"
+read -p "GNOME setup (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  if [ ${WSL} -eq 0 ]; then
+    sudo -S apt install -y gnome-shell-extensions chrome-gnome-shell gnome-shell-extension-manager
+    if [ "`echo "${ubuntu_ver} < 22.04" | bc`" -eq 1 ]; then
+      # required for Gnome extensions setup
+      sudo apt install flatpak
+      flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    fi
   fi
 fi
 
