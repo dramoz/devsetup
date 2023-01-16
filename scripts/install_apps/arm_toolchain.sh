@@ -1,5 +1,8 @@
 #!/bin/bash
 # --------------------------------------------------------------------------------
+# references
+# https://lindevs.com/install-arm-gnu-toolchain-on-ubuntu
+# --------------------------------------------------------------------------------
 VENV_TGT="dev"
 ARM_VERSION="12.2.rel1"
 HOST="x86_64"
@@ -42,6 +45,8 @@ echo "--------------------------------------------------------------------------
 read -p "Install ARM GNU Toolchain (https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain) (baremetal+linux) (y/n)? " ok
 
 if [ "${ok}" == "y" ]; then
+  sudo apt install libncursesw5
+  
   echo ".................................................."
   cd ${HOME}/tmp
   TAR_EXT="tar.xz"
