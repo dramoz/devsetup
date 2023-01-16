@@ -68,7 +68,7 @@ pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
 # --------------------------------------------------------------------------------
 # Dependecies
 #sudo -S snap install cmake --classic -> snape CMake does not currently works with VS Code
-sudo -S apt install libssl-dev
+sudo -S apt install libssl-dev ninja-build
 cd ~/tmp
 wget -O cmake-${CMAKE_VER}.tar.gz https://github.com/Kitware/CMake/releases/download/v${CMAKE_VER}/cmake-${CMAKE_VER}.tar.gz
 tar -xvzf cmake-${CMAKE_VER}.tar.gz 
