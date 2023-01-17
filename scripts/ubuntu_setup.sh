@@ -18,47 +18,7 @@ else
   browser="firefox -new-window"
 fi
 
-echo "----------------------------------------------------------------------------------------------------"
-auto=0
-if [ ! -z "$1" ]; then
-  if [ "$1" == "y" ]; then
-    echo "Running the script in partial auto/all mode"
-    echo "Installing:"
-    echo " build-essential+python+..."
-    echo " setup virtualenv/virtualenvwrapper through pip"
-    echo " setup GIT and GitHub SSH"
-    echo " clone dramoz/devsetup.git and setup .bashrc"
-    echo " install code/brave/pyGrid"
-    echo "Note: user intervention required for Vbox guess install"
-    echo "--------------------------------------------------"
-    read -p "Proceed (y/n)? " ok
-    if [ "${ok}" == "y" ]; then
-      auto=1
-    fi
-    echo "----------------------------------------------------------------------------------------------------"
-  fi
-fi
-
-if [ "${auto}" == "0" ]; then
-  echo "The following script will do a custom install of the required apps for R&D, and then reboot"
-  echo "----------------------------------------------------------------------------------------------------"
-fi
-
-echo "----------------------------------------------------------------------------------------------------"
-read_data=true
-while $read_data; do
-  read -p 'Name LastName: ' full_name
-  read -p 'github email: ' email
-  echo "--------------------------------------------------"
-  echo "${full_name}: ${email}"
-  read -p "OK (y/n)? " ok
-  if [ "${ok}" == "y" ]; then
-    read_data=false
-  else
-    read_data=true
-  fi
-done
-
+echo "The following script will do a custom install of the required apps for R&D... (manual mode)"
 # remove virtualenv and virtualenvwrapper from Ubuntu apt
 echo "--------------------------------------------------"
 echo "Removing default Ubuntu virtualenv/virtualenvwrapper"
@@ -68,7 +28,7 @@ sudo -S apt purge -y virtualenvwrapper
 # Ubuntu update
 echo "--------------------------------------------------"
 echo "update/upgrade/remove"
-sudo -S apt update -y && sudo -S apt upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y
+sudo -S apt update -y && sudo -S apt upgrade -y && sudo -S apt dist-upgrade -y && sudo -S apt autoremove -y
 
 # For USB/UART serial access
 echo "--------------------------------------------------"
@@ -91,26 +51,45 @@ else
 fi
 
 sudo -S apt install -y python3 python3-pip python3-tk meld
-if [ ${WSL} -eq 0 ]; then
-  sudo -S apt install -y gnome-shell-extensions chrome-gnome-shell gnome-shell-extension-manager
-fi
-
 sudo -S snap install node --classic
 
-if [ ${WSL} -eq 0 ]; then
-  if [ "`echo "${ubuntu_ver} < 22.04" | bc`" -eq 1 ]; then
-    # required for Gnome extensions setup
-    sudo apt install flatpak
-    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+echo "--------------------------------------------------"
+read -p "GNOME setup (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  if [ ${WSL} -eq 0 ]; then
+    sudo -S apt install -y gnome-shell-extensions chrome-gnome-shell gnome-shell-extension-manager
+    if [ "`echo "${ubuntu_ver} < 22.04" | bc`" -eq 1 ]; then
+      # required for Gnome extensions setup
+      sudo apt install flatpak
+      flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    fi
   fi
 fi
 
 # Setup git credentials
-echo "--------------------------------------------------"
-echo "git config..."
-git config --global user.email "${email}"
-git config --global user.name "${full_name}"
-git config --global credential.helper 'cache --timeout 30000'
+echo "----------------------------------------------------------------------------------------------------"
+read -p "Setup GIT credentials (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  read_data=true
+  while $read_data; do
+    read -p 'Name LastName: ' full_name
+    read -p 'github email: ' email
+    echo "--------------------------------------------------"
+    echo "${full_name}: ${email}"
+    read -p "OK (y/n)? " ok
+    if [ "${ok}" == "y" ]; then
+      read_data=false
+    else
+      read_data=true
+    fi
+  done
+
+  echo "--------------------------------------------------"
+  echo "git config..."
+  git config --global user.email "${email}"
+  git config --global user.name "${full_name}"
+  git config --global credential.helper 'cache --timeout 30000'
+fi
 
 # SSH key for GitHub
 echo "--------------------------------------------------"
@@ -140,16 +119,13 @@ if [ ${WSL} -eq 0 ]; then
   echo "--------------------------------------------------"
   vboxguest=$(lsmod | grep vboxguest)
   if [ ! -z "${vboxguest}" ]; then
-    read -p "It looks this is a VM, let's install Guest Additions (y/n)? " ok
+    read -p "It looks this is a VM, let's (re)install Guest Additions (y/n)? " ok
     if [ "${ok}" == "y" ]; then
       echo "From VM menu"
       echo "-> Devices.Insert Guest Additions, and click [RUN]"
       read -p "Press [ENTER] key after Guest Additions is done..." ok
       echo "Don't forget to [EJECT] Guest Additions CD/ISO"
       sudo adduser $USER vboxsf
-    
-    else
-      echo "Please install guest additions later..."
     fi
   fi
   echo "--------------------------------------------------"
@@ -158,16 +134,11 @@ fi
 # Python virtualenv
 echo "--------------------------------------------------"
 echo "Installing Python virtualenv/virtualenvwrapper"
-pip3 install virtualenv virtualenvwrapper
+pip3 install --upgrade virtualenv virtualenvwrapper
 
 # DevSetup
 echo "--------------------------------------------------"
-if [ ${auto} -eq 1 ]; then
-  ok="y"
-else
-  read -p "Clone and update .bashrc with <devsetup> (y/n)? " ok
-fi
-
+read -p "Clone and update .bashrc with <devsetup> (y/n)? " ok
 if [ "${ok}" == "y" ]; then
   if [ ! -d "${HOME}/dev/devsetup" ]; then
     echo "Cloning GitHub dramoz/devsetup and set .bash*"
@@ -187,13 +158,23 @@ if [ "${ok}" == "y" ]; then
   source ~/.bashrc
 fi
 
-# Virtualenv:VENV_TGT
+echo "----------------------------------------------------------------------------------------------------"
+# VirtualEnv
 source ~/.bashrc
 source $HOME/.local/bin/virtualenvwrapper.sh
 echo "--------------------------------------------------"
-if [ ! -d "${HOME}/.virtualenvs/${VENV_TGT}/" ]; then
-  echo "virtualenv:${VENV_TGT} not found, creating..."
-  mkvirtualenv ${VENV_TGT}
+python=${VIRTUAL_ENV}
+if [ -z ${python} ]; then
+  read -p "No virtualenv active detected, create/use virtualenv:${VENV_TGT} (y/n)? " ok
+  if [ "${ok}" == "y" ]; then
+    if [ ! -d "${HOME}/.virtualenvs/${VENV_TGT}/" ]; then
+      echo "virtualenv:${VENV_TGT} not found, creating..."
+      mkvirtualenv ${VENV_TGT}
+      source .virtualenvs/${VENV_TGT}/bin/activate
+    else
+      source .virtualenvs/${VENV_TGT}/bin/activate
+    fi
+  fi
 fi
 
 echo "Adding requirements to virtualenv:${VENV_TGT}"
@@ -202,12 +183,7 @@ pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
 pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
 
 echo "--------------------------------------------------"
-if [ ${auto} -eq 1 ]; then
-  ok="y"
-else
-  read -p "Install VS code (y/n)? " ok
-fi
-
+read -p "Install VS code (y/n)? " ok
 if [ "${ok}" == "y" ]; then
   echo "Installing VS Code"
   if [ ${WSL} -eq 0 ]; then
@@ -237,46 +213,15 @@ if [ "${ok}" == "y" ]; then
   fi
 fi
 
-echo "--------------------------------------------------"
 if [ ${WSL} -eq 0 ]; then
-  if [ ${auto} -eq 1 ]; then
-    ok="y"
-  else
-    read -p "Install x11pyGrid (https://github.com/pkkid/x11pygrid) (y/n)? " ok
-  fi
-  
+  echo "--------------------------------------------------"
+  read -p "Install GNOME desktop links (y/n)? " ok
   if [ "${ok}" == "y" ]; then
-    echo "Installing x11pyGrid"
-    mkdir -p ~/.local/bin/
-    cd ~/.local/bin/
-    wget https://raw.githubusercontent.com/pkkid/x11pygrid/master/src/x11pygrid/x11pygrid.py
-    mv x11pygrid.py x11pygrid
-    chmod +x x11pygrid
-    
-    cp ~/dev/devsetup/scripts/assets/x11pygrid/x11pygrid.json ~/.config/x11pygrid.json
-    mkdir -p ~/.config/autostart/
-    echo "" > ~/.config/autostart/x11pygrid.py.desktop
-    echo "[Desktop Entry]" > ~/.config/autostart/x11pygrid.py.desktop
-    echo "Type=Application" > ~/.config/autostart/x11pygrid.py.desktop
-    echo "Exec=${HOME}/.local/bin/x11pygrid" > ~/.config/autostart/x11pygrid.py.desktop
-    echo "Hidden=false" > ~/.config/autostart/x11pygrid.py.desktop
-    echo "NoDisplay=false" > ~/.config/autostart/x11pygrid.py.desktop
-    echo "X-GNOME-Autostart-enabled=true" > ~/.config/autostart/x11pygrid.py.desktop
-    echo "Name[en_CA]=x11pyGrid" > ~/.config/autostart/x11pygrid.py.desktop
-    echo "Name=x11pyGrid" > ~/.config/autostart/x11pygrid.py.desktop
-    echo "Comment=" > ~/.config/autostart/x11pygrid.py.desktop
+    echo "Installing desktop links"
+    cp ~/dev/devsetup/scripts/assets/Desktop/* ~/Desktop/
   fi
-  
   echo "--------------------------------------------------"
-  echo "Installing desktop links"
-  cp ~/dev/devsetup/scripts/assets/Desktop/* ~/Desktop/
-  
-  echo "--------------------------------------------------"
-  if [ ${auto} -eq 1 ]; then
-    ok="y"
-  else
-    read -p "Install Brave Browser (chromium alternative) (y/n)? " ok
-  fi
+  read -p "Install Brave Browser (chromium alternative) (y/n)? " ok
   if [ "${ok}" == "y" ]; then
     echo "Installing Brave browser"
     sudo -S apt -y install apt-transport-https curl
@@ -287,17 +232,12 @@ if [ ${WSL} -eq 0 ]; then
   fi
   
   echo "--------------------------------------------------"
-  if [ ${auto} -eq 1 ]; then
-    ok="y"
-  else
-    read -p "Done for the moment, reboot (y/n)? " ok
-  fi
-
+  read -p "Done for the moment, reboot (y/n)? " ok
   if [ "${ok}" == "y" ]; then
     echo "Sanity reboot..."
     sudo reboot
   fi
-
+  
 else
   echo "--------------------------------------------------"
   echo "Done..."
