@@ -26,13 +26,10 @@ sudo -S apt purge -y virtualenv
 sudo -S apt purge -y virtualenvwrapper
 
 # Ubuntu update
+echo "--------------------------------------------------"
 echo "update/upgrade/remove"
 sudo -S apt update -y && sudo -S apt upgrade -y && sudo -S apt dist-upgrade -y && sudo -S apt autoremove -y
 
-echo "--------------------------------------------------"
-# R&D dirs
-echo "Creating common dirs..."
-cd ~; mkdir -p dev tools repos tmp
 # For USB/UART serial access
 echo "--------------------------------------------------"
 echo "${USER}->dialout"
@@ -177,14 +174,11 @@ if [ -z ${python} ]; then
     else
       source .virtualenvs/${VENV_TGT}/bin/activate
     fi
-  else
-    echo "This scripts only with virtualenv"
-    exit 1
   fi
 fi
 
-echo "Adding requirements to virtualenv:dev"
-source .virtualenvs/dev/bin/activate
+echo "Adding requirements to virtualenv:${VENV_TGT}"
+source .virtualenvs/${VENV_TGT}/bin/activate
 pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
 pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
 

@@ -51,9 +51,6 @@ if [ -z ${python} ]; then
     else
       source .virtualenvs/gui/bin/activate
     fi
-  else
-    echo "This scripts only with virtualenv"
-    exit 1
   fi
 fi
 
