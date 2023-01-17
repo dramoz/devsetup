@@ -230,7 +230,10 @@ if [ ${WSL} -eq 0 ]; then
     sudo -S apt update -y
     sudo -S apt install -y brave-browser
   fi
-  
+  read -p "Install GUI Apps (krusader, ) (y/n)? " ok
+  if [ "${ok}" == "y" ]; then
+    sudo -S apt install -y krusader krename kget kompare mlocate
+  fi
   echo "--------------------------------------------------"
   read -p "Done for the moment, reboot (y/n)? " ok
   if [ "${ok}" == "y" ]; then
