@@ -1,9 +1,20 @@
 #!/bin/bash
 # --------------------------------------------------------------------------------
 # Tools versions
-intel_quartus_ver="22.3"
-intel_quartus_pkg="Quartus-pro-${intel_quartus_ver}.0.104-linux-complete"
-intel_quartus_url="https://cdrdv2.intel.com/v1/dl/getContent/746666/746690?filename=${intel_quartus_pkg}.tar"
+
+# Quartus Pro 22.3
+#intel_quartus_ver="22.3"
+#intel_quartus_pkg="Quartus-pro-${intel_quartus_ver}.0.104-linux-complete"
+#intel_quartus_url="https://cdrdv2.intel.com/v1/dl/getContent/746666/746690?filename=${intel_quartus_pkg}.tar"
+
+# Quartus Pro 22.4
+intel_quartus_ver="22.4"
+intel_quartus_pkg="Quartus-pro-22.4.0.94-linux-complete"
+intel_quartus_url="https://downloads.intel.com/akdlm/software/acdsinst/22.4/94/ib_tar/Quartus-pro-22.4.0.94-linux-complete.tar"
+# Embedded Tools
+#intel_soceds_url="https://downloads.intel.com/akdlm/software/acdsinst/20.1/177/ib_installers/SoCEDSProSetup-20.1.0.177-linux.run"
+intel_arm_ds_url="https://downloads.intel.com/akdlm/software/armds/2022.2/linux/DS000-BN-00001-r22p2-00rel0.tgz"
+
 # --------------------------------------------------------------------------------
 echo "---------------------------------------------------------"
 echo "-> Please make sure that ./ubuntu_setup.sh was run before!!"
@@ -73,7 +84,7 @@ if [ -d ${intel_quartus_pkg} ]; then
   echo "--------------------------------------------------"
   echo "Get (free) license from: https://licensing.intel.com/psg/s/licenses-menu"
   echo "NIC: "
-  ifconfig /all
+  ifconfig
   echo "--------------------------------------------------"
   
   cd ${intel_quartus_pkg}
