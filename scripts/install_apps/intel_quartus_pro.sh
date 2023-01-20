@@ -10,9 +10,10 @@
 # Quartus Pro 22.4
 intel_quartus_ver="22.4"
 intel_quartus_pkg="Quartus-pro-22.4.0.94-linux-complete"
-intel_quartus_url="https://downloads.intel.com/akdlm/software/acdsinst/22.4/94/ib_tar/Quartus-pro-22.4.0.94-linux-complete.tar"
+intel_quartus_url="https://downloads.intel.com/akdlm/software/acdsinst/22.4/94/ib_tar/${intel_quartus_pkg}.tar"
 # Embedded Tools
-#intel_soceds_url="https://downloads.intel.com/akdlm/software/acdsinst/20.1/177/ib_installers/SoCEDSProSetup-20.1.0.177-linux.run"
+#deprecated -> intel_soceds_url="https://downloads.intel.com/akdlm/software/acdsinst/20.1/177/ib_installers/SoCEDSProSetup-20.1.0.177-linux.run"
+intel_arm_ds_pkg="DS000-BN-00001-r22p2-00rel0"
 intel_arm_ds_url="https://downloads.intel.com/akdlm/software/armds/2022.2/linux/DS000-BN-00001-r22p2-00rel0.tgz"
 
 # --------------------------------------------------------------------------------
@@ -109,6 +110,39 @@ if [ -d ${intel_quartus_pkg} ]; then
   
 else
   echo "~/tmp/${intel_quartus_pkg} directory NOT found! Unable to proceed..."
+fi
+
+echo "----------------------------------------------------------------------------------------------------"
+echo "Installing ARM DS for Intel SoC FPGA Intel Quartus Pro (https://www.intel.com/content/www/us/en/software/programmable/soc-eds/arm-ds.html)"
+
+# Install dependencies
+sudo -S apt install 
+
+mkdir -p ${HOME}/logs/armds
+mkdir -p ${HOME}/dev/intel/armds/${intel_quartus_ver}
+
+cd ${HOME}/tmp
+if [ ! -d ${intel_arm_ds_pkg} ] && [ ! -f "${intel_arm_ds_pkg}.tgz" ]; then
+  echo "Download: Intel ARM DS(TGZ ~2GB) (${intel_arm_ds_pkg})"
+  echo "!!! save to ~/tmp/"
+  eval $browser "${intel_arm_ds_url}" >/dev/null 2>&1
+  
+  read -p "Press [ENTER] key after download completed..." ok
+fi
+
+if [ ! -d "${intel_arm_ds_pkg}" ] && [ -f "${intel_arm_ds_pkg}.tgz" ]; then
+  tar xfv ${intel_arm_ds_pkg}.tgz
+else
+  echo "~/tmp/${intel_arm_ds_pkg}.tgz file NOT found! (checking directory)"
+fi
+
+if [ -d ${intel_arm_ds_pkg} ]; then
+  cd ${intel_arm_ds_pkg}
+  echo "Installing... use defaults!"
+  sudo -S ./armds-2022.2.sh
+  
+else
+  echo "~/tmp/${intel_arm_ds_url} directory NOT found! Unable to proceed..."
 fi
 
 echo "--------------------------------------------------"
