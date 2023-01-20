@@ -1,7 +1,7 @@
 
 #!/bin/bash
 # --------------------------------------------------------------------------------
-VENV_TGT="hdl"
+VENV_TGT="dev"
 # --------------------------------------------------------------------------------
 echo "---------------------------------------------------------"
 echo "-> Please make sure that ./ubuntu_setup.sh was run before!!"
@@ -55,11 +55,13 @@ if [ -z ${python} ]; then
 fi
 
 echo "----------------------------------------------------------------------------------------------------"
-echo "Python update..."
-pip install --upgrade pip setuptools virtualenv
-pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
-#pip install -r ~/dev/devsetup/virtualenv/hdl_requirements.txt
-#pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
+read -p "Do a python requirements (dev, pytest) update (y/n)? " ok
+if [ "${ok}" == "y" ]; then
+  pip install --upgrade pip setuptools virtualenv
+  pip install -r ~/dev/devsetup/virtualenv/dev_requirements.txt
+  #pip install -r ~/dev/devsetup/virtualenv/hdl_requirements.txt
+  pip install -r ~/dev/devsetup/virtualenv/pytest_requirements.txt
+fi
 
 echo "----------------------------------------------------------------------------------------------------"
 read -p "Install APP (https://app.org/) (y/n)? " ok

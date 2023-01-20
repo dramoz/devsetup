@@ -93,6 +93,14 @@ if [ -d ${xlnx_tools_pkg} ]; then
   #wget -O "xrt_${xlnx_xrt_ver}.deb" "https://www.xilinx.com/bin/public/openDownload?filename=xrt_${xlnx_xrt_ver}.deb"
   #sudo -S apt install -y ./xrt_${xlnx_xrt_ver}.deb
   
+  if ! grep -q "xilinx" "${HOME}/.bashrc_local"; then
+    echo '# --------------------------------' >> ~/.bashrc_local
+    echo '# xilinx' >> ~/.bashrc_local
+    echo "export XILINX_DIR=\"\${TOOLS_PATH}/Xilinx\"" >> ~/.bashrc_local
+    echo "export XILINX_VER=\"${xlnx_tools_ver}\"" >> ~/.bashrc_local
+    echo '#export XILINXD_LICENSE_FILE=${HOME}/tools/xilinx/license.dat' >> ~/.bashrc_local
+  fi
+  
   # Launch tools setup
   cd ${HOME}/tools
   vitis_sh="vitis.${xlnx_tools_ver}.sh"

@@ -61,7 +61,7 @@ fi
 
 if [ -f "${intel_questa_setup}" ] && [ -f "${intel_questa_pkg}" ]; then
   echo "--------------------------------------------------"
-  echo "!!! Install directory: ${TOOLS_PATH}/intelFPGA_pro/${intel_quartus_ver}/"
+  echo "!!! Install directory: ${TOOLS_PATH}/intelFPGA_pro/${intel_questa_ver}/"
   echo "--------------------------------------------------"
   echo "Get (free) license from: https://licensing.intel.com/psg/s/licenses-menu"
   echo "NIC: "
