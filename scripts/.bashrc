@@ -111,6 +111,7 @@ fi
 #    . ${HOME}/dev/DevSetup/.bash_aliases
 #fi
 # Only ask ssh passphrase once per sesion
+eval `keychain --eval --agents ssh id_rsa`
 ssh-add
 
 # Load .bashrc_devsetup
