@@ -16,6 +16,7 @@ alias hg='history | grep '
 # Misc
 alias count_files='find $1 -type f | wc -l'
 alias sudo='sudo -E env "PATH=$PATH"'
+alias showpath="awk -v RS=: '{print}' <<<$PATH"
 
 # From
 # https://gist.github.com/zachbrowne/8bc414c9f30192067831fafebd14255c

@@ -137,3 +137,6 @@ export PATH=${HOME}/tools:$PATH
 if [ -f ~/.bashrc_local ]; then
     . ~/.bashrc_local
 fi
+
+# Clean up
+PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print}')
