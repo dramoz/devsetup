@@ -15,7 +15,7 @@
 #  https://edg.uchicago.edu/tutorials/enable_remote_jtagd/
 # --------------------------------------------------------------------------------
 if [ -d ${QUARTUS_ROOTDIR} ]; then
-  if [! -d /etc/jtagd ]; then
+  if [ ! -d /etc/jtagd ]; then
     sudo -S mkdir /etc/jtagd
     sudo -S chmod 777 /etc/jtagd 
   fi
