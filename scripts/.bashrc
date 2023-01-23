@@ -110,6 +110,10 @@ fi
 #if [ -f "${HOME}/dev/DevSetup/.bash_aliases" ]; then
 #    . ${HOME}/dev/DevSetup/.bash_aliases
 #fi
+# Only ask ssh passphrase once per sesion
+ssh-add
+
+# Load .bashrc_devsetup
 if [ -f "${HOME}/dev/devsetup/scripts/.bashrc_devsetup" ]; then
   OLD_PWD=$(pwd)
   cd ${HOME}/dev/devsetup/; git pull >/dev/null 2>&1; cd ${OLD_PWD}
