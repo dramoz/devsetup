@@ -98,10 +98,15 @@ if [ "${ok}" == "y" ]; then
     if ! grep -q "quartus" "${HOME}/.bashrc_local"; then
       echo '# --------------------------------' >> ~/.bashrc_local
       echo '# quartus' >> ~/.bashrc_local
-      echo "export QUARTUS_ROOTDIR=\"\${TOOLS_PATH}/intelFPGA_pro/${intel_quartus_ver}/quartus\"" >> ~/.bashrc_local
-      echo 'export QSYS_ROOTDIR=$QUARTUS_ROOTDIR/qsys/bin' >> ~/.bashrc_local
-      echo 'export PATH=$QUARTUS_ROOTDIR/bin:$PATH' >> ~/.bashrc_local
+      echo "export INTEL_QUARTUS_DIR=\"${TOOLS_PATH}/intelFPGA_pro/${intel_quartus_ver}\"" >> ~/.bashrc_local
+      echo 'export QUARTUS_ROOTDIR="${INTEL_QUARTUS_DIR}/quartus"' >> ~/.bashrc_local
+      echo 'export IP_ROOTDIR="${INTEL_QUARTUS_DIR}/ip"' >> ~/.bashrc_local
+      echo 'export QSYS_ROOTDIR="${INTEL_QUARTUS_DIR}/qsys/bin"' >> ~/.bashrc_local
+      echo 'export INTELFPGAOCLSDKROOT="${INTEL_QUARTUS_DIR}/hld"' >> ~/.bashrc_local
+      echo 'export RISCFREE_ROOTDIR="${INTEL_QUARTUS_DIR}/riscfree"' >> ~/.bashrc_local
+      echo 'export PATH=${RISCFREE_ROOTDIR}/RiscFree:${INTELFPGAOCLSDKROOT}/bin:${QSYS_ROOTDIR}:${QUARTUS_ROOTDIR}/bin:$PATH' >> ~/.bashrc_local
       echo '#export LM_LICENSE_FILE=${HOME}/tools/intel/license.dat' >> ~/.bashrc_local
+      
     fi
     
     if ! grep -q "questa" "${HOME}/.bashrc_local"; then
