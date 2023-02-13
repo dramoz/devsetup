@@ -104,7 +104,8 @@ if [ "${ok}" == "y" ]; then
       echo 'export QSYS_ROOTDIR="${INTEL_QUARTUS_DIR}/qsys/bin"' >> ~/.bashrc_local
       echo 'export INTELFPGAOCLSDKROOT="${INTEL_QUARTUS_DIR}/hld"' >> ~/.bashrc_local
       echo 'export RISCFREE_ROOTDIR="${INTEL_QUARTUS_DIR}/riscfree"' >> ~/.bashrc_local
-      echo 'export PATH=${RISCFREE_ROOTDIR}/RiscFree:${INTELFPGAOCLSDKROOT}/bin:${QSYS_ROOTDIR}:${QUARTUS_ROOTDIR}/bin:$PATH' >> ~/.bashrc_local
+      echo 'export SOPC_BUILDER_ROOTDIR="${QUARTUS_ROOTDIR}/sopc_builder"' >> ~/.bashrc_local
+      echo 'export PATH=${SOPC_BUILDER_ROOTDIR}/bin:${RISCFREE_ROOTDIR}/RiscFree:${INTELFPGAOCLSDKROOT}/bin:${QSYS_ROOTDIR}:${QUARTUS_ROOTDIR}/bin:$PATH' >> ~/.bashrc_local
       echo '#export LM_LICENSE_FILE=${HOME}/tools/intel/license.dat' >> ~/.bashrc_local
       
     fi
