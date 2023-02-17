@@ -264,7 +264,7 @@ class TestBenchBase:
       self._log.tb_msg(f"{rst._name}[{lvl.name}] = {lvl_vl}")
       rst.value = lvl_vl
     
-    self._log.sim_msg(f"Waiting {self.main_clk._name} {cycles} cycles...")
+    self._log.tb_msg(f"Waiting {self.main_clk._name} {cycles} cycles...")
     await ClockCycles(self.main_clk, cycles)
     self._log.tb_msg("Clearing reset(s) signals...")
     for rst, lvl in self.rsts.values():

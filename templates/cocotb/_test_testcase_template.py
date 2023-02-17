@@ -28,6 +28,7 @@ _workpath = Path(__file__).resolve().parent
 sys.path.append(str(_workpath))
 sys.path.append(str(_workpath.parent))
 
+from sim_modules.cocotb_methods import with_timeout_msg
 from sim_modules.run_cocotb_sim import run_cocotb_sim
 from sim_modules.pytest_methods import pytest_purge_tests, TestFactoryWithNames, conditional_parametrize
 from sim_modules.pytest_methods import set_and_run_sim, set_env_args, ids, ids_enum
@@ -54,13 +55,18 @@ requested_test = os.getenv("REQUESTED_TESTS", "")
 # -----------------------------------------------------------------------------
 async def test_clk_free_run(dut, **uut_params):
   tb = top_module_TB(dut)
+  
+  # ---------------------------------------------
   tb._log.sim_msg(80*'-')
   tb._log.sim_msg('Start test...')
   await tb.start_test(start_monitors=False, start_drivers=False)
   #await tb.start_monitors()
   #await tb.start_drivers()
+  
   # ---------------------------------------------
+  # r = await with_timeout_msg(msg="process testing", trigger=awaitable_process())
   await ClockCycles(tb.main_clk, 10)
+  
   # ---------------------------------------------
   await tb.done()
   tb._log.sim_msg('Test(s) passed')
