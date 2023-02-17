@@ -72,9 +72,10 @@ class top_module_UUT(UUT_Base):
 class top_module_TB(TestBenchBase):
   def __init__(self,
       dut,
-      tb_param=None,
-      sim_param=None,
+      dut_params_class=None,
+      dut_params_args=None,
       stop_on_error=True,
+      eos_on_error=(1, 'us'),
   ):
     # ------------------------------------------------------------
     args = locals().copy()
