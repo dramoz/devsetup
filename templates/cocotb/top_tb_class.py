@@ -30,10 +30,10 @@ sys.path.append(str(_workpath))
 # Up-one lvl/dir
 sys.path.append(str(_workpath.parent))
 
-from logger import add_logging_lvl
+from sim_modules.logger import add_logging_lvl
 from sim_modules.sim_helpers import cycle_N_generator, high_low_cycles_generator, TEST_TYPE, time_clk_hr_min_sec
 
-from sim_modules.tb_uut_class import TestBenchBase, UUT_Base
+from sim_modules.tb_base import TestBenchBase, UUT_Base
 
 # -----------------------------------------------------------------------------
 # Info
@@ -63,12 +63,13 @@ class top_module_UUT(UUT_Base):
     params = locals().copy()
     del params['self']
     del params['__class__']
-    params['toplevel'] = "qeng_revb_armif_test_h2f_lw_mux"
+    
+    params['toplevel'] = "top_module"
     params['rtl_sources'] = None
     super().__init__(**params)
     
 # -----------------------------------------------------------------------------
-class h2f_lw_mux_tb(TestBenchBase):
+class top_module_TB(TestBenchBase):
   def __init__(self,
       dut,
       tb_param=None,
