@@ -78,7 +78,7 @@ class UUT_Base:
     for param, vl in self.parameters.items():
       self.__setattr__(param, vl)
     
-    self._log.info(f"DUT[{self.toplevel}] parameters: {self.parameters}")
+    self._log.critical(f"DUT[{self.toplevel}] parameters: {self.parameters}")
     
 # -----------------------------------------------------------------------------
 class TestBenchBase:
@@ -108,13 +108,21 @@ class TestBenchBase:
     
     # ------------------------------------------------------------
     self._loglevel = os.environ.get("LOGLEVEL", "INFO")
-    self._models_loglevel = os.environ.get("MODELS_LOGLEVEL", "INFO")
+    self._models_loglevel = os.environ.get("MODELS_LOGLEVEL", "WARNING")
     self._log.warning(f'Setting TB (CoCoTB Logger) log level to "{self._loglevel}", others to "{self._models_loglevel}"')
     loggers = [logging.getLogger(name) for name in logging.root.manager.loggerDict]
     for log in loggers:
-      log.setLevel(self._models_loglevel)
+      if "cocotb" not in log.name:
+        self._log.critical(f"Setting logger {log.name} to LOG_LEVEL:{self._models_loglevel}")
+        log.setLevel(self._models_loglevel)
+      else:
+        if self._models_loglevel not in ["DEBUG", "INFO"]:
+          log.setLevel("INFO")
+        else:
+          log.setLevel(self._models_loglevel)
     
     self._log.setLevel(self._loglevel)
+    
     # ------------------------------------------------------------
     # DUT signals
     self.dut = dut
