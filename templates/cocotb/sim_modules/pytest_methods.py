@@ -144,12 +144,12 @@ def conditional_parametrize(from_pytest, argname, argvalues, ids):
 # -----------------------------------------------------------------------------
 def pytest_purge_tests(tests, from_pytest, requested=None):
     pytest_run = os.getenv('PYTEST_CURRENT_TEST', None)
-    #logging.critical(f":{pytest_run}")
+    logging.debug(f"pytest_run:{pytest_run}")
     if requested is not None:
         # Need a string literal for ast
         requested = str(requested)
     requested = os.getenv('REQUESTED_TESTS', requested)
-    #logging.critical(f":{requested}")
+    logging.debug(f"test_requested:{requested}")
     total_tests = sum( [ math.prod([len(param) if isinstance(param, list) else 1 for param in test['args']]) for test in tests.values() ])
     if requested is not None:
         requested = ast.literal_eval(requested)
@@ -162,7 +162,7 @@ def pytest_purge_tests(tests, from_pytest, requested=None):
     
     if pytest_run is not None:
         # ARGs that are set in from_pytest, are loaded by pytest with mark.parametrize
-        logging.critical(f"Running pytest:{pytest_run}")
+        logging.warning(f"Running pytest:{pytest_run}")
         for test_data in tests.values():
             if from_pytest in ['all', ['all']]:
                 continue
@@ -176,7 +176,7 @@ def pytest_purge_tests(tests, from_pytest, requested=None):
                         del test_data['args'][pt]
                 
     total_factory_tests = sum( [ math.prod([len(param) if isinstance(param, list) else 1 for param in test['args']]) for test in tests.values() ])
-    logging.critical(f"TestFactory[{total_factory_tests}/{total_tests}]: {tests}")
+    logging.warning(f"TestFactory[{total_factory_tests}/{total_tests}]: {tests}")
     
     return tests #, total_tests, total_factory_tests
         
@@ -196,7 +196,7 @@ def set_and_run_sim(
     for narg in ['pymodule', 'workpath', 'tests', 'uut_param_class', 'request', 'as_pytest']+list(sim_params.keys())+list(dut_params.keys()):
         del set_args[narg]
     
-    logging.critical(f"sim_set_args{set_args}")
+    logging.warning(f"sim_set_args{set_args}")
     args = set_env_args(**set_args)
     args = {nm:vl for nm,vl in args.items() if nm in set_args and set_args[nm] is not None or nm not in set_args}
     
@@ -209,7 +209,7 @@ def set_and_run_sim(
     args.update({arg:str(vl) for arg,vl in sim_params.items() if vl is not None})
     args.update({arg:str(vl) for arg,vl in dut_params.items() if vl is not None})
     
-    logging.critical(f"Running pytest: {args}")
+    logging.warning(f"Running pytest: {args}")
     
     dut = uut_param_class()
     for param_nm, param_vl in dut_params.items():
@@ -217,7 +217,7 @@ def set_and_run_sim(
             dut.parameters[param_nm] = param_vl
             
     sims = int(os.getenv("TOTAL_SIMS", 1))
-    logging.critical(f"sim_args{args}")
+    logging.warning(f"sim_args{args}")
     for _ in range(sims):
         run_cocotb_sim(
             module=pymodule,

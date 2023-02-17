@@ -54,8 +54,8 @@ requested_test = os.getenv("REQUESTED_TESTS", "")
 # -----------------------------------------------------------------------------
 async def test_clk_free_run(dut, **uut_params):
   tb = top_module_TB(dut)
-  tb._log.critical(80*'-')
-  tb._log.critical('Start test...')
+  tb._log.sim_msg(80*'-')
+  tb._log.sim_msg('Start test...')
   await tb.start_test(start_monitors=False, start_drivers=False)
   #await tb.start_monitors()
   #await tb.start_drivers()
@@ -63,8 +63,8 @@ async def test_clk_free_run(dut, **uut_params):
   await ClockCycles(tb.main_clk, 10)
   # ---------------------------------------------
   await tb.done()
-  tb._log.critical('Test(s) passed')
-  tb._log.critical(80*'-')
+  tb._log.sim_msg('Test(s) passed')
+  tb._log.sim_msg(80*'-')
   
 # **********************************************
 # -----------------------------------------------------------------------------
@@ -141,7 +141,7 @@ if __name__ == '__main__':
       'PARAM_NM0': PARAM_NM,
       'PARAM_NM1': PARAM_NM0,
     }
-    logging.critical(f"Running with SIM.PARAMS[{inx}/{total_sims}]: {test_parameters}")
+    logging.info(f"Running with SIM.PARAMS[{inx}/{total_sims}]: {test_parameters}")
     
     # Run sim
     # Opt1:

@@ -78,7 +78,7 @@ class UUT_Base:
     for param, vl in self.parameters.items():
       self.__setattr__(param, vl)
     
-    self._log.critical(f"DUT[{self.toplevel}] parameters: {self.parameters}")
+    self._log.warning(f"DUT[{self.toplevel}] parameters: {self.parameters}")
     
 # -----------------------------------------------------------------------------
 class TestBenchBase:
@@ -113,7 +113,7 @@ class TestBenchBase:
     loggers = [logging.getLogger(name) for name in logging.root.manager.loggerDict]
     for log in loggers:
       if "cocotb" not in log.name:
-        self._log.critical(f"Setting logger {log.name} to LOG_LEVEL:{self._models_loglevel}")
+        self._log.warning(f"Setting logger {log.name} to LOG_LEVEL:{self._models_loglevel}")
         log.setLevel(self._models_loglevel)
       else:
         if self._models_loglevel not in ["DEBUG", "INFO"]:
@@ -251,9 +251,9 @@ class TestBenchBase:
   
   # ------------------------------------------------------------
   async def sim_timeout_event(self, max_sim_time):
-    self._log.critical(f"WDT set to {max_sim_time[0]} {max_sim_time[1]}")
+    self._log.sim_msg(f"WDT set to {max_sim_time[0]} {max_sim_time[1]}")
     await Timer(max_sim_time[0], units=max_sim_time[1])
-    self._log.critical(f"Maximum simulation time reached: {max_sim_time[0]} {max_sim_time[1]}")
+    self._log.sim_msg(f"Maximum simulation time reached: {max_sim_time[0]} {max_sim_time[1]}")
     assert False, "WDT Fail"
     
   # ------------------------------------------------------------
