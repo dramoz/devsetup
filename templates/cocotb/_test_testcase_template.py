@@ -138,8 +138,8 @@ if __name__ == '__main__':
   total_sims = math.prod( [len(arg) for arg in [PARAM_NM0_VL_LST, PARAM_NM0_VL_LST]] ) * run_n_times
   for inx, (PARAM_NM, PARAM_NM0) in enumerate( itertools.product(PARAM_NM0_VL_LST, PARAM_NM1_VL_LST) ):
     test_parameters = {
-        'PARAM_NM0': PARAM_NM,
-        'PARAM_NM1': PARAM_NM0,
+      'PARAM_NM0': PARAM_NM,
+      'PARAM_NM1': PARAM_NM0,
     }
     logging.critical(f"Running with SIM.PARAMS[{inx}/{total_sims}]: {test_parameters}")
     
