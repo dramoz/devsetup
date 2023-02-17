@@ -56,7 +56,7 @@ class SignalLvl(Enum):
 
 # -----------------------------------------------------------------------------
 class top_module_UUT(UUT_Base):
-  def __init__(self, from_env=False, log_level=logging.INFO, PARAM_NM=0):
+  def __init__(self, from_env=False, log_level=logging.INFO, PARAM_NM0=0, PARAM_NM1=1):
     """
     Place holder for UUT info, ports, parameters, ...
     """

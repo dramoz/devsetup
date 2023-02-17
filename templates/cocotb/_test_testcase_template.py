@@ -19,6 +19,7 @@ import sys
 from pathlib import Path
 
 import cocotb
+from cocotb.triggers import ClockCycles, RisingEdge, FallingEdge, Timer, ReadOnly, ReadWrite
 from cocotb.regression import TestFactory
 
 # -----------------------------------------------------------------------------
@@ -30,6 +31,8 @@ sys.path.append(str(_workpath.parent))
 from sim_modules.run_cocotb_sim import run_cocotb_sim
 from sim_modules.pytest_methods import pytest_purge_tests, TestFactoryWithNames, conditional_parametrize
 from sim_modules.pytest_methods import set_and_run_sim, set_env_args, ids, ids_enum
+
+from top_tb_class import top_module_UUT, top_module_TB
 
 # -----------------------------------------------------------------------------
 # Info
@@ -47,37 +50,58 @@ __status__ = "Prototype"
 # -----------------------------------------------------------------------------
 as_pytest = int(os.getenv("AS_PYTEST", 0)) == 1
 as_factory = int(os.getenv("AS_FACTORY", 0)) == 1
+requested_test = os.getenv("REQUESTED_TESTS", "")
 # -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
-async def test_name_func(dut, **uut_params):
-  pass
+async def test_clk_free_run(dut, **uut_params):
+  tb = top_module_TB(dut)
+  tb._log.critical(80*'-')
+  tb._log.critical('Start test...')
+  await tb.start_test()
+  #await tb.start_monitors()
+  #await tb.start_drivers()
+  # ---------------------------------------------
+  await ClockCycles(tb.main_clk, 10)
+  # ---------------------------------------------
+  await tb.done()
+  tb._log.critical('Test(s) passed')
+  tb._log.critical(80*'-')
   
+# **********************************************
 # -----------------------------------------------------------------------------
 # Test(s) parameters
+
 # -------------------------------------------------------------------
 # PyTest(s) parameters
 
+# **********************************************
 # -------------------------------------------------------------------
 # CoCoTB func_call args
-
+# -----------------------------------------------------------------------------
+if not as_pytest and not as_factory:
+  # For manual testing, set parameters here
+  # make clean; script -c "WAVES=1 LOGLEVEL=INFO MODULE=test_tc_name PARAM_NM=512 RANDOM_SEED=1234 SIM=verilator make"
+  @cocotb.test()
+  async def cocotb_single_test_run(dut):
+    #set_eng_as = {}
+    await test_clk_free_run(dut=dut, PARAM_NM=0)
+  
 # **********************************************
 
 # **********************************************
 # Run default sanity test
-tests_list = []
+tests_list = ["free_run_test"]
 from_pytest = []
 
 # GAP values XOR idle/backpressure_generators
 gap_vl = [0, 1, 16]
 
 # -----------------------------------------------------------------------------
-if cocotb.SIM_NAME:
+if cocotb.SIM_NAME and (as_pytest or as_factory):
   # ---------------------------------------------
   tests = {
     # ---------------------------------------------
-    'test_name': {
-      'test': test_name_func,
+    'free_run_test': {
+      'test': test_clk_free_run,
       'args': {
         
       }
@@ -90,48 +114,63 @@ if cocotb.SIM_NAME:
   # -----------------------------------------------------
   tests = pytest_purge_tests(tests, from_pytest, tests_list)
   for postfix, params in tests.items():
-      factory = TestFactoryWithNames(params['test'])
-      for arg_nm, opts_lst in params['args'].items():
-          factory.add_option(name=arg_nm, optionlist=opts_lst)
-      
-      factory.generate_tests(postfix='_'+postfix)
+    factory = TestFactoryWithNames(params['test'])
+    for arg_nm, opts_lst in params['args'].items():
+      factory.add_option(name=arg_nm, optionlist=opts_lst)
+    
+    factory.generate_tests(postfix='_'+postfix)
 
 # -----------------------------------------------------------------------------
 # pytest
 # -----------------------------------------------------------------------------
-PARAM_NM_VL_LST = [0]
-tb_class = None
-uut_class = None
+PARAM_NM0_VL_LST = [0]
+PARAM_NM1_VL_LST = [1]
 
-@pytest.mark.parametrize("PARAM_NM", PARAM_NM_VL_LST, ids=lambda x:str(x))
-@conditional_parametrize(from_pytest, "PARAM_NM", PARAM_NM_VL_LST, ids=ids('nick_nm'))
-def test_sanity(request, PARAM_NM):
-    set_and_run_sim(pymodule=Path(__file__).stem, workpath=Path(__file__).resolve().parent, tests=tests_list, tb_class=tb_class, uut_param_class=uut_class, **locals())
+@pytest.mark.parametrize("PARAM_NM0", PARAM_NM0_VL_LST, ids=lambda x:str(x))
+@conditional_parametrize(from_pytest, "PARAM_NM1", PARAM_NM1_VL_LST, ids=ids('nick_nm'))
+def test_sanity(request, PARAM_NM0, PARAM_NM1):
+  set_and_run_sim(pymodule=Path(__file__).stem, workpath=Path(__file__).resolve().parent, tests=tests_list, tb_class=top_module_TB, uut_param_class=top_module_UUT, **locals())
 
 # -----------------------------------------------------------------------------
 # Invoke test
 if __name__ == '__main__':
-    run_n_times = int(os.getenv("RUN_N", 1))
-    total_sims = math.prod( [len(arg) for arg in [PARAM_NM_VL_LST, PARAM_NM_VL_LST, PARAM_NM_VL_LST]] ) * run_n_times
-    for inx, (PARAM_NM, PARAM_NM, PARAM_NM) in enumerate( itertools.product(PARAM_NM_VL_LST, PARAM_NM_VL_LST, PARAM_NM_VL_LST) ):
-        test_parameters = {
-            'PARAM_NM': PARAM_NM_VL_LST,
-            'PARAM_NM': PARAM_NM_VL_LST,
-            'PARAM_NM': PARAM_NM_VL_LST,
-        }
-        logging.critical(f"Running with SIM.PARAMS[{inx}/{total_sims}]: {test_parameters}")
-        # Run sim
-        PARAMS_LST = [None]
-        for _ in range(run_n_times):
-            dut = uut_class(**PARAMS_LST)
-            run_cocotb_sim(
-                module=Path(__file__).stem,
-                top_level=dut.toplevel,
-                test_name=Path(__file__).stem,
-                include_dirs=['../../../../../rtl/'],
-                hdl_sources=dut.verilog_sources,
-                parameters=dut.parameters,
-                testcase=None,
-                workpath=Path(__file__).resolve().parent,
-                extra_env=test_parameters,
-            )
+  run_n_times = int(os.getenv("RUN_N", 1))
+  total_sims = math.prod( [len(arg) for arg in [PARAM_NM0_VL_LST, PARAM_NM0_VL_LST]] ) * run_n_times
+  for inx, (PARAM_NM, PARAM_NM0) in enumerate( itertools.product(PARAM_NM0_VL_LST, PARAM_NM1_VL_LST) ):
+    test_parameters = {
+        'PARAM_NM0': PARAM_NM,
+        'PARAM_NM1': PARAM_NM0,
+    }
+    logging.critical(f"Running with SIM.PARAMS[{inx}/{total_sims}]: {test_parameters}")
+    
+    # Run sim
+    # Opt1:
+    for _ in range(run_n_times):
+      dut = top_module_UUT(from_env=True)
+      run_cocotb_sim(
+        module=Path(__file__).stem,
+        top_level=dut.toplevel,
+        test_name=Path(__file__).stem,
+        include_dirs=['../../../../../rtl/'],
+        hdl_sources=dut.verilog_sources,
+        parameters=dut.parameters,
+        testcase=None,
+        workpath=Path(__file__).resolve().parent,
+        extra_env=test_parameters,
+      )
+      
+    # Opt2:
+    for _ in range(run_n_times):
+      dut = top_module_UUT(from_env=False, **test_parameters)
+      run_cocotb_sim(
+        module=Path(__file__).stem,
+        top_level=dut.toplevel,
+        test_name=Path(__file__).stem,
+        include_dirs=['../../../../../rtl/'],
+        hdl_sources=dut.verilog_sources,
+        parameters=dut.parameters,
+        testcase=None,
+        workpath=Path(__file__).resolve().parent,
+        extra_env=None,
+      )
+  
