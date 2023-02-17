@@ -282,7 +282,17 @@ class TestBenchBase:
       cocotb.start_soon(Clock(signal=signal, period=cycle, units="ns").start())
   
   # ------------------------------------------------------------
-  async def start_test(self, start_clk=True, issue_reset=True, reset_cycles=10, ram_cleanup=None, sim_units='us', testcase=None, max_sim_time=None, **kwargs):
+  async def start_test(
+      self,
+      start_clk=True,
+      issue_reset=True, reset_cycles=10,
+      sim_units='us',
+      testcase=None,
+      max_sim_time=None,
+      start_monitors=True,
+      start_drivers=True,
+      **kwargs
+    ):
     self.sys_start_time = time.time()
     
     self._log.info("Setting TB and UUT (POR)")
@@ -302,8 +312,10 @@ class TestBenchBase:
     self.start_time = round(get_sim_time(sim_units))
     self.sim_units = sim_units
     
-    await self.start_monitors()
-    await self.start_drivers()
+    if start_monitors:
+      await self.start_monitors(**kwargs)
+    if start_drivers:
+      await self.start_drivers(**kwargs)
     
     # ----------------------------------------
     # Report TC after enumerate

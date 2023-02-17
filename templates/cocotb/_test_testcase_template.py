@@ -56,7 +56,7 @@ async def test_clk_free_run(dut, **uut_params):
   tb = top_module_TB(dut)
   tb._log.critical(80*'-')
   tb._log.critical('Start test...')
-  await tb.start_test()
+  await tb.start_test(start_monitors=False, start_drivers=False)
   #await tb.start_monitors()
   #await tb.start_drivers()
   # ---------------------------------------------
