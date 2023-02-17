@@ -89,7 +89,8 @@ class TestBenchBase:
   # ==================================================================
   def __init__(self,
     dut, dut_params_class, dut_params_args,
-    stop_on_error=True, eos_on_error=(1, 'us')
+    stop_on_error=True, eos_on_error=(1, 'us'),
+    **kwargs
   ):
     """
     Setup cocotb TB
