@@ -105,7 +105,7 @@ uut_class = None
 
 @pytest.mark.parametrize("PARAM_NM", PARAM_NM_VL_LST, ids=lambda x:str(x))
 @conditional_parametrize(from_pytest, "PARAM_NM", PARAM_NM_VL_LST, ids=ids('nick_nm'))
-def test_sanity(request, DATA_BYTES, MAX_PAYLOAD, MAX_READ_REQUEST, engines, pkts, length, addressing, zero_len_eop, gap_vl, mem_rd_rnd_completion_response):
+def test_sanity(request, PARAM_NM):
     set_and_run_sim(pymodule=Path(__file__).stem, workpath=Path(__file__).resolve().parent, tests=tests_list, tb_class=tb_class, uut_param_class=uut_class, **locals())
 
 # -----------------------------------------------------------------------------
