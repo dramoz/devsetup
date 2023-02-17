@@ -326,7 +326,7 @@ class TestBenchBase:
     self._log.tb_msg("Simulation completed")
     if eos_delay is not None:
       self._log.tb_msg(f"EOS in {eos_delay[0]}{eos_delay[1]} ")
-      await Timer(eos_delay[0], eos_delay[1])
+      await Timer(*eos_delay)
     
     self.sys_end_time = time.time()
     self._log.tb_msg(f"Simulation completed in {time_clk_hr_min_sec(self.sys_end_time-self.sys_start_time)}")
