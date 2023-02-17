@@ -145,6 +145,9 @@ def conditional_parametrize(from_pytest, argname, argvalues, ids):
 def pytest_purge_tests(tests, from_pytest, requested=None):
     pytest_run = os.getenv('PYTEST_CURRENT_TEST', None)
     #logging.critical(f":{pytest_run}")
+    if requested is not None:
+        # Need a string literal for ast
+        requested = str(requested)
     requested = os.getenv('REQUESTED_TESTS', requested)
     #logging.critical(f":{requested}")
     total_tests = sum( [ math.prod([len(param) if isinstance(param, list) else 1 for param in test['args']]) for test in tests.values() ])
