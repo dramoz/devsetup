@@ -25,23 +25,36 @@ __email__ = 'danilo.ramos@eideticom.com'
 __status__ = "Prototype"
 
 import sys, os
-from pathlib import Path
 import logging
+import inspect
 
+from pathlib import Path
+
+from cocotb import start_soon
 from cocotb.triggers import Timer, First
 from cocotb.result import SimTimeoutError
 
 # -----------------------------------------------------------------------------
-async def with_timeout_msg(trigger, msg, timeout_time, timeout_unit="step"):
-    log = logging.getLogger("cocotb.tb")
-    timeout_timer = Timer(timeout_time, timeout_unit)
-    res = await First(timeout_timer, trigger)
-    if res is timeout_timer:
-        log.error(f"TIMEOUT: {msg}")
-        raise SimTimeoutError
-    else:
-        return res
-    
+async def with_timeout_msg(msg, trigger, timeout_time=1, timeout_unit="us"):
+  # From [cocotb.triggers.with_timeout](https://docs.cocotb.org/en/stable/_modules/cocotb/triggers.html#with_timeout)
+  log = logging.getLogger("cocotb.tb")
+  if inspect.iscoroutine(trigger):
+    trigger = start_soon(trigger)
+    shielded = False
+  else:
+    shielded = True
+  
+  timeout_timer = Timer(timeout_time, timeout_unit)
+  res = await First(timeout_timer, trigger)
+  if res is timeout_timer:
+    if not shielded:
+      trigger.kill()
+    log.error(f"TIMEOUT: {msg}")
+    raise SimTimeoutError
+  
+  else:
+    return res
+  
 # -----------------------------------------------------------------------------
 def set_env_args(
   tb_class,
