@@ -72,7 +72,7 @@ class top_module_UUT(UUT_Base):
 class top_module_TB(TestBenchBase):
   def __init__(self,
       dut,
-      dut_params_class=None,
+      dut_params_class=top_module_UUT,
       dut_params_args=None,
       stop_on_error=True,
       eos_on_error=(1, 'us'),
@@ -81,7 +81,6 @@ class top_module_TB(TestBenchBase):
     args = locals().copy()
     del args['self']
     del args['__class__']
-    args['dut_params_class'] = top_module_UUT
     
     super().__init__(**args)
     self.add_reset(dut.resetn, level=SignalLvl.ACTIVE_LOW)
