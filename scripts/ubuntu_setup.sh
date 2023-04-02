@@ -50,8 +50,14 @@ else
   sudo -S apt install -y gtkwave libcanberra-gtk-module libcanberra-gtk3-module
 fi
 
+# Default Python
 sudo -S apt install -y python3 python3-pip python3-tk meld
 sudo -S snap install node --classic
+
+# Python 3.11
+sudo -S add-apt-repository -y ppa:deadsnakes/ppa
+sudo -S apt install -y python3.11
+curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
 
 echo "--------------------------------------------------"
 read -p "GNOME setup (y/n)? " ok
