@@ -51,13 +51,23 @@ else
 fi
 
 # Default Python
+echo "--------------------------------------------------"
+echo "Installing default OS Python + virtualenv/virtualenvwrapper"
 sudo -S apt install -y python3 python3-pip python3-tk meld
 sudo -S snap install node --classic
+pip3 install --upgrade virtualenv virtualenvwrapper
+#pip3 list --outdated
+#pip3 list -o | cut -f1 -d' ' | tr " " "\n" | awk '{if(NR>=3)print}' | cut -d' ' -f1 | xargs -n1 pip3 install -U 
 
 # Python 3.11
+echo "--------------------------------------------------"
+echo "Installing Python 3.11 + virtualenv/virtualenvwrapper"
 sudo -S add-apt-repository -y ppa:deadsnakes/ppa
 sudo -S apt install -y python3.11
 curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
+pip3.11 install --upgrade virtualenv virtualenvwrapper
+#pip3.11 list --outdated
+#pip3.11 list -o | cut -f1 -d' ' | tr " " "\n" | awk '{if(NR>=3)print}' | cut -d' ' -f1 | xargs -n1 pip3 install -U 
 
 echo "--------------------------------------------------"
 read -p "GNOME setup (y/n)? " ok
@@ -136,11 +146,6 @@ if [ ${WSL} -eq 0 ]; then
   fi
   echo "--------------------------------------------------"
 fi
-
-# Python virtualenv
-echo "--------------------------------------------------"
-echo "Installing Python virtualenv/virtualenvwrapper"
-pip3 install --upgrade virtualenv virtualenvwrapper
 
 # DevSetup
 echo "--------------------------------------------------"
