@@ -111,7 +111,7 @@ fi
 #    . ${HOME}/dev/DevSetup/.bash_aliases
 #fi
 # Only ask ssh passphrase once per sesion
-ssh-add
+#ssh-add
 
 # Load .bashrc_devsetup
 if [ -f "${HOME}/dev/devsetup/scripts/.bashrc_devsetup" ]; then
