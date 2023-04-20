@@ -113,6 +113,8 @@ ssh_key="${HOME}/.ssh/id_ed25519"
 if [ ! -f "${ssh_key}" ]; then
   echo "Creating GitHub ssh-key"
   ssh-keygen -t ed25519 -C "${email}"
+  eval `ssh-agent -s`
+  chmod 600 ~/.ssh/id_ed25519
   ssh-add ~/.ssh/id_ed25519
   echo "Copy/paste (and create key at GitHub) ->"
   cat ~/.ssh/id_ed25519.pub
