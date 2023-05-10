@@ -105,6 +105,7 @@ if [ "${ok}" == "y" ]; then
   git config --global user.email "${email}"
   git config --global user.name "${full_name}"
   git config --global credential.helper 'cache --timeout 30000'
+  git config --global pull.rebase false
 fi
 
 # SSH key for GitHub
