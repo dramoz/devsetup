@@ -59,15 +59,15 @@ pip3 install --upgrade virtualenv virtualenvwrapper
 #pip3 list --outdated
 #pip3 list -o | cut -f1 -d' ' | tr " " "\n" | awk '{if(NR>=3)print}' | cut -d' ' -f1 | xargs -n1 pip3 install -U 
 
-# Python 3.11
+# Python 3.14
 echo "--------------------------------------------------"
-echo "Installing Python 3.11 + virtualenv/virtualenvwrapper"
+echo "Installing Python 3.14 + virtualenv/virtualenvwrapper"
+sudo -S apt install software-properties-common
 sudo -S add-apt-repository -y ppa:deadsnakes/ppa
-sudo -S apt install -y python3.11
-curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
-pip3.11 install --upgrade virtualenv virtualenvwrapper
-#pip3.11 list --outdated
-#pip3.11 list -o | cut -f1 -d' ' | tr " " "\n" | awk '{if(NR>=3)print}' | cut -d' ' -f1 | xargs -n1 pip3 install -U 
+sudo apt update
+
+sudo -S apt install -y python3.14
+sudo apt install python3.14-venv
 
 echo "--------------------------------------------------"
 read -p "GNOME setup (y/n)? " ok
