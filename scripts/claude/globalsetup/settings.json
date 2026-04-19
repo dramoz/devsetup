@@ -21,5 +21,6 @@
     "type": "command",
     "command": "bash /home/dramoz/.claude/scripts/statusline.sh"
   },
-  "effortLevel": "medium"
+  "effortLevel": "xhigh",
+  "model": "opus[1m]"
 }
