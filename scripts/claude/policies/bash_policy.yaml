@@ -1,0 +1,43 @@
+version: 1
+
+blocklist:
+  # Catastrophic filesystem wipes
+  - pattern: "rm[[:space:]]+-rf[[:space:]]+/"
+    reason: "Recursive delete of root directory"
+  - pattern: "rm[[:space:]]+-rf[[:space:]]+/\\*"
+    reason: "Recursive delete of all root files"
+  - pattern: "rm[[:space:]]+-rf[[:space:]]+~"
+    reason: "Recursive delete of home directory"
+  - pattern: "rm[[:space:]]+-rf[[:space:]]+\\.git"
+    reason: "Deleting .git directory"
+
+  # Git destruction
+  - pattern: "git[[:space:]]+reset[[:space:]]+--hard"
+    reason: "Destructive git reset"
+  - pattern: "git[[:space:]]+clean[[:space:]]+-fdx"
+    reason: "Removing untracked files"
+
+  # Disk nuking
+  - pattern: "dd[[:space:]]+if="
+    reason: "Raw disk write"
+  - pattern: "mkfs"
+    reason: "Filesystem creation"
+
+  # System shutdown
+  - pattern: "\\bshutdown\\b"
+    reason: "System shutdown"
+  - pattern: "\\breboot\\b"
+    reason: "System reboot"
+
+  # Fork bombs
+  - pattern: ":\\(\\)[[:space:]]*{[[:space:]]*:|:&[[:space:]]*};:"
+    reason: "Fork bomb"
+
+allowlist:
+  # Example: allow safe rm usage
+  - pattern: "rm[[:space:]]+-rf[[:space:]]+\\.cache"
+    reason: "Allowed cleanup"
+
+settings:
+  normalize_whitespace: true
+  case_insensitive: true
