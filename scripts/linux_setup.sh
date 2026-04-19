@@ -235,14 +235,7 @@ if ask "Clone devsetup and install bash configuration"; then
     echo "Installing bash overlay (symlinks to repo)"
     install_symlink "${SCRIPTS_DIR}/.bashrc_user"   "${HOME}/.bashrc_user"
     install_symlink "${SCRIPTS_DIR}/.bash_aliases"  "${HOME}/.bash_aliases"
-
-    # ~/.bashrc_local is machine-local — copy from the example, do not symlink.
-    if [[ ! -f "${HOME}/.bashrc_local" ]]; then
-        echo "Installing ~/.bashrc_local from example"
-        cp "${SCRIPTS_DIR}/.bashrc_local_example" "${HOME}/.bashrc_local"
-    else
-        echo "  ${HOME}/.bashrc_local exists — leaving it (machine-local, not symlinked)"
-    fi
+    install_symlink "${SCRIPTS_DIR}/.bashrc_local"  "${HOME}/.bashrc_local"
 
     # Idempotent: add the source line only once
     if ! grep -qF '.bashrc_user' "${HOME}/.bashrc" 2>/dev/null; then
