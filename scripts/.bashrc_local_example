@@ -13,6 +13,8 @@ export PATH=${TOOLS_PATH}:$PATH
 # RISC-V
 # https://github.com/riscv-collab/riscv-gnu-toolchain
 # https://www.sifive.com/software (pre-build)
+# Fedora: sudo dnf install riscv64-gcc-toolchain
+# Ubuntu: sudo apt install gcc-riscv64-unknown-elf
 #export PATH=/opt/riscv64-unknown-elf-toolchain/bin:$PATH
 
 # --------------------------------
@@ -23,11 +25,20 @@ export PATH=${TOOLS_PATH}:$PATH
 # --------------------------------
 # OSS CAD Suite (formely FPGA-Toolchain / OpenSource)
 # https://github.com/YosysHQ/oss-cad-suite-build
+# Fedora: sudo dnf install oss-cad-suite
+# Ubuntu: Download pre-built binary or build from source
 #export PATH="${TOOLS_PATH}/oss-cad-suite/bin:$PATH"
 
 # --------------------------------
 # Antlr
 # https://www.antlr.org/
+# Fedora: sudo dnf install antlr4
+# Ubuntu: Download jar and setup manually
 #export CLASSPATH=".:/usr/local/lib/antlr-4.10.1-complete.jar:$CLASSPATH"
 #alias antlr4='java -jar /usr/local/lib/antlr-4.10.1-complete.jar'
 #alias grun='java org.antlr.v4.gui.TestRig'
+
+# --------------------------------
+# Distro-specific notes:
+# Fedora 44: Use 'dnf' for package management, 'systemctl' for services
+# Ubuntu 24.04: Use 'apt' for package management, 'snap' for some apps

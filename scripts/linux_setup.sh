@@ -1,7 +1,7 @@
 #!/bin/bash
 # --------------------------------------------------------------------------------
-# Ubuntu 24.04+ setup script
-# Auto-detects distro via /etc/os-release (also supports Fedora 44+)
+# Linux setup script (Ubuntu 24.04+ / Fedora 44+)
+# Auto-detects distro via /etc/os-release and uses appropriate package manager
 # --------------------------------------------------------------------------------
 
 echo "----------------------------------------------------------------------------------------------------"
@@ -17,15 +17,15 @@ else
   echo "$ubuntu_ver"
 fi
 
-echo "${DISTRO_NAME:-Ubuntu}: ${DISTRO_VER:-unknown}"
+echo "${DISTRO_NAME:-Linux}: ${DISTRO_VER:-unknown}"
 
 # Check if running on Ubuntu/Fedora and set package manager
 if [[ "${ID}" == "ubuntu" ]] || [[ "${ID_LIKE}" == *"ubuntu"* ]]; then
   PKG_MGR="apt"
-  echo "Detected: Ubuntu-based system"
+  echo "Detected: Ubuntu-based system (using apt)"
 elif [[ "${ID}" == "fedora" ]] || [[ "${ID_LIKE}" == *"fedora"* ]]; then
   PKG_MGR="dnf"
-  echo "Detected: Fedora-based system"
+  echo "Detected: Fedora-based system (using dnf)"
 else
   PKG_MGR="apt"
   echo "WARNING: Unknown distro, defaulting to apt"
@@ -43,20 +43,19 @@ fi
 
 echo "The following script will do a custom install of the required apps for R&D... (manual mode)"
 
-# Remove virtualenv and virtualenvwrapper from Ubuntu apt (Ubuntu only)
+# Remove virtualenv and virtualenvwrapper (only if installed)
 if [[ "${PKG_MGR}" == "apt" ]]; then
   echo "--------------------------------------------------"
   echo "Removing default Ubuntu virtualenv/virtualenvwrapper"
-  sudo -S apt purge -y virtualenv virtualenvwrapper
+  sudo -S apt purge -y virtualenv virtualenvwrapper 2>/dev/null || true
 
   # Ubuntu update (Ubuntu 24.04 compatible)
   echo "--------------------------------------------------"
   echo "update/upgrade/remove"
   sudo -S apt update -y && sudo -S apt upgrade -y && sudo -S apt dist-upgrade -y && sudo -S apt autoremove -y
-  sudo -S apt fix-broken -y  # Handle any broken dependencies
+  sudo -S apt fix-broken -y 2>/dev/null || true
 fi
 
-# Fedora update
 if [[ "${PKG_MGR}" == "dnf" ]]; then
   echo "--------------------------------------------------"
   echo "Removing default Fedora virtualenv/virtualenvwrapper"
@@ -241,12 +240,12 @@ if [ "${ok}" == "y" ]; then
     echo "" >> ~/.bash_aliases
     if [[ "${PKG_MGR}" == "dnf" ]]; then
       echo "# Fedora-specific aliases" >> ~/.bash_aliases
-      alias_fedora='alias apt_update_all="sudo dnf update -y && sudo dnf upgrade -y"'
-      echo $alias_fedora >> ~/.bash_aliases
+      alias_distro='alias apt_update_all="sudo dnf update -y && sudo dnf upgrade -y"'
+      echo $alias_distro >> ~/.bash_aliases
     else
       echo "# Ubuntu-specific aliases" >> ~/.bash_aliases
-      alias_ubuntu='alias apt_update_all="sudo apt update -y && sudo apt upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y"'
-      echo $alias_ubuntu >> ~/.bash_aliases
+      alias_distro='alias apt_update_all="sudo apt update -y && sudo apt upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y"'
+      echo $alias_distro >> ~/.bash_aliases
     fi
   fi
 
@@ -260,7 +259,7 @@ fi
 
 echo "----------------------------------------------------------------------------------------------------"
 
-# VS Code installation (distro-specific, per https://code.visualstudio.com/docs/setup/linux)
+# VS Code installation (per https://code.visualstudio.com/docs/setup/linux)
 echo "--------------------------------------------------"
 read -p "Install VS code (y/n)? " ok
 if [ "${ok}" == "y" ]; then
@@ -308,7 +307,6 @@ Signed-By: /usr/share/keyrings/vscode.gpg" | sudo tee /etc/apt/sources.list.d/vs
     done < ${HOME}/dev/devsetup/scripts/assets/vscode/workspace_extensions.ext
 
     echo "Restoring user settings"
-    # Fedora uses same config path as Ubuntu
     mkdir -p ${HOME}/.config/Code/User/
     cp ${HOME}/dev/devsetup/scripts/assets/vscode/*.json ${HOME}/.config/Code/User/ 2>/dev/null || true
   fi
