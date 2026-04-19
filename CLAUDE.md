@@ -8,11 +8,11 @@ A collection of scripts, configuration files, and templates for setting up Ubunt
 
 **Distro Support:**
 - **Ubuntu 24.04+**: Uses `apt` package manager, Microsoft GPG repo for VS Code
-- **Fedora 44+**: Uses `dnf` package manager, Microsoft RPM repo for VS Code
+- **Fedora 43+**: Uses `dnf` package manager, Microsoft RPM repo for VS Code
 
 Scripts auto-detect distro via `/etc/os-release` (`$ID`, `$ID_LIKE`). WSL is detected with:
 ```bash
-if [[ $(grep -i Microsoft /proc/version) ]]; then WSL=1; else WSL=0; fi
+if grep -qi microsoft /proc/version 2>/dev/null; then WSL=1; else WSL=0; fi
 ```
 WSL branches skip packages requiring a display server or use Windows-side tools.
 
@@ -27,9 +27,7 @@ WSL branches skip packages requiring a display server or use Windows-side tools.
 ## Scripts
 
 ### Setup
-- `scripts/linux_setup.sh` — Unified script for Ubuntu/Fedora (recommended, interactive)
-- `scripts/ubuntu_setup.sh` — Ubuntu-specific legacy variant
-- `scripts/fedora_setup.sh` — Fedora-specific legacy variant
+- `scripts/linux_setup.sh` — **The** entry point. Single distro-aware interactive script (Ubuntu 24.04+ / Fedora 43+).
 - `scripts/gnome_setup.sh` — GNOME desktop configuration
 - `scripts/check_tools.py` — Verify installed tool versions
 - `scripts/test.sh` — Version check utility
@@ -39,15 +37,24 @@ All scripts follow `_template.sh`: detect distro/WSL, check prerequisites, set `
 
 ## Bash Configuration
 
-Distro-specific files take priority; setup copies them to `~`:
+The setup script does **not** overwrite `~/.bashrc` — that broke the shell on Fedora because the distro skeleton sources `/etc/bashrc` (which loads `/etc/profile.d/*.sh`). Instead, it appends a single guarded line to the user's stock `~/.bashrc`:
+
+```bash
+[ -f "${HOME}/.bashrc_user" ] && . "${HOME}/.bashrc_user"
+```
+
+The repo-controlled files copied into `~`:
 
 | Source file | Destination | Notes |
 |---|---|---|
-| `.bashrc_${ID}` (e.g. `.bashrc_fedora`) | `~/.bashrc` | Falls back to `.bashrc` |
-| `.bash_aliases_${ID}` | `~/.bash_aliases` | Falls back to `.bash_aliases` |
-| `.bashrc_local` | `~/.bashrc_local` | Machine-local overrides, not overwritten if exists |
-| `.bashrc_devsetup` | — | devsetup-specific env vars template |
-| `.bashrc_wsl` / `.bashrc_wsl_work` | — | WSL variants |
+| `.bashrc_user` | `~/.bashrc_user` | Prompt + helpers + virtualenvwrapper init. Sourced by `~/.bashrc`. Not overwritten if it already exists. |
+| `.bash_aliases` | `~/.bash_aliases` | Common aliases + `os_*` package-manager wrapper functions. Sourced by `.bashrc_user`. |
+| `.bashrc_local_example` → `.bashrc_local` | `~/.bashrc_local` | Machine-local env vars / tool paths. Not overwritten if exists. |
+| `.bashrc_wsl` / `.bashrc_wsl_work` | — | WSL variants (legacy, not yet migrated to the new layout) |
+
+`os_*` wrapper functions in `.bash_aliases` give a distro-agnostic surface: `os_update`, `os_install`, `os_remove`, `os_search`, `os_info`, `os_list`, `os_clean`, `os_autoremove`, `os_owns`, `os_provides`. Each dispatches to `dnf` or `apt` based on `command -v` detection at shell startup.
+
+`virtualenv` and `virtualenvwrapper` are installed via the **distro package** (`python3-virtualenvwrapper` on Fedora, `virtualenvwrapper` on Ubuntu) — not pip. PEP 668 blocks `pip install --user` on both modern Fedora and Ubuntu.
 
 ## Virtual Environments
 
