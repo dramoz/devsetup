@@ -105,6 +105,13 @@ __setprompt() {
     local WHITE='\[\033[1;37m\]'
     local NC='\[\033[0m\]'
 
+    # Window title — runs LAST in PROMPT_COMMAND, so it overrides Fedora's
+    # /etc/bashrc title-setter. Honors $_TERMTITLE if the user called
+    # `termtitle <name>`, otherwise shows host:cwd.
+    if declare -F __write_title >/dev/null 2>&1; then
+        __write_title "${_TERMTITLE:-${USER}@${HOSTNAME%%.*}: ${PWD/#$HOME/\~}}"
+    fi
+
     PS1='\n'
     if (( last != 0 )); then
         PS1+="${RED}<exit:${last}>${NC} "
