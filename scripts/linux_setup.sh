@@ -76,6 +76,42 @@ pkg_update() {
     fi
 }
 
+# Symlink ${src} -> ${dst}. Idempotent: skips silently if the symlink already
+# points to the right target. Asks before clobbering an existing regular file
+# or a symlink that points elsewhere.
+install_symlink() {
+    local src="$1" dst="$2"
+    local src_real
+    src_real=$(readlink -f "${src}")
+
+    if [[ -L "${dst}" ]]; then
+        local cur_real
+        cur_real=$(readlink -f "${dst}")
+        if [[ "${cur_real}" == "${src_real}" ]]; then
+            echo "  ${dst} already linked → ${src_real}"
+            return 0
+        fi
+        if ask "  ${dst} is a symlink to ${cur_real}; replace with link to ${src_real}"; then
+            rm -f "${dst}"
+            ln -s "${src}" "${dst}"
+            echo "  Linked ${dst} → ${src}"
+        else
+            echo "  Keeping existing ${dst}"
+        fi
+    elif [[ -e "${dst}" ]]; then
+        if ask "  ${dst} exists as a regular file; replace with symlink to ${src_real}"; then
+            rm -f "${dst}"
+            ln -s "${src}" "${dst}"
+            echo "  Linked ${dst} → ${src}"
+        else
+            echo "  Keeping existing ${dst}"
+        fi
+    else
+        ln -s "${src}" "${dst}"
+        echo "  Linked ${dst} → ${src}"
+    fi
+}
+
 # --------------------------------------------------------------------------------
 # System update
 # --------------------------------------------------------------------------------
@@ -194,23 +230,18 @@ if ask "Clone devsetup and install bash configuration"; then
         ( cd "${DEVSETUP_DIR}" && git pull ) || true
     fi
 
-    if [[ ! -f "${HOME}/.bashrc_user" ]]; then
-        echo "Installing ~/.bashrc_user"
-        cp "${SCRIPTS_DIR}/.bashrc_user" "${HOME}/.bashrc_user"
-    else
-        echo "~/.bashrc_user already exists — leaving it; update manually if needed"
-    fi
+    # Symlink the repo-controlled files so `git pull` updates them automatically.
+    # The helper asks before clobbering anything that already exists.
+    echo "Installing bash overlay (symlinks to repo)"
+    install_symlink "${SCRIPTS_DIR}/.bashrc_user"   "${HOME}/.bashrc_user"
+    install_symlink "${SCRIPTS_DIR}/.bash_aliases"  "${HOME}/.bash_aliases"
 
-    if [[ ! -f "${HOME}/.bash_aliases" ]]; then
-        echo "Installing ~/.bash_aliases"
-        cp "${SCRIPTS_DIR}/.bash_aliases" "${HOME}/.bash_aliases"
-    else
-        echo "~/.bash_aliases already exists — leaving it; update manually if needed"
-    fi
-
+    # ~/.bashrc_local is machine-local — copy from the example, do not symlink.
     if [[ ! -f "${HOME}/.bashrc_local" ]]; then
         echo "Installing ~/.bashrc_local from example"
         cp "${SCRIPTS_DIR}/.bashrc_local_example" "${HOME}/.bashrc_local"
+    else
+        echo "  ${HOME}/.bashrc_local exists — leaving it (machine-local, not symlinked)"
     fi
 
     # Idempotent: add the source line only once
@@ -301,12 +332,12 @@ if (( WSL == 0 )); then
         fi
     fi
 
-    if ask "Install GUI utilities (krename, kget, kompare, plocate)"; then
+    if ask "Install GUI utilities (krename, kget, kompare, plocate, meld)"; then
         if [[ "${PKG_MGR}" == "apt" ]]; then
-            pkg_install krusader krename kget kompare plocate
+            pkg_install krusader krename kget kompare plocate meld
         else
             # Fedora 43: krusader needs RPM Fusion; the rest are in stock repos.
-            pkg_install krename kget kompare plocate
+            pkg_install krename kget kompare plocate meld
             echo "Note: krusader requires RPM Fusion — skipped"
         fi
     fi
